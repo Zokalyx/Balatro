@@ -16,7 +16,7 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaNula);
+        assertInstanceOf(JugadaNula.class, jugada);
     }
 
     @Test
@@ -27,7 +27,7 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaCartaAlta);
+        assertInstanceOf(JugadaCartaAlta.class, jugada);
     }
 
     @Test
@@ -42,7 +42,7 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaCartaAlta);
+        assertInstanceOf(JugadaCartaAlta.class, jugada);
     }
 
     @Test
@@ -81,7 +81,7 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaPierna);
+        assertInstanceOf(JugadaPierna.class, jugada);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaPoker);
+        assertInstanceOf(JugadaPoker.class, jugada);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaColor);
+        assertInstanceOf(JugadaColor.class, jugada);
     }
 
     @Test
@@ -141,7 +141,7 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaFullHouse);
+        assertInstanceOf(JugadaFullHouse.class, jugada);
     }
 
     @Test
@@ -156,7 +156,7 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaEscalera);
+        assertInstanceOf(JugadaEscalera.class, jugada);
     }
 
     @Test
@@ -171,7 +171,7 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaEscaleraColor);
+        assertInstanceOf(JugadaEscaleraColor.class, jugada);
     }
 
     @Test
@@ -186,6 +186,6 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaEscaleraReal);
+        assertInstanceOf(JugadaEscaleraReal.class, jugada);
     }
 }

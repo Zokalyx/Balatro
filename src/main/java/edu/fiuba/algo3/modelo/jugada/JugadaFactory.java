@@ -4,6 +4,7 @@ import edu.fiuba.algo3.modelo.Palo;
 import edu.fiuba.algo3.modelo.Poker;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class JugadaFactory {
@@ -36,7 +37,13 @@ public class JugadaFactory {
     }
 
     private boolean esCartaAlta(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
-        return false;
+        if (cartas.isEmpty()) {
+            return false;
+        }
+
+        cartas.sort(Comparator.comparingInt(Poker::getValorDeCarta));
+        cartasUsadas.add(cartas.get(0));
+        return true;
     }
 
     private boolean esPar(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
@@ -133,28 +140,21 @@ public class JugadaFactory {
         if (cartas.size() != 5) {
             return false;
         }
-        for (Poker carta1 : cartas) {
-            for (Poker carta2 : cartas) {
-                for (Poker carta3 : cartas) {
-                    for (Poker carta4 : cartas) {
-                        for (Poker carta5 : cartas) {
-                            if (carta1.equals(carta2) || carta2.equals(carta3) || carta3.equals(carta4) || carta4.equals(carta5)) {
-                                continue;
-                            }
-
-                            if (carta1.esMismoSimboloQue(carta2) && carta2.esMismoSimboloQue(carta3)) {
-                                cartasSinUsar.add(carta4);
-                                cartasSinUsar.add(carta5);
-                                cartasUsadas.add(carta1);
-                                cartasUsadas.add(carta2);
-                                cartasUsadas.add(carta3);
-                            }
-                        }
-                    }
+        if (esPierna(cartas, cartasUsadas)) {
+            for (Poker carta : cartas) {
+                if (!cartasUsadas.contains(carta)) {
+                    cartasSinUsar.add(carta);
                 }
             }
-        }
-        return esPar(cartasSinUsar, cartasUsadas);
+            if (esPar(cartasSinUsar, cartasUsadas)) {
+                return true;
+            } else {
+                // esPierna pudo haber modificado cartasUsadas, pero no queremos eso si en realidad no hubo full house.
+                cartasUsadas.clear();
+                return false;
+            }
+        };
+        return false;
     }
 
     private boolean esPoker(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
