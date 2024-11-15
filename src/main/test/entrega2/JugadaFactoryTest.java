@@ -54,7 +54,7 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaPar);
+        assertInstanceOf(JugadaPar.class,jugada);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class JugadaFactoryTest {
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
-        assert(jugada instanceof JugadaPar);
+        assertInstanceOf(JugadaPar.class,jugada);
     }
 
     @Test
@@ -115,12 +115,13 @@ public class JugadaFactoryTest {
     }
 
     @Test
-    public void test09CuatroCartasConMismoPaloFormanUnColor() {
+    public void test09CincoCartasConMismoPaloFormanUnColor() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker(0, "As", 0, new Pica()));
         cartas.add(new Poker(0, "2", 0, new Pica()));
         cartas.add(new Poker(0, "5", 0, new Pica()));
+        cartas.add(new Poker(0, "7", 0, new Pica()));
         cartas.add(new Poker(0, "8", 0, new Pica()));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);

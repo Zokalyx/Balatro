@@ -4,19 +4,20 @@ import edu.fiuba.algo3.modelo.Palo;
 import edu.fiuba.algo3.modelo.Poker;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class JugadaFactory {
     public Jugada obtenerJugada(ArrayList<Poker> cartas) {
         ArrayList<Poker> cartasUsadas = new ArrayList<>();
 
         if (esEscaleraReal(cartas, cartasUsadas)) {
-            return new JugadaEscaleraReal(cartasUsadas);
+            return (new JugadaEscaleraReal(cartasUsadas));
         } else if (esEscaleraColor(cartas, cartasUsadas)) {
             return new JugadaEscaleraColor(cartasUsadas);
         } else if (esPoker(cartas, cartasUsadas)) {
             return new JugadaPoker(cartasUsadas);
         } else if (esFullHouse(cartas, cartasUsadas)) {
-            return new JugadaFullHouse(cartasUsadas);
+            return (new JugadaFullHouse(cartasUsadas));
         } else if (esColor(cartas, cartasUsadas)) {
             return new JugadaColor(cartasUsadas);
         } else if (esEscalera(cartas, cartasUsadas)) {
@@ -114,37 +115,22 @@ public class JugadaFactory {
     }
 
     private boolean esColor(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
-        if (cartas.size() > 5) {
+        if (cartas.size() != 5) {
             return false;
         }
-        for (Poker carta1 : cartas) {
-            for (Poker carta2 : cartas) {
-                for (Poker carta3 : cartas) {
-                    for (Poker carta4 : cartas) {
-                        for (Poker carta5 : cartas) {
-                            if (carta1.equals(carta2) || carta2.equals(carta3) || carta3.equals(carta4) || carta4.equals(carta5)) {
-                                continue;
-                            }
+        for (Poker carta : cartas) {
 
-                            if (carta1.esMismoPaloQue(carta2) && carta2.esMismoPaloQue(carta3)) {
-                                cartasUsadas.add(carta1);
-                                cartasUsadas.add(carta2);
-                                cartasUsadas.add(carta3);
-                                cartasUsadas.add(carta4);
-                                cartasUsadas.add(carta5);
-                                return true;
-                            }
-                        }
-                    }
-                }
+            if (!carta.esMismoPaloQue(cartas.get(0))) {
+                return false;
             }
         }
-        return false;
+        cartasUsadas.addAll(cartas);
+        return true;
     }
 
     private boolean esFullHouse(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
         ArrayList<Poker> cartasSinUsar = new ArrayList<>();
-        if (cartas.size() > 5) {
+        if (cartas.size() != 5) {
             return false;
         }
         for (Poker carta1 : cartas) {
@@ -172,26 +158,30 @@ public class JugadaFactory {
     }
 
     private boolean esPoker(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
-        for (Poker carta1 : cartas) {
-            for (Poker carta2 : cartas) {
-                for (Poker carta3 : cartas) {
-                    for (Poker carta4 : cartas) {
-                        if (carta1.equals(carta2) || carta2.equals(carta3) || carta3.equals(carta4) || carta4.equals(carta1)) {
-                            continue;
-                        }
-
-                        if (carta1.esMismoSimboloQue(carta2) && carta2.esMismoSimboloQue(carta3) && carta3.esMismoSimboloQue(carta4)) {
-                            cartasUsadas.add(carta1);
-                            cartasUsadas.add(carta2);
-                            cartasUsadas.add(carta3);
-                            cartasUsadas.add(carta4);
-                            return true;
-                        }
-                    }
-                }
+        if (cartas.size() < 4) {
+            return false;
+        }
+        HashMap<String,Integer> contador = new HashMap<>();
+        for (Poker carta : cartas) {
+            contador.put(carta.getSimbolo(),contador.getOrDefault(carta.getSimbolo(),0)+1);
+        }
+        String simbolo = "";
+        boolean pokerEncontrado = false;
+        for (HashMap.Entry<String,Integer> entry :contador.entrySet()) {
+            if (entry.getValue() == 4) {
+                simbolo = entry.getKey();
+                pokerEncontrado = true;
+                break;
             }
         }
-
+        if (pokerEncontrado) {
+            for (Poker carta : cartas) {
+                if (carta.getSimbolo().equals(simbolo)) {
+                    cartasUsadas.add(carta);
+                }
+            }
+            return true;
+        }
         return false;
     }
 

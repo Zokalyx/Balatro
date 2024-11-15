@@ -75,5 +75,9 @@ public class Poker implements Carta {
                 throw new IllegalArgumentException("Número de carta inválido: " + simbolo);
         }
     }
+
+    public String getSimbolo() {
+        return simbolo;
+    }
 }
 
