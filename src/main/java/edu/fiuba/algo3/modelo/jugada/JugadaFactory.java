@@ -113,12 +113,61 @@ public class JugadaFactory {
         return true;
     }
 
-    private boolean esColor(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
-        return false;
+    private boolean esFullHouse(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
+        if (cartas.size() > 5) {
+            return false;
+        }
+        for (Poker carta1 : cartas) {
+            for (Poker carta2 : cartas) {
+                for (Poker carta3 : cartas) {
+                    for (Poker carta4 : cartas) {
+                        for (Poker carta5 : cartas) {
+                            if (carta1.equals(carta2) || carta2.equals(carta3) || carta3.equals(carta4) || carta4.equals(carta5)) {
+                                continue;
+                            }
+
+                            if (carta1.esMismoPaloQue(carta2) && carta2.esMismoPaloQue(carta3)) {
+                                cartasUsadas.add(carta1);
+                                cartasUsadas.add(carta2);
+                                cartasUsadas.add(carta3);
+                                cartasUsadas.add(carta4);
+                                cartasUsadas.add(carta5);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return esPar(cartasSinUsar, cartasUsadas);
     }
 
     private boolean esFullHouse(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
-        return false;
+        ArrayList<Poker> cartasSinUsar = new ArrayList<>();
+        if (cartas.size() > 5) {
+            return false;
+        }
+        for (Poker carta1 : cartas) {
+            for (Poker carta2 : cartas) {
+                for (Poker carta3 : cartas) {
+                    for (Poker carta4 : cartas) {
+                        for (Poker carta5 : cartas) {
+                            if (carta1.equals(carta2) || carta2.equals(carta3) || carta3.equals(carta4) || carta4.equals(carta5)) {
+                                continue;
+                            }
+
+                            if (carta1.esMismoSimboloQue(carta2) && carta2.esMismoSimboloQue(carta3)) {
+                                cartasSinUsar.add(carta4);
+                                cartasSinUsar.add(carta5);
+                                cartasUsadas.add(carta1);
+                                cartasUsadas.add(carta2);
+                                cartasUsadas.add(carta3);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return esPar(cartasSinUsar, cartasUsadas);
     }
 
     private boolean esPoker(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
