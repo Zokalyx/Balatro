@@ -38,6 +38,21 @@ public class JugadaFactory {
     }
 
     private boolean esPar(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
+        for (Poker carta1 : cartas) {
+            for (Poker carta2 : cartas) {
+                if (carta1.equals(carta2)) {
+                    continue;
+                }
+
+                if (carta1.esMismoSimboloQue(carta2)) {
+                    // Si hubiera otro par, ya tendría que haber sido detectado por otra jugada.
+                    cartasUsadas.add(carta1);
+                    cartasUsadas.add(carta2);
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
@@ -46,6 +61,23 @@ public class JugadaFactory {
     }
 
     private boolean esPierna(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
+        for (Poker carta1 : cartas) {
+            for (Poker carta2 : cartas) {
+                for (Poker carta3 : cartas) {
+                    if (carta1.equals(carta2) || carta2.equals(carta3) || carta3.equals(carta1)) {
+                        continue;
+                    }
+
+                    if (carta1.esMismoSimboloQue(carta2) && carta2.esMismoSimboloQue(carta3)) {
+                        cartasUsadas.add(carta1);
+                        cartasUsadas.add(carta2);
+                        cartasUsadas.add(carta3);
+                        return true;
+                    }
+                }
+            }
+        }
+
         return false;
     }
 
@@ -62,6 +94,26 @@ public class JugadaFactory {
     }
 
     private boolean esPoker(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
+        for (Poker carta1 : cartas) {
+            for (Poker carta2 : cartas) {
+                for (Poker carta3 : cartas) {
+                    for (Poker carta4 : cartas) {
+                        if (carta1.equals(carta2) || carta2.equals(carta3) || carta3.equals(carta4) || carta4.equals(carta1)) {
+                            continue;
+                        }
+
+                        if (carta1.esMismoSimboloQue(carta2) && carta2.esMismoSimboloQue(carta3) && carta3.esMismoSimboloQue(carta4)) {
+                            cartasUsadas.add(carta1);
+                            cartasUsadas.add(carta2);
+                            cartasUsadas.add(carta3);
+                            cartasUsadas.add(carta4);
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
         return false;
     }
 
