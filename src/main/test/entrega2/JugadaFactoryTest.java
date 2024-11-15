@@ -174,7 +174,7 @@ public class JugadaFactoryTest {
     }
 
     @Test
-    public void test12SePuedeFormarUnaEscaleraReal() {
+    public void test13SePuedeFormarUnaEscaleraReal() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker(0, "As", 0, new Pica()));

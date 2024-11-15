@@ -113,7 +113,7 @@ public class JugadaFactory {
         return true;
     }
 
-    private boolean esFullHouse(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
+    private boolean esColor(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
         if (cartas.size() > 5) {
             return false;
         }
@@ -132,13 +132,14 @@ public class JugadaFactory {
                                 cartasUsadas.add(carta3);
                                 cartasUsadas.add(carta4);
                                 cartasUsadas.add(carta5);
+                                return true;
                             }
                         }
                     }
                 }
             }
         }
-        return esPar(cartasSinUsar, cartasUsadas);
+        return false;
     }
 
     private boolean esFullHouse(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
@@ -197,21 +198,25 @@ public class JugadaFactory {
     private boolean esEscaleraColor(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
         if (esEscalera(cartas, cartasUsadas)) {
             for (int i = 1; i < cartas.size(); i++) {
-                if (cartas.get(i) != cartas.get(i - 1)) {
+                if (!cartas.get(i).esMismoPaloQue(cartas.get(i - 1))) {
                     return false;
                 }
             }
+            cartasUsadas.addAll(cartas);
+            return true;
         }
-        cartasUsadas.addAll(cartas);
-        return true;
+
+        return false;
     }
 
     private boolean esEscaleraReal(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
         if (esEscaleraColor(cartas, cartasUsadas)) {
-            if (cartas.get(5).getValorDeCarta() != 1) {
+            if (cartas.get(4).getValorDeCarta() != 14) {
                 return false;
-            };
+            }
+            return true;
         }
-        return true;
+
+        return false;
     }
 }
