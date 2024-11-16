@@ -1,4 +1,4 @@
-package entrega2;
+package entregas;
 
 import edu.fiuba.algo3.modelo.LectorJson;
 import edu.fiuba.algo3.modelo.Poker;
@@ -19,7 +19,7 @@ public class Entrega2Test {
     @Test
     public void test01UsarComodinPuntajeAfectaPuntaje() {
         Comodin comodin = new ComodinPuntaje("A", "B", 0, 8);
-        Puntaje puntaje = new Puntaje(1, 3);
+        Puntaje puntaje = new Puntaje(3, 1);
 
         comodin.modificarPuntaje(puntaje);
 

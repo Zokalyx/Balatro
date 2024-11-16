@@ -64,7 +64,7 @@ public class LectorJson {
         String numero = (String) carta.get("numero");
         int puntos = Math.toIntExact((long) carta.get("puntos"));
         int multiplicador = Integer.parseInt((String) carta.get("multiplicador"));
-        Poker poker = new Poker(multiplicador, numero, puntos, palo);
+        Poker poker = new Poker(numero, palo, puntos, multiplicador);
         return poker;
     }
 

@@ -27,7 +27,7 @@ public class JugadaFactoryTest {
     public void test02JugarUnaCartaEsCartaAlta() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "As", 0, new Pica()));
+        cartas.add(new Poker("As", new Pica(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
@@ -38,11 +38,11 @@ public class JugadaFactoryTest {
     public void test03JugarCartasQueNoFormanNadaEsCartaAlta() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "As", 0, new Pica()));
-        cartas.add(new Poker(0, "Jota", 0, new Pica()));
-        cartas.add(new Poker(0, "7", 0, new Trebol()));
-        cartas.add(new Poker(0, "3", 0, new Trebol()));
-        cartas.add(new Poker(0, "2", 0, new Diamante()));
+        cartas.add(new Poker("As", new Pica(), 0, 0));
+        cartas.add(new Poker("Jota", new Pica(), 0, 0));
+        cartas.add(new Poker("7", new Trebol(), 0, 0));
+        cartas.add(new Poker("3", new Trebol(), 0, 0));
+        cartas.add(new Poker("2", new Diamante(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
@@ -53,8 +53,8 @@ public class JugadaFactoryTest {
     public void test04DosCartasConMismoSimboloFormanUnPar() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "As", 0, new Pica()));
-        cartas.add(new Poker(0, "As", 0, new Trebol()));
+        cartas.add(new Poker("As", new Pica(), 0, 0));
+        cartas.add(new Poker("As", new Trebol(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
@@ -65,10 +65,10 @@ public class JugadaFactoryTest {
     public void test05UnParEntreOtrasCartasFormanUnPar() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "As", 0, new Pica()));
-        cartas.add(new Poker(0, "As", 0, new Trebol()));
-        cartas.add(new Poker(0, "7", 0, new Diamante()));
-        cartas.add(new Poker(0, "2", 0, new Corazon()));
+        cartas.add(new Poker("As", new Pica(), 0, 0));
+        cartas.add(new Poker("As", new Trebol(), 0, 0));
+        cartas.add(new Poker("7", new Diamante(), 0, 0));
+        cartas.add(new Poker("2", new Corazon(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
@@ -79,9 +79,9 @@ public class JugadaFactoryTest {
     public void test06TresCartasConMismoSimboloFormanUnaPierna() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "As", 0, new Pica()));
-        cartas.add(new Poker(0, "As", 0, new Trebol()));
-        cartas.add(new Poker(0, "As", 0, new Diamante()));
+        cartas.add(new Poker("As", new Pica(), 0, 0));
+        cartas.add(new Poker("As", new Trebol(), 0, 0));
+        cartas.add(new Poker("As", new Diamante(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
@@ -92,11 +92,11 @@ public class JugadaFactoryTest {
     public void test07UnaPiernaEntreOtrasCartasFormanUnaPierna() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "As", 0, new Pica()));
-        cartas.add(new Poker(0, "As", 0, new Trebol()));
-        cartas.add(new Poker(0, "As", 0, new Diamante()));
-        cartas.add(new Poker(0, "7", 0, new Corazon()));
-        cartas.add(new Poker(0, "2", 0, new Diamante()));
+        cartas.add(new Poker("As", new Pica(), 0, 0));
+        cartas.add(new Poker("As", new Trebol(), 0, 0));
+        cartas.add(new Poker("As", new Diamante(), 0, 0));
+        cartas.add(new Poker("7", new Corazon(), 0, 0));
+        cartas.add(new Poker("2", new Diamante(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
@@ -107,11 +107,11 @@ public class JugadaFactoryTest {
     public void test08CuatroCartasConMismoSimboloFormanUnPoker() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "As", 0, new Pica()));
-        cartas.add(new Poker(0, "As", 0, new Trebol()));
-        cartas.add(new Poker(0, "As", 0, new Diamante()));
-        cartas.add(new Poker(0, "As", 0, new Corazon()));
-        cartas.add(new Poker(0, "2", 0, new Diamante()));
+        cartas.add(new Poker("As", new Pica(), 0, 0));
+        cartas.add(new Poker("As", new Trebol(), 0, 0));
+        cartas.add(new Poker("As", new Diamante(), 0, 0));
+        cartas.add(new Poker("As", new Corazon(), 0, 0));
+        cartas.add(new Poker("2", new Diamante(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
@@ -122,11 +122,11 @@ public class JugadaFactoryTest {
     public void test09CincoCartasConMismoPaloFormanUnColor() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "As", 0, new Pica()));
-        cartas.add(new Poker(0, "2", 0, new Pica()));
-        cartas.add(new Poker(0, "5", 0, new Pica()));
-        cartas.add(new Poker(0, "7", 0, new Pica()));
-        cartas.add(new Poker(0, "8", 0, new Pica()));
+        cartas.add(new Poker("As", new Pica(), 0, 0));
+        cartas.add(new Poker("2", new Pica(), 0, 0));
+        cartas.add(new Poker("5", new Pica(), 0, 0));
+        cartas.add(new Poker("7", new Pica(), 0, 0));
+        cartas.add(new Poker("8", new Pica(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
@@ -137,11 +137,11 @@ public class JugadaFactoryTest {
     public void test10SePuedeFormarUnFullHouse() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "As", 0, new Pica()));
-        cartas.add(new Poker(0, "As", 0, new Corazon()));
-        cartas.add(new Poker(0, "As", 0, new Diamante()));
-        cartas.add(new Poker(0, "Rey", 0, new Pica()));
-        cartas.add(new Poker(0, "Rey", 0, new Corazon()));
+        cartas.add(new Poker("As", new Pica(), 0, 0));
+        cartas.add(new Poker("As", new Corazon(), 0, 0));
+        cartas.add(new Poker("As", new Diamante(), 0, 0));
+        cartas.add(new Poker("Rey", new Pica(), 0, 0));
+        cartas.add(new Poker("Rey", new Corazon(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
@@ -152,11 +152,11 @@ public class JugadaFactoryTest {
     public void test11SePuedeFormarUnaEscaleraNormal() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "2", 0, new Pica()));
-        cartas.add(new Poker(0, "3", 0, new Corazon()));
-        cartas.add(new Poker(0, "4", 0, new Diamante()));
-        cartas.add(new Poker(0, "5", 0, new Pica()));
-        cartas.add(new Poker(0, "6", 0, new Corazon()));
+        cartas.add(new Poker("2", new Pica(), 0, 0));
+        cartas.add(new Poker("3", new Corazon(), 0, 0));
+        cartas.add(new Poker("4", new Diamante(), 0, 0));
+        cartas.add(new Poker("5", new Pica(), 0, 0));
+        cartas.add(new Poker("6", new Corazon(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
@@ -167,11 +167,11 @@ public class JugadaFactoryTest {
     public void test12SePuedeFormarUnaEscaleraDeColor() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "2", 0, new Pica()));
-        cartas.add(new Poker(0, "3", 0, new Pica()));
-        cartas.add(new Poker(0, "4", 0, new Pica()));
-        cartas.add(new Poker(0, "5", 0, new Pica()));
-        cartas.add(new Poker(0, "6", 0, new Pica()));
+        cartas.add(new Poker("2", new Pica(), 0, 0));
+        cartas.add(new Poker("3", new Pica(), 0, 0));
+        cartas.add(new Poker("4", new Pica(), 0, 0));
+        cartas.add(new Poker("5", new Pica(), 0, 0));
+        cartas.add(new Poker("6", new Pica(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
@@ -182,11 +182,11 @@ public class JugadaFactoryTest {
     public void test13SePuedeFormarUnaEscaleraReal() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker(0, "As", 0, new Pica()));
-        cartas.add(new Poker(0, "Rey", 0, new Pica()));
-        cartas.add(new Poker(0, "Reina", 0, new Pica()));
-        cartas.add(new Poker(0, "Jota", 0, new Pica()));
-        cartas.add(new Poker(0, "10", 0, new Pica()));
+        cartas.add(new Poker("As", new Pica(), 0, 0));
+        cartas.add(new Poker("Rey", new Pica(), 0, 0));
+        cartas.add(new Poker("Reina", new Pica(), 0, 0));
+        cartas.add(new Poker("Jota", new Pica(), 0, 0));
+        cartas.add(new Poker("10", new Pica(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 

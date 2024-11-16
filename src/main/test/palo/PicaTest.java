@@ -10,7 +10,7 @@ public class PicaTest {
     @Test
     public void test01DadaUnaCartaDePicaEsDelMismoPalo(){
         Pica pica = new Pica();
-        Poker carta = new Poker(1,"Q",10, pica);
+        Poker carta = new Poker("Q", pica, 10, 1);
         assert(pica.sonDelMismoPalo(carta));
     }
 
@@ -18,7 +18,7 @@ public class PicaTest {
     public void test02DadaUnaCartaDeCorazonEsDeOtroPalo(){
         Corazon corazon = new Corazon();
         Pica pica = new Pica();
-        Poker carta = new Poker(1,"Q",10, corazon);
+        Poker carta = new Poker("Q", corazon, 10, 1);
         assertFalse(pica.sonDelMismoPalo(carta));
     }
 }

@@ -10,14 +10,14 @@ public class CorazonTest {
     @Test
     public void test01DadaUnaCartaDeCorazonEsDelMismoPalo(){
         Corazon corazon = new Corazon();
-        Poker carta = new Poker(1,"Q",10, corazon);
+        Poker carta = new Poker("Q", corazon, 10, 1);
         assert(corazon.sonDelMismoPalo(carta));
     }
     @Test
     public void test02DadaUnaCartaDePicaEsDeOtroPalo(){
         Pica pica = new Pica();
         Corazon corazon = new Corazon();
-        Poker carta = new Poker(1,"Q",10, pica);
+        Poker carta = new Poker("Q", pica, 10, 1);
         assertFalse(corazon.sonDelMismoPalo(carta));
     }
 }

@@ -49,14 +49,14 @@ public class JugadorTest {
     public void test03JugadorPuedeJugarSuMano() {
         // Arrange
         List<Poker> cartas = Arrays.asList(
-                new Poker(0, "A", 10, new Pica()),
-                new Poker(0, "A", 10, new Diamante()),
-                new Poker(0, "A", 10, new Trebol()),
-                new Poker(0, "A", 10, new Corazon()),
-                new Poker(0, "7", 7, new Pica()),
-                new Poker(0, "7", 7, new Diamante()),
-                new Poker(0, "7", 7, new Trebol()),
-                new Poker(0, "7", 7, new Corazon())
+                new Poker("A", new Pica(), 10, 0),
+                new Poker("A", new Diamante(), 10, 0),
+                new Poker("A", new Trebol(), 10, 0),
+                new Poker("A", new Corazon(), 10, 0),
+                new Poker("7", new Pica(), 7, 0),
+                new Poker("7", new Diamante(), 7, 0),
+                new Poker("7", new Trebol(), 7, 0),
+                new Poker("7", new Corazon(), 7, 0)
         );
         AtomicInteger index = new AtomicInteger(0);
 
@@ -90,14 +90,14 @@ public class JugadorTest {
 
         // Arrange
         List<Poker> cartas = Arrays.asList(
-                new Poker(0, "A", 10, new Pica()),
-                new Poker(0, "A", 10, new Diamante()),
-                new Poker(0, "A", 10, new Trebol()),
-                new Poker(0, "A", 10, new Corazon()),
-                new Poker(0, "7", 7, new Pica()),
-                new Poker(0, "7", 7, new Diamante()),
-                new Poker(0, "7", 7, new Trebol()),
-                new Poker(0, "7", 7, new Corazon())
+                new Poker("A", new Pica(), 10, 0),
+                new Poker("A", new Diamante(), 10, 0),
+                new Poker("A", new Trebol(), 10, 0),
+                new Poker("A", new Corazon(), 10, 0),
+                new Poker("7", new Pica(), 7, 0),
+                new Poker("7", new Diamante(), 7, 0),
+                new Poker("7", new Trebol(), 7, 0),
+                new Poker("7", new Corazon(), 7, 0)
         );
         AtomicInteger index = new AtomicInteger(0);
         Mazo mazoMock = Mockito.mock(Mazo.class);

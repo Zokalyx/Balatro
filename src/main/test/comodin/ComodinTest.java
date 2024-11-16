@@ -11,7 +11,7 @@ public class ComodinTest {
     @Test
     public void test01UsarComodinPuntajeAfectaPuntaje() {
         Comodin comodin = new ComodinPuntaje("A", "B", 0, 8);
-        Puntaje puntaje = new Puntaje(1, 3);
+        Puntaje puntaje = new Puntaje(3, 1);
 
         comodin.modificarPuntaje(puntaje);
 

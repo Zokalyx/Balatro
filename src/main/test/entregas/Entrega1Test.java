@@ -1,4 +1,4 @@
-package entrega1;
+package entregas;
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
@@ -6,11 +6,8 @@ import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.palo.Pica;
 import edu.fiuba.algo3.modelo.palo.Trebol;
-import edu.fiuba.algo3.modelo.tarot.ModificablePorTarot;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
-import edu.fiuba.algo3.modelo.tarot.TarotPoker;
 import org.junit.jupiter.api.Test;
-import org.mockito.InOrder;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
@@ -50,14 +47,14 @@ public class Entrega1Test {
     public void test03JugadorPuedeJugarSuMano() {
         // Arrange
         List<Poker> cartas = Arrays.asList(
-                new Poker(0, "A", 10, new Pica()),
-                new Poker(0, "A", 10, new Diamante()),
-                new Poker(0, "A", 10, new Trebol()),
-                new Poker(0, "A", 10, new Corazon()),
-                new Poker(0, "7", 7, new Pica()),
-                new Poker(0, "7", 7, new Diamante()),
-                new Poker(0, "7", 7, new Trebol()),
-                new Poker(0, "7", 7, new Corazon())
+                new Poker("A", new Pica(), 10, 0),
+                new Poker("A", new Diamante(), 10, 0),
+                new Poker("A", new Trebol(), 10, 0),
+                new Poker("A", new Corazon(), 10, 0),
+                new Poker("7", new Pica(), 7, 0),
+                new Poker("7", new Diamante(), 7, 0),
+                new Poker("7", new Trebol(), 7, 0),
+                new Poker("7", new Corazon(), 7, 0)
         );
         AtomicInteger index = new AtomicInteger(0);
 
@@ -91,14 +88,14 @@ public class Entrega1Test {
 
         // Arrange
         List<Poker> cartas = Arrays.asList(
-                new Poker(0, "A", 10, new Pica()),
-                new Poker(0, "A", 10, new Diamante()),
-                new Poker(0, "A", 10, new Trebol()),
-                new Poker(0, "A", 10, new Corazon()),
-                new Poker(0, "7", 7, new Pica()),
-                new Poker(0, "7", 7, new Diamante()),
-                new Poker(0, "7", 7, new Trebol()),
-                new Poker(0, "7", 7, new Corazon())
+                new Poker("A", new Pica(), 10, 0),
+                new Poker("A", new Diamante(), 10, 0),
+                new Poker("A", new Trebol(), 10, 0),
+                new Poker("A", new Corazon(), 10, 0),
+                new Poker("7", new Pica(), 7, 0),
+                new Poker("7", new Diamante(), 7, 0),
+                new Poker("7", new Trebol(), 7, 0),
+                new Poker("7", new Corazon(), 7, 0)
         );
         AtomicInteger index = new AtomicInteger(0);
         Mazo mazoMock = Mockito.mock(Mazo.class);
@@ -125,7 +122,7 @@ public class Entrega1Test {
 
     @Test
     public void test05AplicarTarotModificaElValorNumericoDeCarta() {
-        Poker carta = new Poker(1, "7", 7, new Diamante());
+        Poker carta = new Poker("7", new Diamante(), 7, 1);
         Tarot tarot = Tarot.CrearTarot("La Torre", "Mejora 1 carta seleccionada y la convierte en una carta de piedra.","carta","cualquiera",50,1);
         ArrayList<Poker> pokers = new ArrayList<>();
         pokers.add(carta);
@@ -136,7 +133,7 @@ public class Entrega1Test {
 
     @Test
     public void test06AplicarTarotModificaElMultiplicadorDeCarta() {
-        Poker carta = new Poker(1, "7", 7, new Diamante());
+        Poker carta = new Poker("7", new Diamante(), 7, 1);
         Tarot tarot = Tarot.CrearTarot("Justicia", "Mejora 1 carta seleccionada y la convierte en una carta de cristal", "carta", "cualquiera", 1, 2);
         ArrayList<Poker> pokers = new ArrayList<>();
         pokers.add(carta);

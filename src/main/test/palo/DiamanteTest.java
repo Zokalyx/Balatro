@@ -10,7 +10,7 @@ public class DiamanteTest {
     @Test
     public void test01DadaUnaCartaDeDiamanteEsDelMismoPalo(){
         Diamante diamante = new Diamante();
-        Poker carta = new Poker(1,"Q",10, diamante);
+        Poker carta = new Poker("Q", diamante, 10, 1);
         assert(diamante.sonDelMismoPalo(carta));
     }
 
@@ -18,7 +18,7 @@ public class DiamanteTest {
     public void test02DadaUnaCartaDePicaEsDeOtroPalo(){
         Pica pica = new Pica();
         Diamante diamante = new Diamante();
-        Poker carta = new Poker(1,"Q",10, pica);
+        Poker carta = new Poker("Q", pica, 10, 1);
         assertFalse(diamante.sonDelMismoPalo(carta));
     }
 }

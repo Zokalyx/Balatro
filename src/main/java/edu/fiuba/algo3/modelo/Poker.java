@@ -6,11 +6,11 @@ import edu.fiuba.algo3.modelo.tarot.ModificablePorTarot;
 
 public class Poker implements Carta, ModificablePorTarot {
     String simbolo;
-    double multiplicador;
-    int valorNumerico;
     Palo palo;
+    int valorNumerico;
+    double multiplicador;
 
-    public Poker(int multiplicador, String simbolo, int valorNumerico, Palo palo) {
+    public Poker(String simbolo, Palo palo, int valorNumerico, int multiplicador) {
         this.multiplicador = multiplicador;
         this.simbolo = simbolo;
         this.valorNumerico = valorNumerico;

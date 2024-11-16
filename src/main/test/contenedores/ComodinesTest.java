@@ -24,7 +24,7 @@ public class ComodinesTest {
         Comodines comodines = new Comodines(new ArrayList<>());
         comodines.agregar(new ComodinPuntaje("A", "B", 1, 8));
         comodines.agregar(new ComodinPuntaje("C", "D", 2, 10));
-        Puntaje puntaje = new Puntaje(1, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
 
         comodines.modificarPuntaje(puntaje);
 

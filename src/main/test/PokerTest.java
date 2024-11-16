@@ -8,7 +8,7 @@ public class PokerTest {
     @Test
     public void test01DadaUnaCartaQPuntua10(){
         Pica palo = new Pica();
-        Poker carta = new Poker(1,"Q",10,palo);
+        Poker carta = new Poker("Q", palo, 10, 1);
         int puntajeEsperado = 10;
         int puntajeObtenido = carta.usar();
         assertEquals(puntajeEsperado, puntajeObtenido);
@@ -16,7 +16,7 @@ public class PokerTest {
     @Test
     public void test02DadaUnaCartaDeDiamanteSabeIndicarSuPalo(){
         Corazon palo = new Corazon();
-        Poker carta = new Poker(10,"Q",0, palo);
+        Poker carta = new Poker("Q", palo, 0, 10);
         assert(palo.sonDelMismoPalo(carta));
     }
 }

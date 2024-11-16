@@ -10,14 +10,14 @@ public class TrebolTest {
     @Test
     public void test01DadaUnaCartaDeTrebolEsDelMismoPalo(){
         Trebol trebol = new Trebol();
-        Poker carta = new Poker(1,"Q",10, trebol);
+        Poker carta = new Poker("Q", trebol, 10, 1);
         assert(trebol.sonDelMismoPalo(carta));
     }
     @Test
     public void test02DadaUnaCartaDePicaEsDeOtroPalo(){
         Pica pica = new Pica();
         Trebol trebol = new Trebol();
-        Poker carta = new Poker(1,"Q",10, pica);
+        Poker carta = new Poker("Q", pica, 10, 1);
         assertFalse(trebol.sonDelMismoPalo(carta));
     }
 }

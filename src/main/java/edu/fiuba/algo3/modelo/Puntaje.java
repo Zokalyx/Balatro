@@ -1,12 +1,12 @@
 package edu.fiuba.algo3.modelo;
 
 public class Puntaje {
-    double multiplicador;
     int valorBase;
+    double multiplicador;
 
-    public Puntaje (int multiplicador, int valorBase) {
-        this.multiplicador = multiplicador;
+    public Puntaje (int valorBase, int multiplicador) {
         this.valorBase = valorBase;
+        this.multiplicador = multiplicador;
     }
 
     public void sumarMultiplicador(double multiplicador) {
