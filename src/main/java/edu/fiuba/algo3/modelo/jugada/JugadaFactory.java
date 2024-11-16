@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.jugada;
 import edu.fiuba.algo3.modelo.Poker;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
@@ -40,7 +41,7 @@ public class JugadaFactory {
             return false;
         }
 
-        cartas.sort(Comparator.comparingInt(Poker::getValorDeCarta));
+        Collections.sort(cartas);
         cartasUsadas.add(cartas.get(0));
         return true;
     }
@@ -90,29 +91,15 @@ public class JugadaFactory {
     }
 
     private boolean esEscalera(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
-
         if (cartas.size() != 5) {
             return false;
         }
 
-        // Ordenar cartas de menor a mayor
-        int n = cartas.size();
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = 0; j < n - i - 1; j++) {
-                if (cartas.get(j).getValorDeCarta() > cartas.get(j + 1).getValorDeCarta()) {
-                    // Intercambiar cartas[j] y cartas[j+1]
-                    Poker temp = cartas.get(j);
-                    cartas.set(j, cartas.get(j + 1));
-                    cartas.set(j + 1, temp);
-                }
-            }
-        }
+        Collections.sort(cartas);
 
         // Verificar que las cartas tengan valores consecutivos
         for (int i = 0; i < cartas.size() - 1; i++) {
-            int valorActual = cartas.get(i).getValorDeCarta();
-            int valorSiguiente = cartas.get(i + 1).getValorDeCarta();
-            if (valorSiguiente != valorActual + 1) {
+            if (!cartas.get(i).esSimboloAnteriorA(cartas.get(i + 1))) {
                 return false;
             }
         }
@@ -160,39 +147,31 @@ public class JugadaFactory {
         if (cartas.size() < 4) {
             return false;
         }
-        HashMap<String,Integer> contador = new HashMap<>();
-        for (Poker carta : cartas) {
-            contador.put(carta.getSimbolo(),contador.getOrDefault(carta.getSimbolo(),0)+1);
-        }
-        String simbolo = "";
-        boolean pokerEncontrado = false;
-        for (HashMap.Entry<String,Integer> entry :contador.entrySet()) {
-            if (entry.getValue() == 4) {
-                simbolo = entry.getKey();
-                pokerEncontrado = true;
-                break;
+
+        // Caso base
+        if (cartas.size() == 5) {
+            ArrayList<Poker> cartasAuxiliar = new ArrayList<>(cartas);
+            Collections.sort(cartasAuxiliar);
+            boolean cartaDistintaEsLaPrimera = !cartasAuxiliar.get(0).esMismoSimboloQue(cartasAuxiliar.get(1));
+            if (cartaDistintaEsLaPrimera) {
+                cartasAuxiliar.remove(0);
+            } else {
+                cartasAuxiliar.remove(4);
             }
+            return esPoker(cartasAuxiliar, cartasUsadas);
         }
-        if (pokerEncontrado) {
-            for (Poker carta : cartas) {
-                if (carta.getSimbolo().equals(simbolo)) {
-                    cartasUsadas.add(carta);
-                }
-            }
-            return true;
+
+        if (!cartas.get(0).esMismoSimboloQue(cartas.get(1)) || !cartas.get(1).esMismoSimboloQue(cartas.get(2)) || !cartas.get(2).esMismoSimboloQue(cartas.get(3))) {
+            return false;
         }
-        return false;
+
+        cartasUsadas.addAll(cartas);
+        return true;
     }
 
     private boolean esEscaleraColor(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
-        if (esEscalera(cartas, cartasUsadas)) {
-            for (int i = 1; i < cartas.size(); i++) {
-                if (!cartas.get(i).esMismoPaloQue(cartas.get(i - 1))) {
-                    return false;
-                }
-            }
-            cartasUsadas.addAll(cartas);
-            return true;
+        if (esEscalera(cartas, new ArrayList<>())) {
+            return esColor(cartas, cartasUsadas);
         }
 
         return false;
@@ -200,10 +179,11 @@ public class JugadaFactory {
 
     private boolean esEscaleraReal(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
         if (esEscaleraColor(cartas, cartasUsadas)) {
-            if (cartas.get(4).getValorDeCarta() != 14) {
-                return false;
+            if (cartas.get(4).esAs()) {
+                return true;
             }
-            return true;
+            cartasUsadas.clear();
+            return false;
         }
 
         return false;
