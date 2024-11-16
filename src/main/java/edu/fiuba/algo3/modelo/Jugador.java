@@ -1,6 +1,12 @@
 package edu.fiuba.algo3.modelo;
 
+import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.modelo.contenedores.Comodines;
+import edu.fiuba.algo3.modelo.contenedores.Mano;
+import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
+
+import java.util.ArrayList;
 
 public class Jugador {
     Mazo mazo;
@@ -11,6 +17,8 @@ public class Jugador {
     public Jugador(Mazo mazo) {
         this.mazo = mazo;
         mano = new Mano();
+        ArrayList<Comodin> comodinesCartas = new ArrayList<>();
+        comodines = new Comodines(comodinesCartas);
         puntaje = new Puntaje(0, 0);
     }
 

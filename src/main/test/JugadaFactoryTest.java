@@ -1,12 +1,14 @@
-package entrega2;
-
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.jugada.*;
+import edu.fiuba.algo3.modelo.palo.Corazon;
+import edu.fiuba.algo3.modelo.palo.Diamante;
+import edu.fiuba.algo3.modelo.palo.Pica;
+import edu.fiuba.algo3.modelo.palo.Trebol;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 public class JugadaFactoryTest {
     @Test

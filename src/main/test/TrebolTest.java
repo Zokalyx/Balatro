@@ -1,3 +1,5 @@
+import edu.fiuba.algo3.modelo.palo.Pica;
+import edu.fiuba.algo3.modelo.palo.Trebol;
 import org.junit.jupiter.api.Test;
 import edu.fiuba.algo3.modelo.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;

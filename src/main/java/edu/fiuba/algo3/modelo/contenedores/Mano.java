@@ -1,5 +1,7 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.contenedores;
 
+import edu.fiuba.algo3.modelo.Poker;
+import edu.fiuba.algo3.modelo.Puntaje;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaFactory;
 import edu.fiuba.algo3.modelo.jugada.JugadaNula;

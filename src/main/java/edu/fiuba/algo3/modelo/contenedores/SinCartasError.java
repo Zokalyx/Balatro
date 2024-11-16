@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.contenedores;
 
 public class SinCartasError extends RuntimeException {
     public SinCartasError(String message) {

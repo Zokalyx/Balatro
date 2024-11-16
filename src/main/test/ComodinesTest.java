@@ -1,6 +1,7 @@
-package entrega2;
-
 import edu.fiuba.algo3.modelo.*;
+import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.modelo.comodin.ComodinPuntaje;
+import edu.fiuba.algo3.modelo.contenedores.Comodines;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

@@ -1,4 +1,7 @@
-package edu.fiuba.algo3.modelo;
+package edu.fiuba.algo3.modelo.contenedores;
+
+import edu.fiuba.algo3.modelo.Puntaje;
+import edu.fiuba.algo3.modelo.comodin.Comodin;
 
 import java.util.ArrayList;
 
@@ -10,8 +13,10 @@ public class Comodines {
     }
 
     public void modificarPuntaje(Puntaje puntaje) {
-        for (Comodin comodin : cartas) {
-            comodin.modificarPuntaje(puntaje);
+        if(!cartas.isEmpty()){
+            for (Comodin comodin : cartas) {
+                comodin.modificarPuntaje(puntaje);
+            }
         }
     }
 
