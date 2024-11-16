@@ -1,10 +1,12 @@
 package edu.fiuba.algo3.modelo;
 
 
+import edu.fiuba.algo3.modelo.palo.Palo;
+import edu.fiuba.algo3.modelo.tarot.ModificablePorTarot;
 
-public class Poker implements Carta {
+public class Poker implements Carta, ModificablePorTarot {
     String simbolo;
-    int multiplicador;
+    double multiplicador;
     int valorNumerico;
     Palo palo;
 
@@ -13,10 +15,12 @@ public class Poker implements Carta {
         this.simbolo = simbolo;
         this.valorNumerico = valorNumerico;
         this.palo = palo;
+
     }
     public int usar() {
-        return valorNumerico * multiplicador;
+        return (int) Math.round(valorNumerico * multiplicador);
     }
+
 
     public boolean esMismoPaloQue(Poker carta) {
         return palo.sonDelMismoPalo(carta);
@@ -30,13 +34,6 @@ public class Poker implements Carta {
         return this.palo;
     }
 
-    public void setValorNumerico(int valorNumerico) {
-        this.valorNumerico = valorNumerico;
-    }
-
-    public void setMultiplicador(int multiplicador) {
-        this.multiplicador = multiplicador;
-    }
 
     public void modificarPuntaje(Puntaje puntaje) {
         puntaje.sumarValorBase(valorNumerico);
@@ -78,6 +75,19 @@ public class Poker implements Carta {
 
     public String getSimbolo() {
         return simbolo;
+    }
+
+    @Override
+    public void modificarse(int puntos, double multiplicador) {
+        if(puntos!=1){
+            valorNumerico = puntos;
+        }
+        this.multiplicador = multiplicador;
+    }
+
+    @Override
+    public boolean esEjemplar(String ejemplar) {
+        return true;
     }
 }
 

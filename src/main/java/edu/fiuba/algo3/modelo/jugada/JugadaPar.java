@@ -9,5 +9,6 @@ public class JugadaPar extends Jugada {
         super(cartas);
         valorBase = 10;
         multiplicadorBase = 2;
+        nombre = "par";
     }
 }

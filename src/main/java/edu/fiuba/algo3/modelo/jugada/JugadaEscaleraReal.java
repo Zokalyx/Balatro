@@ -9,5 +9,6 @@ public class JugadaEscaleraReal extends Jugada {
         super(cartas);
         valorBase = 100;
         multiplicadorBase = 8;
+        nombre = "escalera real";
     }
 }

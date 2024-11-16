@@ -9,5 +9,6 @@ public class JugadaCartaAlta extends Jugada{
         super(cartas);
         valorBase = 5;
         multiplicadorBase = 1;
+        nombre = "carta mas alta";
     }
 }

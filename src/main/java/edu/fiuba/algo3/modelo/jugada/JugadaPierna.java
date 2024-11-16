@@ -9,5 +9,6 @@ public class JugadaPierna extends Jugada {
         super(cartasUsadas);
         valorBase = 30;
         multiplicadorBase = 3;
+        nombre = "trio";
     }
 }

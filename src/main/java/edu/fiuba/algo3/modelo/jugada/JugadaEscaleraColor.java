@@ -9,5 +9,6 @@ public class JugadaEscaleraColor extends Jugada {
         super(cartas);
         valorBase = 100;
         multiplicadorBase = 8;
+        nombre = "esclaera de color";
     }
 }

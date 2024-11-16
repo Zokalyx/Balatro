@@ -9,5 +9,6 @@ public class JugadaPoker extends Jugada {
         super(cartasUsadas);
         valorBase = 60;
         multiplicadorBase = 7;
+        nombre = "poker";
     }
 }

@@ -10,5 +10,6 @@ public class JugadaColor extends Jugada {
         super(cartas);
         valorBase = 30;
         multiplicadorBase = 4;
+        nombre = "color";
     }
 }

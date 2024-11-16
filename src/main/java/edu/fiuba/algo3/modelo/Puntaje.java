@@ -1,7 +1,7 @@
 package edu.fiuba.algo3.modelo;
 
 public class Puntaje {
-    int multiplicador;
+    double multiplicador;
     int valorBase;
 
     public Puntaje (int multiplicador, int valorBase) {
@@ -9,7 +9,7 @@ public class Puntaje {
         this.valorBase = valorBase;
     }
 
-    public void sumarMultiplicador(int multiplicador) {
+    public void sumarMultiplicador(double multiplicador) {
         this.multiplicador += multiplicador;
     }
 
@@ -18,6 +18,6 @@ public class Puntaje {
     }
 
     public int calcularTotal() {
-        return valorBase * multiplicador;
+        return (int) Math.round(valorBase * multiplicador);
     }
 }

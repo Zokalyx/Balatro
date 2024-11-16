@@ -1,6 +1,5 @@
 package edu.fiuba.algo3.modelo.jugada;
 
-import edu.fiuba.algo3.modelo.Palo;
 import edu.fiuba.algo3.modelo.Poker;
 
 import java.util.ArrayList;

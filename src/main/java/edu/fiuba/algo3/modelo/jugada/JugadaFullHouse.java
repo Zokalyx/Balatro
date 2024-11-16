@@ -9,5 +9,6 @@ public class JugadaFullHouse extends Jugada {
         super(cartas);
         valorBase = 40;
         multiplicadorBase = 4;
+        nombre = "full house";
     }
 }

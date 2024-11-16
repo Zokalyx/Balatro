@@ -10,5 +10,6 @@ public class JugadaDoblePar extends Jugada {
         super(cartas);
         valorBase = 20;
         multiplicadorBase = 2;
+        nombre = "doble Par";
     }
 }
