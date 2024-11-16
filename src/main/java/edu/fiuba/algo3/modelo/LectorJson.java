@@ -1,5 +1,9 @@
 package edu.fiuba.algo3.modelo;
 
+import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.modelo.comodin.ComodinPuntaje;
+import edu.fiuba.algo3.modelo.palo.*;
+import edu.fiuba.algo3.modelo.tarot.Tarot;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -110,4 +114,46 @@ public class LectorJson {
 
         return cartas;
     }
+
+    public ArrayList<Tarot> leerTarots() {
+        JSONParser parser = new JSONParser();
+        ArrayList<Tarot> tarots = new ArrayList<>();
+
+        try (FileReader reader = new FileReader("src/test/resources/json/tarots.json")) {
+            // Parsear el archivo JSON
+            JSONObject jsonObject = (JSONObject) parser.parse(reader);
+
+            // Obtener el array de tarots
+            JSONArray tarotsArray = (JSONArray) jsonObject.get("tarots");
+
+            for(Object objeto : tarotsArray){
+                JSONObject tarotObjeto = (JSONObject) objeto;
+
+                // Extraer los campos de cada carta
+                String nombre = (String) tarotObjeto.get("nombre");
+                String descripcion = (String) tarotObjeto.get("descripcion");
+
+                // Extraer el efecto
+                JSONObject efecto = (JSONObject) tarotObjeto.get("efecto");
+                int puntos = Math.toIntExact((long) efecto.get("puntos"));
+                double multiplicador = ((Number) efecto.get("multiplicador")).doubleValue();
+
+                String sobre = (String) tarotObjeto.get("sobre");
+                String ejemplar = (String) tarotObjeto.get("ejemplar");
+
+                // Crear una nueva instancia de Tarot y añadirla a la lista
+                Tarot tarot = Tarot.CrearTarot(nombre, descripcion,sobre,ejemplar, puntos, multiplicador);
+                tarots.add(tarot);
+            }
+
+
+        } catch (ParseException e) {
+            System.err.println("Error al parsear el archivo JSON: " + e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Ocurrió un error: " + e.getMessage());
+        }
+
+        return tarots;
+    }
+
 }
