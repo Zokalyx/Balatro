@@ -85,7 +85,7 @@ public class LectorJson {
                 String descripcion = (String) section.get("descripcion");
 
                 // Procesar comodines
-                JSONArray comodines = (JSONArray) section.get("comodines");
+                JSONArray comodines = (JSONArray) section.get("contenedores");
                 for (int i = 0; i < comodines.size(); i++) {
                     JSONObject comodin = (JSONObject) comodines.get(i);
                     String nombre = (String) comodin.get("nombre");

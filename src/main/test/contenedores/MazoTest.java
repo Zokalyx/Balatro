@@ -1,3 +1,5 @@
+package contenedores;
+
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import edu.fiuba.algo3.modelo.contenedores.SinCartasError;

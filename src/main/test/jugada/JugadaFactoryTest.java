@@ -1,3 +1,5 @@
+package jugada;
+
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.jugada.*;
 import edu.fiuba.algo3.modelo.palo.Corazon;

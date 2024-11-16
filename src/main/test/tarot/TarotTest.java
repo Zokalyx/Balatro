@@ -1,3 +1,5 @@
+package tarot;
+
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.tarot.Tarot;

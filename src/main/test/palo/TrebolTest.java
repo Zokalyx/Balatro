@@ -1,3 +1,5 @@
+package palo;
+
 import edu.fiuba.algo3.modelo.palo.Pica;
 import edu.fiuba.algo3.modelo.palo.Trebol;
 import org.junit.jupiter.api.Test;
