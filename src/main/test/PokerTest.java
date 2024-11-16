@@ -1,4 +1,3 @@
-import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Pica;
 import org.junit.jupiter.api.Test;
 import edu.fiuba.algo3.modelo.*;
@@ -12,11 +11,5 @@ public class PokerTest {
         int puntajeEsperado = 10;
         int puntajeObtenido = carta.usar();
         assertEquals(puntajeEsperado, puntajeObtenido);
-    }
-    @Test
-    public void test02DadaUnaCartaDeDiamanteSabeIndicarSuPalo(){
-        Corazon palo = new Corazon();
-        Poker carta = new Poker("Q", palo, 0, 10);
-        assert(palo.sonDelMismoPalo(carta));
     }
 }

@@ -1,7 +1,8 @@
 package edu.fiuba.algo3.modelo.palo;
 
-import edu.fiuba.algo3.modelo.Poker;
-
-public interface Palo {
-    public boolean sonDelMismoPalo(Poker carta);
+public abstract class Palo {
+    @Override
+    public boolean equals(Object obj) {
+        return this.getClass().equals(obj.getClass());
+    }
 }

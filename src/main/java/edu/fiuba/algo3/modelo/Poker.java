@@ -23,7 +23,7 @@ public class Poker implements Carta, ModificablePorTarot {
 
 
     public boolean esMismoPaloQue(Poker carta) {
-        return palo.sonDelMismoPalo(carta);
+        return palo.equals(carta.palo);
     }
 
     public boolean esMismoSimboloQue(Poker carta) {
