@@ -37,13 +37,13 @@ public class Poker implements Carta, ModificablePorTarot, Comparable<Poker> {
     public boolean esSimboloSiguienteA(Poker carta) {
         int valorPropio = getValorDeCarta();
         int valorCarta = carta.getValorDeCarta();
-        return (valorPropio - valorCarta == 1);
+        return (valorPropio - valorCarta == 1) || (simbolo.equals("As") && carta.simbolo.equals("Rey"));
     }
 
     public boolean esSimboloAnteriorA(Poker carta) {
         int valorPropio = getValorDeCarta();
         int valorCarta = carta.getValorDeCarta();
-        return (valorCarta - valorPropio == 1);
+        return (valorCarta - valorPropio == 1) || (simbolo.equals("Rey") && carta.simbolo.equals("As"));
     }
 
     private int getValorDeCarta() {

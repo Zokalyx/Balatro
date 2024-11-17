@@ -4,8 +4,6 @@ import edu.fiuba.algo3.modelo.Poker;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 
 public class JugadaFactory {
     public Jugada obtenerJugada(ArrayList<Poker> cartas) {
@@ -41,8 +39,9 @@ public class JugadaFactory {
             return false;
         }
 
-        Collections.sort(cartas);
-        cartasUsadas.add(cartas.get(0));
+        ArrayList<Poker> cartasAuxiliar = new ArrayList<>(cartas);
+        Collections.sort(cartasAuxiliar);
+        cartasUsadas.add(cartasAuxiliar.get(0));
         return true;
     }
 
@@ -66,6 +65,19 @@ public class JugadaFactory {
     }
 
     private boolean esDoblePar(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
+        if (esPar(cartas, cartasUsadas)) {
+            ArrayList<Poker> cartasRestantes = new ArrayList<>();
+            for (Poker carta : cartas) {
+                if (!cartasUsadas.contains(carta)) {
+                    cartasRestantes.add(carta);
+                }
+            }
+            if (esPar(cartasRestantes, cartasUsadas)) {
+                return true;
+            }
+
+            cartasUsadas.clear();
+        }
         return false;
     }
 
@@ -95,7 +107,16 @@ public class JugadaFactory {
             return false;
         }
 
-        Collections.sort(cartas);
+        ArrayList<Poker> cartasAuxiliar = new ArrayList<>(cartas);
+        Collections.sort(cartasAuxiliar);
+
+        // Caso especial: Hay un As y un Rey.
+        // Movemos el As al final.
+        if (cartasAuxiliar.get(0).esAs() && cartasAuxiliar.get(0).esSimboloSiguienteA(cartasAuxiliar.get(4))) {
+            Poker as = cartasAuxiliar.get(0);
+            cartasAuxiliar.remove(as);
+            cartasAuxiliar.add(as);
+        }
 
         // Verificar que las cartas tengan valores consecutivos
         for (int i = 0; i < cartas.size() - 1; i++) {
@@ -104,6 +125,11 @@ public class JugadaFactory {
             }
         }
 
+        for (Poker carta : cartas) {
+            if (cartasAuxiliar.contains(carta)) {
+                cartasUsadas.add(carta);
+            }
+        }
         return true;
     }
 
@@ -139,7 +165,7 @@ public class JugadaFactory {
                 cartasUsadas.clear();
                 return false;
             }
-        };
+        }
         return false;
     }
 

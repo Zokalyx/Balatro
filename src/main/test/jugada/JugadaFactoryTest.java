@@ -182,14 +182,44 @@ public class JugadaFactoryTest {
     public void test13SePuedeFormarUnaEscaleraReal() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker("As", new Pica(), 0, 0));
-        cartas.add(new Poker("Rey", new Pica(), 0, 0));
         cartas.add(new Poker("Reina", new Pica(), 0, 0));
+        cartas.add(new Poker("Rey", new Pica(), 0, 0));
+        cartas.add(new Poker("As", new Pica(), 0, 0));
         cartas.add(new Poker("Jota", new Pica(), 0, 0));
         cartas.add(new Poker("10", new Pica(), 0, 0));
 
         Jugada jugada = jugadaFactory.obtenerJugada(cartas);
 
         assertInstanceOf(JugadaEscaleraReal.class, jugada);
+    }
+
+    @Test
+    public void test14NoSePuedeFormarUnaEscaleraQueTengaAsEnMedio() {
+        JugadaFactory jugadaFactory = new JugadaFactory();
+        ArrayList<Poker> cartas = new ArrayList<>();
+        cartas.add(new Poker("Reina", new Pica(), 0, 0));
+        cartas.add(new Poker("Rey", new Diamante(), 0, 0));
+        cartas.add(new Poker("As", new Corazon(), 0, 0));
+        cartas.add(new Poker("2", new Pica(), 0, 0));
+        cartas.add(new Poker("3", new Pica(), 0, 0));
+
+        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+
+        assertInstanceOf(JugadaCartaAlta.class, jugada);
+    }
+
+    @Test
+    public void test15DosParesDistintosFormanUnDoblePar() {
+        JugadaFactory jugadaFactory = new JugadaFactory();
+        ArrayList<Poker> cartas = new ArrayList<>();
+        cartas.add(new Poker("2", new Pica(), 0, 0));
+        cartas.add(new Poker("3", new Diamante(), 0, 0));
+        cartas.add(new Poker("4", new Corazon(), 0, 0));
+        cartas.add(new Poker("3", new Pica(), 0, 0));
+        cartas.add(new Poker("2", new Corazon(), 0, 0));
+
+        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+
+        assertInstanceOf(JugadaDoblePar.class, jugada);
     }
 }
