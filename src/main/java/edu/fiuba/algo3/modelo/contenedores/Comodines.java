@@ -7,9 +7,13 @@ import java.util.ArrayList;
 
 public class Comodines {
     ArrayList<Comodin> cartas;
+    int capacidad;
 
     public Comodines(ArrayList<Comodin> cartas) {
-        this.cartas = cartas;
+        this.cartas = new ArrayList<>();
+        for (Comodin comodin : cartas) {
+            this.agregar(comodin);
+        }
     }
 
     public void modificarPuntaje(Puntaje puntaje) {
@@ -21,7 +25,9 @@ public class Comodines {
     }
 
     public void agregar(Comodin comodin) {
-        // Agregar límite (creo que 5)
+        if (cartas.size() >= capacidad) {
+            throw new ComodinesLlenoError("No entran más comodines.");
+        }
         cartas.add(comodin);
     }
 }
