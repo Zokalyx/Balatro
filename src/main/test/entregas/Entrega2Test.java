@@ -5,7 +5,6 @@ import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.Puntaje;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.comodin.ComodinPuntaje;
-import edu.fiuba.algo3.modelo.contenedores.Comodines;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import edu.fiuba.algo3.modelo.contenedores.SinCartasError;
 import org.junit.jupiter.api.Test;
@@ -30,8 +29,6 @@ public class Entrega2Test {
     public void test02SePuedenCargarComodinesConJSON() {
         ArrayList<Comodin> cartas = new LectorJson().leerComodines();
         assert(cartas.size() > 10);
-
-        Comodines comodines = new Comodines(cartas);
     }
 
     @Test

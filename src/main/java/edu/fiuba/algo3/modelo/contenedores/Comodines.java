@@ -9,11 +9,9 @@ public class Comodines {
     ArrayList<Comodin> cartas;
     int capacidad;
 
-    public Comodines(ArrayList<Comodin> cartas) {
+    public Comodines() {
         this.cartas = new ArrayList<>();
-        for (Comodin comodin : cartas) {
-            this.agregar(comodin);
-        }
+        this.capacidad = 5;
     }
 
     public void modificarPuntaje(Puntaje puntaje) {
