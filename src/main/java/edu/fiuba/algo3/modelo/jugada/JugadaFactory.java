@@ -119,8 +119,8 @@ public class JugadaFactory {
         }
 
         // Verificar que las cartas tengan valores consecutivos
-        for (int i = 0; i < cartas.size() - 1; i++) {
-            if (!cartas.get(i).esSimboloAnteriorA(cartas.get(i + 1))) {
+        for (int i = 0; i < cartasAuxiliar.size() - 1; i++) {
+            if (!cartasAuxiliar.get(i).esSimboloAnteriorA(cartasAuxiliar.get(i + 1))) {
                 return false;
             }
         }
@@ -205,7 +205,9 @@ public class JugadaFactory {
 
     private boolean esEscaleraReal(ArrayList<Poker> cartas, ArrayList<Poker> cartasUsadas) {
         if (esEscaleraColor(cartas, cartasUsadas)) {
-            if (cartas.get(4).esAs()) {
+            ArrayList<Poker> cartasAuxiliar = new ArrayList<>(cartas);
+            Collections.sort(cartasAuxiliar);
+            if (cartasAuxiliar.get(0).esAs()) {
                 return true;
             }
             cartasUsadas.clear();
