@@ -9,9 +9,10 @@ public class PokerTest {
     public void test01DadaUnaCartaQPuntua10(){
         Pica palo = new Pica();
         Poker carta = new Poker("Reina", palo, 10, 1);
-        int puntajeEsperado = 10;
-        int puntajeObtenido = carta.usar();
-        assertEquals(puntajeEsperado, puntajeObtenido);
+        Puntaje puntaje = new Puntaje(0, 0);
+        carta.modificarPuntaje(puntaje);
+
+        assertEquals(10, puntaje.calcularTotal());
     }
 
     @Test

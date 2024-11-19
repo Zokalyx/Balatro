@@ -116,8 +116,11 @@ public class Entrega1Test {
         ArrayList<Poker> pokers = new ArrayList<>();
         pokers.add(carta);
         tarot.modificar(pokers);
+        Puntaje puntaje = new Puntaje(0, 0);
 
-        assertEquals(carta.usar(), 50);
+        carta.modificarPuntaje(puntaje);
+
+        assertEquals(50, puntaje.calcularTotal());
     }
 
     @Test
@@ -127,8 +130,11 @@ public class Entrega1Test {
         ArrayList<Poker> pokers = new ArrayList<>();
         pokers.add(carta);
         tarot.modificar(pokers);
+        Puntaje puntaje = new Puntaje(0, 0);
 
-        assertEquals(carta.usar(), 14);
+        carta.modificarPuntaje(puntaje);
+
+        assertEquals(14, puntaje.calcularTotal());
     }
 
 }

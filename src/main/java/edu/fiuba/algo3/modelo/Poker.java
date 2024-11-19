@@ -4,7 +4,7 @@ package edu.fiuba.algo3.modelo;
 import edu.fiuba.algo3.modelo.palo.Palo;
 import edu.fiuba.algo3.modelo.tarot.ModificablePorTarot;
 
-public class Poker implements Carta, ModificablePorTarot, Comparable<Poker> {
+public class Poker implements ModificablePorTarot, Comparable<Poker> {
     String simbolo;
     Palo palo;
     int valorNumerico;
@@ -15,10 +15,6 @@ public class Poker implements Carta, ModificablePorTarot, Comparable<Poker> {
         this.simbolo = simbolo;
         this.valorNumerico = valorNumerico;
         this.palo = palo;
-    }
-
-    public int usar() {
-        return (int) Math.round(valorNumerico * multiplicador);
     }
 
     public boolean esMismoPaloQue(Poker carta) {
@@ -44,6 +40,28 @@ public class Poker implements Carta, ModificablePorTarot, Comparable<Poker> {
         int valorPropio = getValorDeCarta();
         int valorCarta = carta.getValorDeCarta();
         return (valorCarta - valorPropio == 1) || (simbolo.equals("Rey") && carta.simbolo.equals("As"));
+    }
+
+    public boolean esAs() {
+        return this.simbolo.equals("As");
+    }
+
+    @Override
+    public void modificarse(int puntos, double multiplicador) {
+        if(puntos!=1){
+            valorNumerico = puntos;
+        }
+        this.multiplicador = multiplicador;
+    }
+
+    @Override
+    public boolean esEjemplar(String ejemplar) {
+        return true;
+    }
+
+    @Override
+    public int compareTo(Poker carta) {
+        return this.getValorDeCarta() - carta.getValorDeCarta();
     }
 
     private int getValorDeCarta() {
@@ -77,28 +95,6 @@ public class Poker implements Carta, ModificablePorTarot, Comparable<Poker> {
             default:
                 throw new IllegalArgumentException("Número de carta inválido: " + simbolo);
         }
-    }
-
-    @Override
-    public void modificarse(int puntos, double multiplicador) {
-        if(puntos!=1){
-            valorNumerico = puntos;
-        }
-        this.multiplicador = multiplicador;
-    }
-
-    @Override
-    public boolean esEjemplar(String ejemplar) {
-        return true;
-    }
-
-    @Override
-    public int compareTo(Poker carta) {
-        return this.getValorDeCarta() - carta.getValorDeCarta();
-    }
-
-    public boolean esAs() {
-        return this.simbolo.equals("As");
     }
 }
 
