@@ -18,7 +18,7 @@ public class Comodines {
     public void modificarPuntaje(Puntaje puntaje, Jugada jugada, int cantCartasDescartadas) {
         if(!cartas.isEmpty()){
             for (Comodin comodin : cartas) {
-                comodin.modificarPuntaje(puntaje, jugada);
+                comodin.modificarPuntaje(puntaje, jugada, cantCartasDescartadas);
             }
         }
     }

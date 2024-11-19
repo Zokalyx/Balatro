@@ -18,7 +18,7 @@ public class ComodinTest {
         Puntaje puntaje = new Puntaje(3, 1);
         ArrayList<Poker> cartas = new ArrayList<>();
         Jugada jugada = new JugadaEscalera(cartas);
-        comodin.modificarPuntaje(puntaje, jugada);
+        comodin.modificarPuntaje(puntaje, jugada, 0);
 
         assertEquals(27, puntaje.calcularTotal());
     }
@@ -28,5 +28,7 @@ public class ComodinTest {
     @Test
     public void test02UsarComodinBonusPorManoJugadaAumentando3PorEscalera() {
         Comodin comodin = new ComodinPuntaje("A", "B", 0, 8);
+
+        fail("No implementado");
     }
 }

@@ -44,26 +44,25 @@ public class Mano {
     }
 
     public Jugada jugar() {
-        for (Poker cartaSeleccionada : cartasSeleccionadas) {
-            deseleccionarCarta(cartaSeleccionada);
-            cartas.remove(cartaSeleccionada);
-        }
+        cartasSeleccionadas.clear();
 
         return jugada;
     }
 
     public void modificarPuntaje(Puntaje puntaje) {
         // Según las cartas en la mano modifica el puntaje
+        // es necesario?
     }
 
     public int descartar(){
         int cartasDescartadas = 0;
         for (Poker cartaSeleccionada : cartasSeleccionadas) {
             cartas.remove(cartaSeleccionada);
-            cartasDescartadas = cartasDescartadas + 1;
-            deseleccionarCarta(cartaSeleccionada);
+            cartasDescartadas++;
         }
+        cartasSeleccionadas.clear();
         repartir();
+        jugada = new JugadaNula(new ArrayList<>());
         return cartasDescartadas;
     }
 }

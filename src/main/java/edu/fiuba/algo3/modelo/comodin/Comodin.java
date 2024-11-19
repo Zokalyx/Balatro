@@ -16,8 +16,5 @@ public abstract class Comodin {
         this.multiplicador = multiplicador;
     }
 
-    public void modificarPuntaje(Puntaje puntaje, Jugada jugada) {
-        puntaje.sumarMultiplicador(multiplicador);
-        puntaje.sumarValorBase(puntos);
-    }
+    public abstract void modificarPuntaje(Puntaje puntaje, Jugada jugada, int cantCartasDescartadas);
 }

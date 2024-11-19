@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 public class Entrega1Test {
@@ -57,9 +56,7 @@ public class Entrega1Test {
                 new Poker("7", new Corazon(), 7, 0)
         );
         AtomicInteger index = new AtomicInteger(0);
-
         Mazo mazoMock = Mockito.mock(Mazo.class);
-
         when(mazoMock.tomarCarta()).thenAnswer(new Answer<Carta>() {
             @Override
             public Carta answer(InvocationOnMock invocation) {

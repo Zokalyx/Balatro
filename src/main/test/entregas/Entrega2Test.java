@@ -1,9 +1,6 @@
 package entregas;
 
-import edu.fiuba.algo3.modelo.Jugador;
-import edu.fiuba.algo3.modelo.LectorJson;
-import edu.fiuba.algo3.modelo.Poker;
-import edu.fiuba.algo3.modelo.Puntaje;
+import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.comodin.ComodinBonusPorManoJugada;
 import edu.fiuba.algo3.modelo.comodin.ComodinDescarte;
@@ -17,13 +14,18 @@ import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.palo.Pica;
 import edu.fiuba.algo3.modelo.palo.Trebol;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 public class Entrega2Test {
     @Test
@@ -32,7 +34,7 @@ public class Entrega2Test {
         Puntaje puntaje = new Puntaje(3, 1);
         ArrayList<Poker> cartas = new ArrayList<>();
         Jugada jugada = new JugadaEscalera(cartas);
-        comodin.modificarPuntaje(puntaje, jugada);
+        comodin.modificarPuntaje(puntaje, jugada, 0);
 
         assertEquals(27, puntaje.calcularTotal());
     }
@@ -63,30 +65,36 @@ public class Entrega2Test {
         ArrayList<Poker> cartas = new ArrayList<>();
         Jugada jugada = new JugadaEscalera(cartas);
         jugada.modificarPuntaje(puntaje);
-        comodin.modificarPuntaje(puntaje, jugada);
+        comodin.modificarPuntaje(puntaje, jugada, 0);
         assertEquals(210, puntaje.calcularTotal());
     }
 
     @Test
     public void test05seSuman10PuntosPorDescarte(){
-        ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker("As", new Pica(), 10, 0));
-        cartas.add(new Poker("As", new Diamante(), 10, 0));
-        cartas.add(new Poker("As", new Trebol(), 10, 0));
-        cartas.add(new Poker("As", new Corazon(), 10, 0));
-        cartas.add(new Poker("7", new Pica(), 7, 0));
-        cartas.add(new Poker("7", new Diamante(), 7, 0));
-        cartas.add(new Poker("7", new Trebol(), 7, 0));
-        cartas.add(new Poker("2", new Corazon(), 2, 0));
-        cartas.add(new Poker("3", new Corazon(), 3, 0));
-        cartas.add(new Poker("4", new Corazon(), 4, 0));
+        List<Poker> cartas = Arrays.asList(
+                new Poker("A", new Pica(), 10, 0),
+                new Poker("A", new Diamante(), 10, 0),
+                new Poker("A", new Trebol(), 10, 0),
+                new Poker("A", new Corazon(), 10, 0),
+                new Poker("7", new Pica(), 7, 0),
+                new Poker("7", new Diamante(), 7, 0),
+                new Poker("7", new Trebol(), 7, 0),
+                new Poker("7", new Corazon(), 7, 0),
+                new Poker("4", new Corazon(), 4, 0),
+                new Poker("4", new Trebol(), 4, 0)
+        );
+        AtomicInteger index = new AtomicInteger(0);
+        Mazo mazoMock = Mockito.mock(Mazo.class);
+        when(mazoMock.tomarCarta()).thenAnswer(new Answer<Carta>() {
+            @Override
+            public Carta answer(InvocationOnMock invocation) {
+                int currentIndex = index.getAndIncrement();
+                return cartas.get(currentIndex);
+            }
+        });
+        Jugador jugador = new Jugador(mazoMock);
 
-        ArrayList<Poker> cartas2 = new ArrayList<>(cartas);
-
-        Mazo mazo = new Mazo(cartas2);
-        Jugador jugador = new Jugador(mazo);
-
-        Comodin comodin = new ComodinDescarte("a", "a",  10, 1);
+        Comodin comodin = new ComodinDescarte("a", "a",  10, 0);
         jugador.agregarComodin(comodin);
 
         jugador.repartirMano();
@@ -95,8 +103,8 @@ public class Entrega2Test {
         jugador.seleccionarCarta(cartas.get(3));
         jugador.descartarCartas();
 
-        jugador.seleccionarCarta(cartas.get(5));
-
-        assertEquals(40, jugador.jugarMano());
+        // Carta alta 5 * 1 + valor de carta (7) + 10 * 2 del comodín por descarte = 32
+        jugador.seleccionarCarta(cartas.get(4));
+        assertEquals(32, jugador.jugarMano());
     }
 }
