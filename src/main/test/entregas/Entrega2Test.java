@@ -1,14 +1,12 @@
 package entregas;
 
 import edu.fiuba.algo3.modelo.*;
-import edu.fiuba.algo3.modelo.comodin.Comodin;
-import edu.fiuba.algo3.modelo.comodin.ComodinBonusPorManoJugada;
-import edu.fiuba.algo3.modelo.comodin.ComodinDescarte;
-import edu.fiuba.algo3.modelo.comodin.ComodinPuntaje;
+import edu.fiuba.algo3.modelo.comodin.*;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import edu.fiuba.algo3.modelo.contenedores.SinCartasError;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaEscalera;
+import edu.fiuba.algo3.modelo.jugada.JugadaNula;
 import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.palo.Pica;
@@ -23,14 +21,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 public class Entrega2Test {
     @Test
     public void test01UsarComodinPuntajeAfectaPuntaje() {
-        Comodin comodin = new ComodinPuntaje("A", "B", 0, 8);
+        Comodin comodin = new Comodin("A", "B", 0, 8, new ActivacionSiempre());
         Puntaje puntaje = new Puntaje(3, 1);
         ArrayList<Poker> cartas = new ArrayList<>();
         Jugada jugada = new JugadaEscalera(cartas);
@@ -60,7 +57,7 @@ public class Entrega2Test {
 
     @Test
     public void  test04multiplicaPor3SiSeJuegaUnaEscalera(){
-        Comodin comodin = new ComodinBonusPorManoJugada("a", "a", "escalera", 0, 3);
+        Comodin comodin = new Comodin("a", "a", 0, 3, new ActivacionJugada("escalera"));
         Puntaje puntaje = new Puntaje(0, 0);
         ArrayList<Poker> cartas = new ArrayList<>();
         Jugada jugada = new JugadaEscalera(cartas);
@@ -94,7 +91,7 @@ public class Entrega2Test {
         });
         Jugador jugador = new Jugador(mazoMock);
 
-        Comodin comodin = new ComodinDescarte("a", "a",  10, 0);
+        Comodin comodin = new Comodin("a", "a",  10, 0, new ActivacionDescarte());
         jugador.agregarComodin(comodin);
 
         jugador.repartirMano();
@@ -106,5 +103,63 @@ public class Entrega2Test {
         // Carta alta 5 * 1 + valor de carta (7) + 10 * 2 del comodín por descarte = 32
         jugador.seleccionarCarta(cartas.get(4));
         assertEquals(32, jugador.jugarMano());
+    }
+
+    @Test
+    public void test06seSuman10PuntosPorDescarte(){
+        List<Poker> cartas = Arrays.asList(
+                new Poker("A", new Pica(), 10, 0),
+                new Poker("A", new Diamante(), 10, 0),
+                new Poker("A", new Trebol(), 10, 0),
+                new Poker("A", new Corazon(), 10, 0),
+                new Poker("7", new Pica(), 7, 0),
+                new Poker("7", new Diamante(), 7, 0),
+                new Poker("7", new Trebol(), 7, 0),
+                new Poker("7", new Corazon(), 7, 0),
+                new Poker("4", new Corazon(), 4, 0),
+                new Poker("4", new Trebol(), 4, 0)
+        );
+        AtomicInteger index = new AtomicInteger(0);
+        Mazo mazoMock = Mockito.mock(Mazo.class);
+        when(mazoMock.tomarCarta()).thenAnswer(new Answer<Carta>() {
+            @Override
+            public Carta answer(InvocationOnMock invocation) {
+                int currentIndex = index.getAndIncrement();
+                return cartas.get(currentIndex);
+            }
+        });
+        Jugador jugador = new Jugador(mazoMock);
+
+        Comodin comodin = new Comodin("a", "a",  10, 0, new ActivacionDescarte());
+        jugador.agregarComodin(comodin);
+
+        jugador.repartirMano();
+
+        jugador.seleccionarCarta(cartas.get(2));
+        jugador.seleccionarCarta(cartas.get(3));
+        jugador.descartarCartas();
+
+        // Carta alta 5 * 1 + valor de carta (7) + 10 * 2 del comodín por descarte = 32
+        jugador.seleccionarCarta(cartas.get(4));
+        assertEquals(32, jugador.jugarMano());
+    }
+
+    @Test
+    public void test07LaProbabilidad1En1000EsAproximadamenteCorrecta(){
+        Comodin comodin = new Comodin("a", "a",  1, 0, new ActivacionProbabilidad(1000));
+
+        Puntaje puntaje = new Puntaje(0, 1);
+        int N = 1000000;
+        for (int i = 0; i < N; i++) {
+            comodin.modificarPuntaje(puntaje, new JugadaNula(new ArrayList<>()), 0);
+        }
+
+        assertTrue(puntaje.calcularTotal() > 1000 - 100);
+        assertTrue(puntaje.calcularTotal() < 1000 + 100);
+    }
+
+    @Test
+    public void test08SePuedenJugarComodinesConCombinacionesDeEfectos() {
+        fail("Not implemented");
     }
 }
