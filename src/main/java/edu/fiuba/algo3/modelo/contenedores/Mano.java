@@ -14,14 +14,16 @@ public class Mano {
     int maximoCartas = 8;
     int maximoCartasSeleccionadas = 5;
     Jugada jugada;
+    Mazo mazo;
 
-    public Mano() {
+    public Mano(Mazo mazo) {
         cartas = new ArrayList<>();
         cartasSeleccionadas = new ArrayList<>();
         jugada = new JugadaNula(new ArrayList<>());
+        this.mazo = mazo;
     }
 
-    public void repartirUsando(Mazo mazo) {
+    public void repartir() {
         while (cartas.size() < maximoCartas) {
             cartas.add(mazo.tomarCarta());
         }
@@ -43,6 +45,7 @@ public class Mano {
 
     public Jugada jugar() {
         for (Poker cartaSeleccionada : cartasSeleccionadas) {
+            deseleccionarCarta(cartaSeleccionada);
             cartas.remove(cartaSeleccionada);
         }
 
@@ -51,5 +54,16 @@ public class Mano {
 
     public void modificarPuntaje(Puntaje puntaje) {
         // Según las cartas en la mano modifica el puntaje
+    }
+
+    public int descartar(){
+        int cartasDescartadas = 0;
+        for (Poker cartaSeleccionada : cartasSeleccionadas) {
+            cartas.remove(cartaSeleccionada);
+            cartasDescartadas = cartasDescartadas + 1;
+            deseleccionarCarta(cartaSeleccionada);
+        }
+        repartir();
+        return cartasDescartadas;
     }
 }

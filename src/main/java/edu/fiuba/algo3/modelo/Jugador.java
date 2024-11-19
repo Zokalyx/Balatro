@@ -7,27 +7,26 @@ import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
 
 public class Jugador {
-    Mazo mazo;
     Mano mano;
     Comodines comodines;
     Puntaje puntaje;
+    int cantCartasDescartadas;
 
     public Jugador(Mazo mazo) {
-        this.mazo = mazo;
-        mano = new Mano();
+        mano = new Mano(mazo);
         comodines = new Comodines();
         puntaje = new Puntaje(0, 0);
     }
 
     public void repartirMano()  {
-        mano.repartirUsando(mazo);
+        mano.repartir();
     }
 
     public int jugarMano() {
         Jugada jugada = mano.jugar();
         jugada.modificarPuntaje(puntaje);
         mano.modificarPuntaje(puntaje);
-        comodines.modificarPuntaje(puntaje);
+        comodines.modificarPuntaje(puntaje, jugada, cantCartasDescartadas);
         int puntajeFinal = puntaje.calcularTotal();
         puntaje = new Puntaje(0, 0);
         return puntajeFinal;
@@ -39,5 +38,9 @@ public class Jugador {
 
     public void agregarComodin(Comodin comodin) {
         comodines.agregar(comodin);
+    }
+
+    public void descartarCartas() {
+        cantCartasDescartadas = mano.descartar();
     }
 }

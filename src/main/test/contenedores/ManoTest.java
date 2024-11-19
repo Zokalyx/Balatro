@@ -10,12 +10,12 @@ import static org.mockito.Mockito.*;
 
 public class ManoTest {
     @Test
-    public void test01UnaManoVaciaSePuedeRepartirUsandoUnMazoYRecibe8Cartas() {
-        Mano mano = new Mano();
+    public void test01UnaManoVaciaSePuedeRepartirUnMazoYRecibe8Cartas() {
+
         Mazo mockMazo = Mockito.mock(Mazo.class);
         when(mockMazo.tomarCarta()).thenReturn(Mockito.mock(Poker.class));
-
-        mano.repartirUsando(mockMazo);
+        Mano mano = new Mano(mockMazo);
+        mano.repartir();
 
         verify(mockMazo, times(8)).tomarCarta();
     }

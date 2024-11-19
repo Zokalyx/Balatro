@@ -34,11 +34,11 @@ public class Entrega1Test {
 
     @Test
     public void test02UnaManoVaciaSePuedeRepartirUsandoUnMazoYRecibe8Cartas() {
-        Mano mano = new Mano();
+
         Mazo mockMazo = Mockito.mock(Mazo.class);
         when(mockMazo.tomarCarta()).thenReturn(Mockito.mock(Poker.class));
-
-        mano.repartirUsando(mockMazo);
+        Mano mano = new Mano(mockMazo);
+        mano.repartir();
 
         verify(mockMazo, times(8)).tomarCarta();
     }
