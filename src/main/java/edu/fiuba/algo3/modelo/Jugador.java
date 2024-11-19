@@ -25,7 +25,6 @@ public class Jugador {
     public int jugarMano() {
         Jugada jugada = mano.jugar();
         jugada.modificarPuntaje(puntaje);
-        mano.modificarPuntaje(puntaje);
         comodines.modificarPuntaje(puntaje, jugada, cantCartasDescartadas);
         int puntajeFinal = puntaje.calcularTotal();
         puntaje = new Puntaje(0, 0);

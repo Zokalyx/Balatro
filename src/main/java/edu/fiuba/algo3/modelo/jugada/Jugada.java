@@ -12,21 +12,17 @@ public abstract class Jugada implements ModificablePorTarot {
     int valorBase;
     String nombre;
 
-    public static boolean verificar(ArrayList<Poker> cartas) {
-        return false;
-    }
-
     public Jugada(ArrayList<Poker> cartas) {
         this.cartas = cartas;
     }
 
     public void modificarPuntaje(Puntaje puntaje) {
-        puntaje.sumarMultiplicador((int)multiplicadorBase);
-        puntaje.sumarValorBase(valorBase);
-
         for (Poker carta : cartas) {
             carta.modificarPuntaje(puntaje);
         }
+
+        puntaje.sumarMultiplicador((int)multiplicadorBase);
+        puntaje.sumarValorBase(valorBase);
     }
     @Override
     public boolean esEjemplar(String nombre) {
