@@ -14,7 +14,7 @@ public class MazoTest {
     @Test
     public void test01MazoSePuedeCargarConJson() {
         LectorJson lector = new LectorJson();
-        ArrayList<Poker> cartas = lector.leerCartasDeMazo();
+        ArrayList<Poker> cartas = lector.leerMazo();
         Mazo mazo = new Mazo(cartas);
         for (int i = 0; i < 52; i++) {
             mazo.tomarCarta();

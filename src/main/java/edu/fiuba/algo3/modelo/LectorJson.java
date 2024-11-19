@@ -9,41 +9,84 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LectorJson {
-    public ArrayList<Poker> leerCartasDeMazo() {
-        JSONParser parser = new JSONParser();
-        ArrayList<Poker> cartas = new ArrayList<>();
-
-        try (FileReader reader = new FileReader("src/test/resources/json/mazo.json")) {
-            // Parsear el archivo JSON
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-
-            // Obtener el array "mazo"
-            JSONArray mazo = (JSONArray) jsonObject.get("mazo");
-
-            // Recorrer las cartas del mazo
-            for (Object obj : mazo) {
-                Poker poker = getPoker((JSONObject) obj);
-                cartas.add(poker);
-            }
+    public ArrayList<Poker> leerMazo() {
+        JSONObject archivo;
+        try {
+            archivo = parsearArchivo("src/test/resources/json/mazo.json");
+        } catch (IOException e) {
+            throw new RuntimeException("No se pudo abrir el archivo");
         } catch (ParseException e) {
-            System.err.println("Error al parsear el archivo JSON: " + e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Ocurrió un error: " + e.getMessage());
+            throw new RuntimeException("No se pudo parsear el contenido JSON");
         }
 
-        return cartas;
+        ArrayList<Poker> pokers = new ArrayList<>();
+        JSONArray mazo = (JSONArray) archivo.get("mazo");
+        for (Object carta : mazo) {
+            Poker poker = parsearPoker((JSONObject) carta);
+            pokers.add(poker);
+        }
+
+        return pokers;
     }
 
-    private static Poker getPoker(JSONObject obj) {
-        JSONObject carta = obj;
+    public ArrayList<Comodin> leerComodines() {
+        JSONObject archivo;
+        try {
+            archivo = parsearArchivo("src/test/resources/json/comodines.json");
+        } catch (IOException e) {
+            throw new RuntimeException("No se pudo abrir el archivo");
+        } catch (ParseException e) {
+            throw new RuntimeException("No se pudo parsear el contenido JSON");
+        }
 
-        String nombre = (String) carta.get("nombre");
-        String paloString = (String) carta.get("palo");
+        ArrayList<Comodin> listaComodines = new ArrayList<>();
+        for (Object key : archivo.keySet()) {
+            String categoria = (String) key;
+            JSONArray comodines = (JSONArray) ((JSONObject) archivo.get(key)).get("comodines");
+            for (Object obj : comodines) {
+                JSONObject comodin = (JSONObject) obj;
+                boolean compuesto = categoria.equals("Combinación");
+                listaComodines.add(parsearComodin(comodin, compuesto));
+            }
+        }
+
+        return listaComodines;
+    }
+
+    public ArrayList<Tarot> leerTarots() {
+        JSONObject archivo;
+        try {
+            archivo = parsearArchivo("src/test/resources/json/tarots.json");
+        } catch (IOException e) {
+            throw new RuntimeException("No se pudo abrir el archivo");
+        } catch (ParseException e) {
+            throw new RuntimeException("No se pudo parsear el contenido JSON");
+        }
+
+        ArrayList<Tarot> tarots = new ArrayList<>();
+        JSONArray mazo = (JSONArray) archivo.get("tarots");
+        for (Object carta : mazo) {
+            Tarot tarot = parsearTarot((JSONObject) carta);
+            tarots.add(tarot);
+        }
+
+        return tarots;
+    }
+
+    private JSONObject parsearArchivo(String nombreArchivo) throws IOException, ParseException {
+        FileReader reader = new FileReader(nombreArchivo);
+        JSONParser parser = new JSONParser();
+        return (JSONObject) parser.parse(reader);
+    }
+
+    private Poker parsearPoker(JSONObject carta) {
+        // String nombre = (String) carta.get("nombre");
         Palo palo;
-        switch (paloString) {
+        switch ((String) carta.get("palo")) {
             case "Trebol":
                 palo = new Trebol();
                 break;
@@ -59,123 +102,70 @@ public class LectorJson {
             default:
                 throw new RuntimeException("Palo inválido");
         }
-
         String numero = (String) carta.get("numero");
         int puntos = Math.toIntExact((long) carta.get("puntos"));
         int multiplicador = Integer.parseInt((String) carta.get("multiplicador"));
-        Poker poker = new Poker(numero, palo, puntos, multiplicador);
-        return poker;
+        return new Poker(numero, palo, puntos, multiplicador);
     }
 
-    public ArrayList<Comodin> leerComodines() {
-        JSONParser parser = new JSONParser();
-        ArrayList<Comodin> cartas = new ArrayList<>();
+    private Tarot parsearTarot(JSONObject carta) {
+        String nombre = (String) carta.get("nombre");
+        String descripcion = (String) carta.get("descripcion");
+        JSONObject efecto = (JSONObject) carta.get("efecto");
+        int puntos = Math.toIntExact((long) efecto.get("puntos"));
+        double multiplicador = ((Number) efecto.get("multiplicador")).doubleValue();
+        String sobre = (String) carta.get("sobre");
+        String ejemplar = (String) carta.get("ejemplar");
 
-        try (FileReader reader = new FileReader("src/test/resources/json/comodines.json")) {
-            // Parsear el archivo JSON
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-            // Iterar por cada sección del JSON
-            for (Object key : jsonObject.keySet()) {
-                String keyString = (String) key;
-                if (keyString.equals("Combinación")) {
-                    continue;
-                }
-                JSONObject section = (JSONObject) jsonObject.get(keyString);
-                String descripcion = (String) section.get("descripcion");
-
-                // Procesar comodines
-                JSONArray comodines = (JSONArray) section.get("comodines");
-                for (int i = 0; i < comodines.size(); i++) {
-                    JSONObject comodin = (JSONObject) comodines.get(i);
-                    String nombre = (String) comodin.get("nombre");
-                    String comodinDescripcion = (String) comodin.get("descripcion");
-                    JSONObject efecto = (JSONObject) comodin.get("efecto");
-                    int puntos = Math.toIntExact((long) efecto.get("puntos"));
-                    int multiplicador = Math.toIntExact((long) efecto.get("multiplicador"));
-
-                    // Activación (puede ser un objeto o una cadena)
-                    Object activacionObject = comodin.get("activacion");
-                    String activacion = "";
-                    String valorActivacion = "";
-                    if (activacionObject instanceof String) {
-                        activacion = (String) activacionObject;
-                    } else if (activacionObject instanceof JSONObject) {
-                        activacion = (String) ((JSONObject) activacionObject).keySet().iterator().next();
-                        valorActivacion = (String) ((JSONObject) activacionObject).get(activacion);
-                    } else {
-                        throw new RuntimeException("Error al obtener activación de JSON");
-                    }
-
-                    Activacion activacionObjeto;
-                    switch (activacion) {
-                        case "Siempre":
-                            activacionObjeto = new ActivacionSiempre();
-                            break;
-                        case "1 en":
-                            activacionObjeto = new ActivacionProbabilidad(Integer.parseInt(valorActivacion));
-                            break;
-                        case "Descarte":
-                            activacionObjeto = new ActivacionDescarte();
-                            break;
-                        case "Mano Jugada":
-                            activacionObjeto = new ActivacionJugada(valorActivacion);
-                            break;
-                        default:
-                            throw new RuntimeException("Activación no conocida");
-                    }
-
-                    // Crear objeto de Activación y pasarlo a puntaje.
-                    cartas.add(new Comodin(nombre, comodinDescripcion, puntos, multiplicador, activacionObjeto));
-                }
-            }
-        } catch (ParseException e) {
-            System.err.println("Error al parsear el archivo JSON: " + e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Ocurrió un error: " + e.getMessage());
-        }
-
-        return cartas;
+        return Tarot.CrearTarot(nombre, descripcion, sobre, ejemplar, puntos, multiplicador);
     }
 
-    public ArrayList<Tarot> leerTarots() {
-        JSONParser parser = new JSONParser();
-        ArrayList<Tarot> tarots = new ArrayList<>();
-
-        try (FileReader reader = new FileReader("src/test/resources/json/tarots.json")) {
-            // Parsear el archivo JSON
-            JSONObject jsonObject = (JSONObject) parser.parse(reader);
-
-            // Obtener el array de tarots
-            JSONArray tarotsArray = (JSONArray) jsonObject.get("tarots");
-
-            for(Object objeto : tarotsArray){
-                JSONObject tarotObjeto = (JSONObject) objeto;
-
-                // Extraer los campos de cada carta
-                String nombre = (String) tarotObjeto.get("nombre");
-                String descripcion = (String) tarotObjeto.get("descripcion");
-
-                // Extraer el efecto
-                JSONObject efecto = (JSONObject) tarotObjeto.get("efecto");
-                int puntos = Math.toIntExact((long) efecto.get("puntos"));
-                double multiplicador = ((Number) efecto.get("multiplicador")).doubleValue();
-
-                String sobre = (String) tarotObjeto.get("sobre");
-                String ejemplar = (String) tarotObjeto.get("ejemplar");
-
-                // Crear una nueva instancia de Tarot y añadirla a la lista
-                Tarot tarot = Tarot.CrearTarot(nombre, descripcion,sobre,ejemplar, puntos, multiplicador);
-                tarots.add(tarot);
+    private Activacion parsearActivacion(Object activacionJSON) {
+        if (activacionJSON instanceof String) {
+            switch ((String) activacionJSON) {
+                case "Siempre":
+                    return new ActivacionSiempre();
+                case "Descarte":
+                    return new ActivacionDescarte();
+                default:
+                    throw new RuntimeException("Activación desconocida");
             }
 
-
-        } catch (ParseException e) {
-            System.err.println("Error al parsear el archivo JSON: " + e.getMessage());
-        } catch (Exception e) {
-            System.err.println("Ocurrió un error: " + e.getMessage());
+        } else if (activacionJSON instanceof JSONObject) {
+            String key = (String) ((JSONObject) activacionJSON).keySet().iterator().next();
+            Object valor = ((JSONObject) activacionJSON).get(key);
+            switch (key) {
+                case "1 en":
+                    return new ActivacionProbabilidad(Math.toIntExact((long) valor));
+                case "Mano Jugada":
+                    return new ActivacionJugada((String) valor);
+                default:
+                    throw new RuntimeException("Activación desconocida");
+            }
         }
 
-        return tarots;
+        throw new RuntimeException("Activación no parseable");
     }
 
+    private Comodin parsearComodin(JSONObject carta, boolean compuesto) {
+        String nombre = (String) carta.get("nombre");
+        String descripcion = (String) carta.get("descripcion");
+        if (compuesto) {
+            JSONArray comodines =  (JSONArray) carta.get("comodines");
+            ArrayList<Comodin> listaComodines = new ArrayList<>();
+            for (Object obj : comodines) {
+                JSONObject comodin = (JSONObject) obj;
+                Comodin comodinIndividual = parsearComodin(comodin, false);
+                listaComodines.add(comodinIndividual);
+            }
+            return new ComodinCompuesto(nombre, descripcion, listaComodines);
+
+        } else {
+            Activacion activacion = parsearActivacion(carta.get("activacion"));
+            JSONObject efecto = (JSONObject) carta.get("efecto");
+            int puntos = Math.toIntExact((long) efecto.get("puntos"));
+            int multiplicador = Math.toIntExact((long) efecto.get("multiplicador"));
+            return new ComodinIndividual(nombre, descripcion, puntos, multiplicador, activacion);
+        }
+    }
 }
