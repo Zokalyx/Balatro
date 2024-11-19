@@ -9,8 +9,6 @@ import edu.fiuba.algo3.modelo.palo.Trebol;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,7 +22,7 @@ public class Entrega1Test {
     @Test
     public void test01JugadorPoseeCartasSuficientesEnElMazoParaEmpezarElJuego() {
         LectorJson lector = new LectorJson();
-        ArrayList<Poker> cartas = lector.leerCartasDeMazo();
+        ArrayList<Poker> cartas = lector.leerMazo();
         Mazo mazo = new Mazo(cartas);
         Jugador jugador = new Jugador(mazo);
 
@@ -57,12 +55,9 @@ public class Entrega1Test {
         );
         AtomicInteger index = new AtomicInteger(0);
         Mazo mazoMock = Mockito.mock(Mazo.class);
-        when(mazoMock.tomarCarta()).thenAnswer(new Answer<Carta>() {
-            @Override
-            public Carta answer(InvocationOnMock invocation) {
-                int currentIndex = index.getAndIncrement();
-                return cartas.get(currentIndex);
-            }
+        when(mazoMock.tomarCarta()).thenAnswer(invocation -> {
+            int currentIndex = index.getAndIncrement();
+            return cartas.get(currentIndex);
         });
 
         Jugador jugador = new Jugador(mazoMock);
@@ -96,12 +91,9 @@ public class Entrega1Test {
         );
         AtomicInteger index = new AtomicInteger(0);
         Mazo mazoMock = Mockito.mock(Mazo.class);
-        when(mazoMock.tomarCarta()).thenAnswer(new Answer<Carta>() {
-            @Override
-            public Carta answer(InvocationOnMock invocation) {
-                int currentIndex = index.getAndIncrement();
-                return cartas.get(currentIndex);
-            }
+        when(mazoMock.tomarCarta()).thenAnswer(invocation -> {
+            int currentIndex = index.getAndIncrement();
+            return cartas.get(currentIndex);
         });
         Jugador jugador = new Jugador(mazoMock);
         jugador.repartirMano();

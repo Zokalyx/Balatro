@@ -13,8 +13,6 @@ import edu.fiuba.algo3.modelo.palo.Pica;
 import edu.fiuba.algo3.modelo.palo.Trebol;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class Entrega2Test {
     @Test
     public void test01UsarComodinPuntajeAfectaPuntaje() {
-        Comodin comodin = new Comodin("A", "B", 0, 8, new ActivacionSiempre());
+        Comodin comodin = new ComodinIndividual("A", "B", 0, 8, new ActivacionSiempre());
         Puntaje puntaje = new Puntaje(3, 1);
         ArrayList<Poker> cartas = new ArrayList<>();
         Jugada jugada = new JugadaEscalera(cartas);
@@ -45,7 +43,7 @@ public class Entrega2Test {
     @Test
     public void test03MazoSePuedeCargarConJson() {
         LectorJson lector = new LectorJson();
-        ArrayList<Poker> cartas = lector.leerCartasDeMazo();
+        ArrayList<Poker> cartas = lector.leerMazo();
         Mazo mazo = new Mazo(cartas);
         for (int i = 0; i < 52; i++) {
             mazo.tomarCarta();
@@ -57,7 +55,7 @@ public class Entrega2Test {
 
     @Test
     public void  test04multiplicaPor3SiSeJuegaUnaEscalera(){
-        Comodin comodin = new Comodin("a", "a", 0, 3, new ActivacionJugada("escalera"));
+        Comodin comodin = new ComodinIndividual("a", "a", 0, 3, new ActivacionJugada("escalera"));
         Puntaje puntaje = new Puntaje(0, 0);
         ArrayList<Poker> cartas = new ArrayList<>();
         Jugada jugada = new JugadaEscalera(cartas);
@@ -82,16 +80,13 @@ public class Entrega2Test {
         );
         AtomicInteger index = new AtomicInteger(0);
         Mazo mazoMock = Mockito.mock(Mazo.class);
-        when(mazoMock.tomarCarta()).thenAnswer(new Answer<Carta>() {
-            @Override
-            public Carta answer(InvocationOnMock invocation) {
-                int currentIndex = index.getAndIncrement();
-                return cartas.get(currentIndex);
-            }
+        when(mazoMock.tomarCarta()).thenAnswer(invocation -> {
+            int currentIndex = index.getAndIncrement();
+            return cartas.get(currentIndex);
         });
         Jugador jugador = new Jugador(mazoMock);
 
-        Comodin comodin = new Comodin("a", "a",  10, 0, new ActivacionDescarte());
+        Comodin comodin = new ComodinIndividual("a", "a",  10, 0, new ActivacionDescarte());
         jugador.agregarComodin(comodin);
 
         jugador.repartirMano();
@@ -121,16 +116,13 @@ public class Entrega2Test {
         );
         AtomicInteger index = new AtomicInteger(0);
         Mazo mazoMock = Mockito.mock(Mazo.class);
-        when(mazoMock.tomarCarta()).thenAnswer(new Answer<Carta>() {
-            @Override
-            public Carta answer(InvocationOnMock invocation) {
-                int currentIndex = index.getAndIncrement();
-                return cartas.get(currentIndex);
-            }
+        when(mazoMock.tomarCarta()).thenAnswer(invocation -> {
+            int currentIndex = index.getAndIncrement();
+            return cartas.get(currentIndex);
         });
         Jugador jugador = new Jugador(mazoMock);
 
-        Comodin comodin = new Comodin("a", "a",  10, 0, new ActivacionDescarte());
+        Comodin comodin = new ComodinIndividual("a", "a",  10, 0, new ActivacionDescarte());
         jugador.agregarComodin(comodin);
 
         jugador.repartirMano();
@@ -146,7 +138,7 @@ public class Entrega2Test {
 
     @Test
     public void test07LaProbabilidad1En1000EsAproximadamenteCorrecta(){
-        Comodin comodin = new Comodin("a", "a",  1, 0, new ActivacionProbabilidad(1000));
+        Comodin comodin = new ComodinIndividual("a", "a",  1, 0, new ActivacionProbabilidad(1000));
 
         Puntaje puntaje = new Puntaje(0, 1);
         int N = 1000000;
@@ -160,6 +152,19 @@ public class Entrega2Test {
 
     @Test
     public void test08SePuedenJugarComodinesConCombinacionesDeEfectos() {
-        fail("Not implemented");
+        Comodin comodinJugada = new ComodinIndividual("Jugada", "solo en escalera", 10, 0, new ActivacionJugada("escalera"));
+        Comodin comodinSiempre = new ComodinIndividual("Siempre", "siempre se activa", 0, 2, new ActivacionSiempre());
+        Comodin comodinJugada2 = new ComodinIndividual("Jugada", "solo en flush", 100, 100, new ActivacionJugada("color"));
+        ArrayList<Comodin> comodines = new ArrayList<>();
+        comodines.add(comodinJugada);
+        comodines.add(comodinSiempre);
+        comodines.add(comodinJugada2);
+        Comodin comodinCompuesto = new ComodinCompuesto("compuesto", "varios efectos", comodines);
+        Puntaje puntaje = new Puntaje(0, 0);
+
+        // 10 * 2
+        comodinCompuesto.modificarPuntaje(puntaje, new JugadaEscalera(new ArrayList<>()), 0);
+
+        assertEquals(20, puntaje.calcularTotal());
     }
 }
