@@ -1,7 +1,6 @@
 package edu.fiuba.algo3.modelo;
 
-import edu.fiuba.algo3.modelo.comodin.Comodin;
-import edu.fiuba.algo3.modelo.comodin.ComodinPuntaje;
+import edu.fiuba.algo3.modelo.comodin.*;
 import edu.fiuba.algo3.modelo.palo.*;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import org.json.simple.JSONArray;
@@ -85,7 +84,7 @@ public class LectorJson {
                 String descripcion = (String) section.get("descripcion");
 
                 // Procesar comodines
-                JSONArray comodines = (JSONArray) section.get("contenedores");
+                JSONArray comodines = (JSONArray) section.get("comodines");
                 for (int i = 0; i < comodines.size(); i++) {
                     JSONObject comodin = (JSONObject) comodines.get(i);
                     String nombre = (String) comodin.get("nombre");
@@ -96,14 +95,37 @@ public class LectorJson {
 
                     // Activación (puede ser un objeto o una cadena)
                     Object activacionObject = comodin.get("activacion");
-                    String activacion;
+                    String activacion = "";
+                    String valorActivacion = "";
                     if (activacionObject instanceof String) {
                         activacion = (String) activacionObject;
                     } else if (activacionObject instanceof JSONObject) {
-                        // no se
+                        activacion = (String) ((JSONObject) activacionObject).keySet().iterator().next();
+                        valorActivacion = (String) ((JSONObject) activacionObject).get(activacion);
+                    } else {
+                        throw new RuntimeException("Error al obtener activación de JSON");
                     }
 
-                    cartas.add(new ComodinPuntaje(nombre, comodinDescripcion, puntos, multiplicador));
+                    Activacion activacionObjeto;
+                    switch (activacion) {
+                        case "Siempre":
+                            activacionObjeto = new ActivacionSiempre();
+                            break;
+                        case "1 en":
+                            activacionObjeto = new ActivacionProbabilidad(Integer.parseInt(valorActivacion));
+                            break;
+                        case "Descarte":
+                            activacionObjeto = new ActivacionDescarte();
+                            break;
+                        case "Mano Jugada":
+                            activacionObjeto = new ActivacionJugada(valorActivacion);
+                            break;
+                        default:
+                            throw new RuntimeException("Activación no conocida");
+                    }
+
+                    // Crear objeto de Activación y pasarlo a puntaje.
+                    cartas.add(new Comodin(nombre, comodinDescripcion, puntos, multiplicador, activacionObjeto));
                 }
             }
         } catch (ParseException e) {

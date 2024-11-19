@@ -1,8 +1,9 @@
 package comodin;
 
 import edu.fiuba.algo3.modelo.*;
+import edu.fiuba.algo3.modelo.comodin.ActivacionJugada;
+import edu.fiuba.algo3.modelo.comodin.ActivacionSiempre;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
-import edu.fiuba.algo3.modelo.comodin.ComodinPuntaje;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaEscalera;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ComodinTest {
     @Test
     public void test01UsarComodinPuntajeAfectaPuntaje() {
-        Comodin comodin = new ComodinPuntaje("A", "B", 0, 8);
+        Comodin comodin = new Comodin("A", "B", 0, 8, new ActivacionSiempre());
         Puntaje puntaje = new Puntaje(3, 1);
         ArrayList<Poker> cartas = new ArrayList<>();
         Jugada jugada = new JugadaEscalera(cartas);
@@ -27,8 +28,13 @@ public class ComodinTest {
     //aumenta el multiplicador por 3 si juega una escalera
     @Test
     public void test02UsarComodinBonusPorManoJugadaAumentando3PorEscalera() {
-        Comodin comodin = new ComodinPuntaje("A", "B", 0, 8);
+        Comodin comodin = new Comodin("A", "B", 0, 8, new ActivacionJugada("escalera"));
 
-        fail("No implementado");
+        Jugada jugada = new JugadaEscalera(new ArrayList<>());
+        Puntaje puntaje = new Puntaje(2, 0);
+
+        comodin.modificarPuntaje(puntaje, jugada, 0);
+
+        assertEquals(16, puntaje.calcularTotal());
     }
 }
