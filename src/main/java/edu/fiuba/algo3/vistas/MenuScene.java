@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.vistas;
 
+import edu.fiuba.algo3.modelo.palo.Trebol;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -7,16 +8,16 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class Menu extends Application {
+public class MenuScene extends Application {
     @Override
     public void start(Stage primaryStage) {
 
         Pane root = new Pane();
+        root.setStyle("-fx-background-color: #3b6c34;");
 
         Text title = new Text("BALATRO");
         title.setFont(Font.font("Arial Black", 36));
@@ -49,7 +50,9 @@ public class Menu extends Application {
         btnJugar.setOnAction(e -> System.out.println("Iniciar el juego."));
         btnSalir.setOnAction(e -> primaryStage.close());
 
-        root.getChildren().addAll(title, buttonBox);
+        PokerVista poker = new PokerVista("Q", new Trebol());
+
+        root.getChildren().addAll(title, buttonBox, poker);
 
         Scene scene = new Scene(root, 800, 400);
         primaryStage.setTitle("Balatro - Menú Principal");
