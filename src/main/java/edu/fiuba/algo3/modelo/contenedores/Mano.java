@@ -13,9 +13,9 @@ public class Mano {
     int maximoCartas = 8;
     int maximoCartasSeleccionadas = 5;
     Jugada jugada;
-    Mazo mazo;
+    Mazo<Poker> mazo;
 
-    public Mano(Mazo mazo) {
+    public Mano(Mazo<Poker> mazo) {
         cartas = new ArrayList<>();
         cartasSeleccionadas = new ArrayList<>();
         jugada = new JugadaNula(new ArrayList<>());
