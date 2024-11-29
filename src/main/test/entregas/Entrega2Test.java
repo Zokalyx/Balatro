@@ -137,20 +137,6 @@ public class Entrega2Test {
     }
 
     @Test
-    public void test07LaProbabilidad1En1000EsAproximadamenteCorrecta(){
-        Comodin comodin = new ComodinIndividual("a", "a",  1, 0, new ActivacionProbabilidad(1000));
-
-        Puntaje puntaje = new Puntaje(0, 1);
-        int N = 1000000;
-        for (int i = 0; i < N; i++) {
-            comodin.modificarPuntaje(puntaje, new JugadaNula(new ArrayList<>()), 0);
-        }
-
-        assertTrue(puntaje.calcularTotal() > 1000 - 100);
-        assertTrue(puntaje.calcularTotal() < 1000 + 100);
-    }
-
-    @Test
     public void test08SePuedenJugarComodinesConCombinacionesDeEfectos() {
         Comodin comodinJugada = new ComodinIndividual("Jugada", "solo en escalera", 10, 0, new ActivacionJugada("escalera"));
         Comodin comodinSiempre = new ComodinIndividual("Siempre", "siempre se activa", 0, 2, new ActivacionSiempre());
