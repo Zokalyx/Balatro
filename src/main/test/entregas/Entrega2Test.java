@@ -6,7 +6,6 @@ import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import edu.fiuba.algo3.modelo.contenedores.SinCartasError;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaEscalera;
-import edu.fiuba.algo3.modelo.jugada.JugadaNula;
 import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.palo.Pica;
@@ -44,7 +43,7 @@ public class Entrega2Test {
     public void test03MazoSePuedeCargarConJson() {
         LectorJson lector = new LectorJson();
         ArrayList<Poker> cartas = lector.leerMazo();
-        Mazo mazo = new Mazo(cartas);
+        Mazo<Poker> mazo = new Mazo<>(cartas);
         for (int i = 0; i < 52; i++) {
             mazo.tomarCarta();
         }
@@ -79,7 +78,7 @@ public class Entrega2Test {
                 new Poker("4", new Trebol(), 4, 0)
         );
         AtomicInteger index = new AtomicInteger(0);
-        Mazo mazoMock = Mockito.mock(Mazo.class);
+        Mazo<Poker> mazoMock = Mockito.mock(Mazo.class);
         when(mazoMock.tomarCarta()).thenAnswer(invocation -> {
             int currentIndex = index.getAndIncrement();
             return cartas.get(currentIndex);
@@ -115,7 +114,7 @@ public class Entrega2Test {
                 new Poker("4", new Trebol(), 4, 0)
         );
         AtomicInteger index = new AtomicInteger(0);
-        Mazo mazoMock = Mockito.mock(Mazo.class);
+        Mazo<Poker> mazoMock = Mockito.mock(Mazo.class);
         when(mazoMock.tomarCarta()).thenAnswer(invocation -> {
             int currentIndex = index.getAndIncrement();
             return cartas.get(currentIndex);
