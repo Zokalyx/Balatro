@@ -1,7 +1,5 @@
 package edu.fiuba.algo3.vistas;
 
-import edu.fiuba.algo3.modelo.Poker;
-import edu.fiuba.algo3.modelo.palo.Trebol;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

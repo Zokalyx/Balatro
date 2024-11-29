@@ -5,7 +5,6 @@ import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import javafx.application.Application;
 
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 
 import javafx.scene.image.Image;

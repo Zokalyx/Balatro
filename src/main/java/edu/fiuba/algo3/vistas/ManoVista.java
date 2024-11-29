@@ -2,7 +2,6 @@ package edu.fiuba.algo3.vistas;
 
 import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
-import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.palo.Pica;
 import edu.fiuba.algo3.modelo.palo.Trebol;
