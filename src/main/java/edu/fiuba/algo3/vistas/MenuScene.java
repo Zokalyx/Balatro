@@ -6,59 +6,69 @@ import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 public class MenuScene extends Application {
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage stage) {
+        HBox root = new HBox();
 
-        Pane root = new Pane();
-        root.setStyle("-fx-background-color: #3b6c34;");
+        try {
+            Image image = new Image(new FileInputStream("src/main/resources/freepik_poker_table_background.jpg"));
+            BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+            root.setBackground(new Background(backgroundImage));
+        } catch (FileNotFoundException e) {
+            System.out.println("No se encontró el imagen");
+        }
 
         Text title = new Text("BALATRO");
         title.setFont(Font.font("Arial Black", 36));
         title.setFill(Color.BLACK);
-        title.setX(300);
-        title.setY(100);
 
         Button btnReglas = new Button("Reglas");
-        btnReglas.setLayoutX(150);
-        btnReglas.setLayoutY(200);
         btnReglas.setStyle("-fx-background-color: #E0E0E0; -fx-font-size: 16;");
 
         Button btnJugar = new Button("Jugar");
-        btnJugar.setLayoutX(150);
-        btnJugar.setLayoutY(250);
         btnJugar.setStyle("-fx-background-color: #E0E0E0; -fx-font-size: 16;");
 
         Button btnSalir = new Button("Salir");
-        btnSalir.setLayoutX(150);
-        btnSalir.setLayoutY(300);
         btnSalir.setStyle("-fx-background-color: #E0E0E0; -fx-font-size: 16;");
 
-        HBox buttonBox = new HBox(50);
+        HBox buttonBox = new HBox();
         buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.setLayoutX(240);
-        buttonBox.setLayoutY(200);
         buttonBox.getChildren().addAll(btnReglas, btnJugar, btnSalir);
+        buttonBox.setSpacing(50);
 
         btnReglas.setOnAction(e -> System.out.println("Mostrar las reglas del juego."));
         btnJugar.setOnAction(e -> System.out.println("Iniciar el juego."));
-        btnSalir.setOnAction(e -> primaryStage.close());
+        btnSalir.setOnAction(e -> stage.close());
 
-        PokerVista poker = new PokerVista(new Poker("Rey", new Trebol(), 1, 1));
+        Region margenIzquierda = new Region();
+        Region margenDerecha = new Region();
+        HBox.setHgrow(margenIzquierda, Priority.ALWAYS);
+        HBox.setHgrow(margenDerecha, Priority.ALWAYS);
 
-        root.getChildren().addAll(title, buttonBox, poker);
+        VBox columnaCentral = new VBox();
+        columnaCentral.setAlignment(Pos.CENTER);
+        columnaCentral.getChildren().addAll(title, buttonBox);
+        columnaCentral.prefHeightProperty().bind(root.heightProperty());
+        columnaCentral.setMaxWidth(600);
+        columnaCentral.setSpacing(100);
+
+        root.getChildren().addAll(margenIzquierda, columnaCentral, margenDerecha);
 
         Scene scene = new Scene(root, 800, 400);
-        primaryStage.setTitle("Balatro - Menú Principal");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        stage.setTitle("Balatro - Menú Principal");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {

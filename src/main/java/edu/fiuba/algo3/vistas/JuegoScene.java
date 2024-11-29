@@ -14,18 +14,23 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
 public class JuegoScene extends Application {
 
     @Override
-    public void start(Stage stage) throws Exception {
-        Pane root = new Pane();
+    public void start(Stage stage) {
+        HBox root = new HBox();
 
-        Image image = new Image(new FileInputStream("src/main/resources/freepik_poker_table_background.jpg"));
-        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-        root.setBackground(new Background(backgroundImage));
+        try {
+            Image image = new Image(new FileInputStream("src/main/resources/freepik_poker_table_background.jpg"));
+            BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+            root.setBackground(new Background(backgroundImage));
+        } catch (FileNotFoundException e) {
+            System.out.println("No se encontró el imagen");
+        }
 
         ComodinesVista comodines = new ComodinesVista();
         Region espacioCentralVertical = new Region();
@@ -42,11 +47,7 @@ public class JuegoScene extends Application {
         Region espacioAntesTarots = new Region();
         HBox.setHgrow(espacioAntesTarots, Priority.ALWAYS);
 
-        HBox contenedores = new HBox(comodines, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarots);
-        // Esto hace que el HBox madre ocupe todo el ancho de la pantalla
-        contenedores.prefWidthProperty().bind(root.widthProperty());
-
-        root.getChildren().addAll(contenedores);
+        root.getChildren().addAll(comodines, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarots);
 
         Scene scene = new Scene(root, 1000, 600);
         stage.setTitle("Balatro - Partida");
