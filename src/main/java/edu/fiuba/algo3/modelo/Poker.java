@@ -96,5 +96,13 @@ public class Poker implements ModificablePorTarot, Comparable<Poker> {
                 throw new IllegalArgumentException("Número de carta inválido: " + simbolo);
         }
     }
+
+    public Palo getPalo() {
+        return palo;
+    }
+
+    public String getSimbolo() {
+        return simbolo;
+    }
 }
 

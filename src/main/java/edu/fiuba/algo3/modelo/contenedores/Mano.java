@@ -59,4 +59,8 @@ public class Mano {
         jugada = new JugadaNula(new ArrayList<>());
         return cartasDescartadas;
     }
+
+    public ArrayList<Poker> getCartas() {
+        return cartas;
+    }
 }

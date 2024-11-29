@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.vistas;
 
+import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.palo.Trebol;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -50,7 +51,7 @@ public class MenuScene extends Application {
         btnJugar.setOnAction(e -> System.out.println("Iniciar el juego."));
         btnSalir.setOnAction(e -> primaryStage.close());
 
-        PokerVista poker = new PokerVista("Q", new Trebol());
+        PokerVista poker = new PokerVista(new Poker("Rey", new Trebol(), 1, 1));
 
         root.getChildren().addAll(title, buttonBox, poker);
 
