@@ -15,10 +15,10 @@ public class Comodines {
         this.capacidad = 5;
     }
 
-    public void modificarPuntaje(Puntaje puntaje, Jugada jugada, int cantCartasDescartadas) {
+    public void modificarPuntaje(Puntaje puntaje, Jugada jugada, int descartesDisponibles) {
         if(!cartas.isEmpty()){
             for (Comodin comodin : cartas) {
-                comodin.modificarPuntaje(puntaje, jugada, cantCartasDescartadas);
+                comodin.modificarPuntaje(puntaje, jugada, descartesDisponibles);
             }
         }
     }

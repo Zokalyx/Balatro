@@ -1,7 +1,10 @@
 package tarot;
 
 import edu.fiuba.algo3.modelo.*;
+import edu.fiuba.algo3.modelo.jugada.Jugada;
+import edu.fiuba.algo3.modelo.jugada.JugadaEscalera;
 import edu.fiuba.algo3.modelo.palo.Diamante;
+import edu.fiuba.algo3.modelo.tarot.ActivacionTarotJugadaParticular;
 import edu.fiuba.algo3.modelo.tarot.ActivacionTarotPokerCualquiera;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import org.junit.jupiter.api.Test;
@@ -31,5 +34,29 @@ public class TarotTest {
         carta.modificarPuntaje(puntaje);
 
         assertEquals(14, puntaje.calcularTotal());
+    }
+
+    @Test
+    public void test03AplicarTarotModificaElValorNumericoDeJugada() {
+        Jugada jugada = new JugadaEscalera();  // 30 x 4 normalmente
+        Tarot tarot = new Tarot("Test", "A", 10, 0, new ActivacionTarotJugadaParticular(new JugadaEscalera()));
+        tarot.modificar(jugada);
+        Puntaje puntaje = new Puntaje(0, 0);
+
+        jugada.modificarPuntaje(puntaje);
+
+        assertEquals(160, puntaje.calcularTotal());
+    }
+
+    @Test
+    public void test04AplicarTarotModificaElMultiplicadorDeJugada() {
+        Jugada jugada = new JugadaEscalera();  // 30 x 4 normalmente
+        Tarot tarot = new Tarot("Test", "A", 0, 1, new ActivacionTarotJugadaParticular(new JugadaEscalera()));
+        tarot.modificar(jugada);
+        Puntaje puntaje = new Puntaje(0, 0);
+
+        jugada.modificarPuntaje(puntaje);
+
+        assertEquals(150, puntaje.calcularTotal());
     }
 }

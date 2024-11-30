@@ -19,7 +19,7 @@ public class JugadaFactoryTest {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
 
-        assertThrows(JugadaNulaError.class, () -> jugadaFactory.obtenerJugada(cartas));
+        assertThrows(JugadaNulaError.class, () -> jugadaFactory.calcularJugada(cartas));
     }
 
     @Test
@@ -28,7 +28,7 @@ public class JugadaFactoryTest {
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("As", new Pica(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaCartaAlta.class, jugada);
     }
@@ -43,7 +43,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("3", new Trebol(), 0, 0));
         cartas.add(new Poker("2", new Diamante(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaCartaAlta.class, jugada);
     }
@@ -55,7 +55,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("As", new Pica(), 0, 0));
         cartas.add(new Poker("As", new Trebol(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaPar.class,jugada);
     }
@@ -69,7 +69,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("7", new Diamante(), 0, 0));
         cartas.add(new Poker("2", new Corazon(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaPar.class,jugada);
     }
@@ -82,7 +82,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("As", new Trebol(), 0, 0));
         cartas.add(new Poker("As", new Diamante(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaPierna.class, jugada);
     }
@@ -97,7 +97,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("7", new Corazon(), 0, 0));
         cartas.add(new Poker("2", new Diamante(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assert(jugada instanceof JugadaPierna);
     }
@@ -112,7 +112,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("As", new Corazon(), 0, 0));
         cartas.add(new Poker("2", new Diamante(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaPoker.class, jugada);
     }
@@ -127,7 +127,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("7", new Pica(), 0, 0));
         cartas.add(new Poker("8", new Pica(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaColor.class, jugada);
     }
@@ -142,7 +142,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("Rey", new Pica(), 0, 0));
         cartas.add(new Poker("Rey", new Corazon(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaFullHouse.class, jugada);
     }
@@ -157,7 +157,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("5", new Pica(), 0, 0));
         cartas.add(new Poker("6", new Corazon(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaEscalera.class, jugada);
     }
@@ -172,7 +172,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("5", new Pica(), 0, 0));
         cartas.add(new Poker("6", new Pica(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaEscaleraColor.class, jugada);
     }
@@ -187,7 +187,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("Jota", new Pica(), 0, 0));
         cartas.add(new Poker("10", new Pica(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaEscaleraReal.class, jugada);
     }
@@ -202,7 +202,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("2", new Pica(), 0, 0));
         cartas.add(new Poker("3", new Pica(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaCartaAlta.class, jugada);
     }
@@ -217,7 +217,7 @@ public class JugadaFactoryTest {
         cartas.add(new Poker("3", new Pica(), 0, 0));
         cartas.add(new Poker("2", new Corazon(), 0, 0));
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartas);
 
         assertInstanceOf(JugadaDoblePar.class, jugada);
     }

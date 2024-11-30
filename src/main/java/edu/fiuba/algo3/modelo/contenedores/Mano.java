@@ -40,7 +40,7 @@ public class Mano {
     }
 
     public Jugada jugar() {
-        Jugada jugada = jugadaFactory.obtenerJugada(cartasSeleccionadas);
+        Jugada jugada = jugadaFactory.calcularJugada(cartasSeleccionadas);
         cartasSeleccionadas.clear();
         return jugada;
     }

@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.modelo.jugada;
 
+import edu.fiuba.algo3.modelo.JugadaNoEncontradaError;
 import edu.fiuba.algo3.modelo.Poker;
 
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ public class JugadaFactory {
         jugadas.add(new JugadaCartaAlta());
     }
 
-    public Jugada obtenerJugada(ArrayList<Poker> cartas) {
+    public Jugada calcularJugada(ArrayList<Poker> cartas) {
        for (Jugada jugada : jugadas) {
            ArrayList<Poker> cartasInvolucradas = jugada.formarseConCartas(cartas);
            if (!cartasInvolucradas.isEmpty()) {
