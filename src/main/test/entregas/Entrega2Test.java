@@ -2,6 +2,7 @@ package entregas;
 
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.comodin.*;
+import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import edu.fiuba.algo3.modelo.contenedores.SinCartasError;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
@@ -82,20 +83,25 @@ public class Entrega2Test {
             int currentIndex = index.getAndIncrement();
             return cartas.get(currentIndex);
         });
-        Jugador jugador = new Jugador(mazoMock);
+        Mano mano = new Mano(mazoMock);
 
         Comodin comodin = new ComodinIndividual("a", "a",  10, 0, new ActivacionComodinDescarte());
-        jugador.agregarComodin(comodin);
 
-        jugador.repartirMano();
+        mano.repartir();
 
-        jugador.seleccionarCarta(cartas.get(2));
-        jugador.seleccionarCarta(cartas.get(3));
-        jugador.descartarCartas();
+        mano.seleccionarCarta(cartas.get(2));
+        mano.seleccionarCarta(cartas.get(3));
+        int cartasDescartadas = mano.descartar();
 
         // Carta alta 5 * 1 + valor de carta (7) + 10 * 2 del comodín por descarte = 32
-        jugador.seleccionarCarta(cartas.get(4));
-        assertEquals(32, jugador.jugarMano());
+        mano.seleccionarCarta(cartas.get(4));
+
+        Puntaje puntaje = new Puntaje(0, 0);
+        Jugada jugada = mano.jugar();
+        jugada.modificarPuntaje(puntaje);
+        comodin.modificarPuntaje(puntaje, jugada, cartasDescartadas);
+
+        assertEquals(32, puntaje.calcularTotal());
     }
 
     @Test
@@ -118,20 +124,23 @@ public class Entrega2Test {
             int currentIndex = index.getAndIncrement();
             return cartas.get(currentIndex);
         });
-        Jugador jugador = new Jugador(mazoMock);
+        Mano mano = new Mano(mazoMock);
+        mano.repartir();
 
         Comodin comodin = new ComodinIndividual("a", "a",  10, 0, new ActivacionComodinDescarte());
-        jugador.agregarComodin(comodin);
 
-        jugador.repartirMano();
-
-        jugador.seleccionarCarta(cartas.get(2));
-        jugador.seleccionarCarta(cartas.get(3));
-        jugador.descartarCartas();
+        mano.seleccionarCarta(cartas.get(2));
+        mano.seleccionarCarta(cartas.get(3));
+        int cantidadDescartada = mano.descartar();
 
         // Carta alta 5 * 1 + valor de carta (7) + 10 * 2 del comodín por descarte = 32
-        jugador.seleccionarCarta(cartas.get(4));
-        assertEquals(32, jugador.jugarMano());
+        mano.seleccionarCarta(cartas.get(4));
+        Puntaje puntaje = new Puntaje(0, 0);
+        Jugada jugada = mano.jugar();
+        jugada.modificarPuntaje(puntaje);
+        comodin.modificarPuntaje(puntaje, jugada, cantidadDescartada);
+
+        assertEquals(32, puntaje.calcularTotal());
     }
 
     @Test

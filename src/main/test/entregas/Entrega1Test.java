@@ -2,6 +2,7 @@ package entregas;
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
+import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.palo.Pica;
@@ -24,10 +25,10 @@ public class Entrega1Test {
     public void test01JugadorPoseeCartasSuficientesEnElMazoParaEmpezarElJuego() {
         LectorJson lector = new LectorJson();
         ArrayList<Poker> cartas = lector.leerMazo();
-        Mazo<Poker> mazo = new Mazo<Poker>(cartas);
-        Jugador jugador = new Jugador(mazo);
+        Mazo<Poker> mazo = new Mazo<>(cartas);
+        Mano mano = new Mano(mazo);
 
-        assertDoesNotThrow(jugador::repartirMano);
+        assertDoesNotThrow(mano::repartir);
     }
 
     @Test
@@ -61,15 +62,18 @@ public class Entrega1Test {
             return cartas.get(currentIndex);
         });
 
-        Jugador jugador = new Jugador(mazoMock);
-        jugador.repartirMano();
+        Mano mano = new Mano(mazoMock);
+        mano.repartir();
 
         // Par de Aces
-        jugador.seleccionarCarta(cartas.get(0));
-        jugador.seleccionarCarta(cartas.get(1));
+        mano.seleccionarCarta(cartas.get(0));
+        mano.seleccionarCarta(cartas.get(1));
 
         // Act
-        int puntajeFinal = jugador.jugarMano();
+        Jugada jugada = mano.jugar();
+        Puntaje puntaje = new Puntaje(0, 0);
+        jugada.modificarPuntaje(puntaje);
+        int puntajeFinal = puntaje.calcularTotal();
 
         // Assert
         assertEquals(60, puntajeFinal);
@@ -96,14 +100,17 @@ public class Entrega1Test {
             int currentIndex = index.getAndIncrement();
             return cartas.get(currentIndex);
         });
-        Jugador jugador = new Jugador(mazoMock);
-        jugador.repartirMano();
+        Mano mano = new Mano(mazoMock);
+        mano.repartir();
         // Par de Aces
-        jugador.seleccionarCarta(cartas.get(0));
-        jugador.seleccionarCarta(cartas.get(1));
+        mano.seleccionarCarta(cartas.get(0));
+        mano.seleccionarCarta(cartas.get(1));
 
         // Act
-        int puntajeFinal = jugador.jugarMano();
+        Jugada jugada = mano.jugar();
+        Puntaje puntaje = new Puntaje(0, 0);
+        jugada.modificarPuntaje(puntaje);
+        int puntajeFinal = puntaje.calcularTotal();
 
         // Assert
         assertEquals(60, puntajeFinal);
