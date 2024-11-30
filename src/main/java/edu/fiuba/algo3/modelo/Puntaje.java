@@ -9,8 +9,8 @@ public class Puntaje {
         this.multiplicador = multiplicador;
     }
 
-    public void sumarMultiplicador(double multiplicador) {
-        this.multiplicador += multiplicador;
+    public void multiplicarMultiplicador(double multiplicador) {
+        this.multiplicador *= multiplicador;
     }
 
     public void sumarValorBase(int valorBase) {

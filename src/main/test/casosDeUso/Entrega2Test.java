@@ -31,7 +31,7 @@ public class Entrega2Test {
         Puntaje puntaje = new Puntaje(3, 1);
         comodin.modificarPuntaje(puntaje, new JugadaCartaAlta(), 0);
 
-        assertEquals(27, puntaje.calcularTotal());
+        assertEquals(24, puntaje.calcularTotal());
     }
 
     @Test
@@ -56,26 +56,25 @@ public class Entrega2Test {
     @Test
     public void  test04multiplicaPor3SiSeJuegaUnaEscalera(){
         Comodin comodin = new ComodinIndividual("a", "a", 0, 3, new ActivacionComodinJugada(new JugadaEscalera()));
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(2, 1);
         Jugada jugada = new JugadaEscalera();
-        jugada.modificarPuntaje(puntaje);
         comodin.modificarPuntaje(puntaje, jugada, 0);
-        assertEquals(210, puntaje.calcularTotal());
+        assertEquals(6, puntaje.calcularTotal());
     }
 
     @Test
     public void test05seSuman10PuntosPorDescarteDisponible(){
         List<Poker> cartas = Arrays.asList(
-                new Poker("A", new Pica(), 10, 0),
-                new Poker("A", new Diamante(), 10, 0),
-                new Poker("A", new Trebol(), 10, 0),
-                new Poker("A", new Corazon(), 10, 0),
-                new Poker("7", new Pica(), 7, 0),
-                new Poker("7", new Diamante(), 7, 0),
-                new Poker("7", new Trebol(), 7, 0),
-                new Poker("7", new Corazon(), 7, 0),
-                new Poker("4", new Corazon(), 4, 0),
-                new Poker("4", new Trebol(), 4, 0)
+                new Poker("A", new Pica(), 10, 1),
+                new Poker("A", new Diamante(), 10, 1),
+                new Poker("A", new Trebol(), 10, 1),
+                new Poker("A", new Corazon(), 10, 1),
+                new Poker("7", new Pica(), 7, 1),
+                new Poker("7", new Diamante(), 7, 1),
+                new Poker("7", new Trebol(), 7, 1),
+                new Poker("7", new Corazon(), 7, 1),
+                new Poker("4", new Corazon(), 4, 1),
+                new Poker("4", new Trebol(), 4, 1)
         );
         AtomicInteger index = new AtomicInteger(0);
         Mazo<Poker> mazoMock = Mockito.mock(Mazo.class);
@@ -85,7 +84,7 @@ public class Entrega2Test {
         });
         Mano mano = new Mano(mazoMock);
 
-        Comodin comodin = new ComodinIndividual("a", "a",  10, 0, new ActivacionComodinDescarte());
+        Comodin comodin = new ComodinIndividual("a", "a",  10, 1, new ActivacionComodinDescarte());
 
         mano.repartir();
 
@@ -95,30 +94,33 @@ public class Entrega2Test {
         mano.seleccionarCarta(cartas.get(3));
         descartesDisponibles -= mano.descartar();
 
-        // Carta alta 5 * 1 + valor de carta (7) + 10 * 2 del comodín por descarte = 32
         mano.seleccionarCarta(cartas.get(4));
 
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
         Jugada jugada = mano.jugar();
         jugada.modificarPuntaje(puntaje);
         comodin.modificarPuntaje(puntaje, jugada, descartesDisponibles);
 
+        // Comodin 10 x 1 + 10 x 1 (doble activacion)
+        // Carta alta 5 x 1
+        // Carta 7 x 1
+        // Total 32 x 1
         assertEquals(32, puntaje.calcularTotal());
     }
 
     @Test
     public void test06seSuman10PuntosPorDescarteDisponible(){
         List<Poker> cartas = Arrays.asList(
-                new Poker("A", new Pica(), 10, 0),
-                new Poker("A", new Diamante(), 10, 0),
-                new Poker("A", new Trebol(), 10, 0),
-                new Poker("A", new Corazon(), 10, 0),
-                new Poker("7", new Pica(), 7, 0),
-                new Poker("7", new Diamante(), 7, 0),
-                new Poker("7", new Trebol(), 7, 0),
-                new Poker("7", new Corazon(), 7, 0),
-                new Poker("4", new Corazon(), 4, 0),
-                new Poker("4", new Trebol(), 4, 0)
+                new Poker("A", new Pica(), 10, 1),
+                new Poker("A", new Diamante(), 10, 1),
+                new Poker("A", new Trebol(), 10, 1),
+                new Poker("A", new Corazon(), 10, 1),
+                new Poker("7", new Pica(), 7, 1),
+                new Poker("7", new Diamante(), 7, 1),
+                new Poker("7", new Trebol(), 7, 1),
+                new Poker("7", new Corazon(), 7, 1),
+                new Poker("4", new Corazon(), 4, 1),
+                new Poker("4", new Trebol(), 4, 1)
         );
         AtomicInteger index = new AtomicInteger(0);
         Mazo<Poker> mazoMock = Mockito.mock(Mazo.class);
@@ -129,7 +131,7 @@ public class Entrega2Test {
         Mano mano = new Mano(mazoMock);
         mano.repartir();
 
-        Comodin comodin = new ComodinIndividual("a", "a",  10, 0, new ActivacionComodinDescarte());
+        Comodin comodin = new ComodinIndividual("a", "a",  10, 1, new ActivacionComodinDescarte());
 
         int descartesDisponibles = 4;
 
@@ -137,9 +139,8 @@ public class Entrega2Test {
         mano.seleccionarCarta(cartas.get(3));
         descartesDisponibles -= mano.descartar();
 
-        // Carta alta 5 * 1 + valor de carta (7) + 10 * 2 del comodín por descarte = 32
         mano.seleccionarCarta(cartas.get(4));
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
         Jugada jugada = mano.jugar();
         jugada.modificarPuntaje(puntaje);
         comodin.modificarPuntaje(puntaje, jugada, descartesDisponibles);
@@ -149,7 +150,7 @@ public class Entrega2Test {
 
     @Test
     public void test08SePuedenJugarComodinesConCombinacionesDeEfectos() {
-        Comodin comodinJugada = new ComodinIndividual("Jugada", "solo en escalera", 10, 0, new ActivacionComodinJugada(new JugadaEscalera()));
+        Comodin comodinJugada = new ComodinIndividual("Jugada", "solo en escalera", 10, 1, new ActivacionComodinJugada(new JugadaEscalera()));
         Comodin comodinSiempre = new ComodinIndividual("Siempre", "siempre se activa", 0, 2, new ActivacionComodinSiempre());
         Comodin comodinJugada2 = new ComodinIndividual("Jugada", "solo en flush", 100, 100, new ActivacionComodinJugada(new JugadaColor()));
         ArrayList<Comodin> comodines = new ArrayList<>();
@@ -157,9 +158,11 @@ public class Entrega2Test {
         comodines.add(comodinSiempre);
         comodines.add(comodinJugada2);
         Comodin comodinCompuesto = new ComodinCompuesto("compuesto", "varios efectos", comodines);
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
 
-        // 10 * 2
+        // Comodin escalera: 10 x 1
+        // Comodin siempre: 0 x 2
+        // Comodin color: 0 (no se activa)
         comodinCompuesto.modificarPuntaje(puntaje, new JugadaEscalera(), 0);
 
         assertEquals(20, puntaje.calcularTotal());

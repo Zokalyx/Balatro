@@ -27,7 +27,7 @@ public class Poker implements ModificablePorTarot, Comparable<Poker> {
 
     public void modificarPuntaje(Puntaje puntaje) {
         puntaje.sumarValorBase(valorNumerico);
-        puntaje.sumarMultiplicador(multiplicador);
+        puntaje.multiplicarMultiplicador(multiplicador);
     }
 
     public boolean esSimboloSiguienteA(Poker carta) {

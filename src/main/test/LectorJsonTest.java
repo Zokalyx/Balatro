@@ -42,7 +42,7 @@ public class LectorJsonTest {
 
         Poker carta = cartas.get(0);
         Poker cartaComparacion = new Poker("As", new Trebol(), 10, 1);
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
         carta.modificarPuntaje(puntaje);
 
         assertTrue(carta.esMismoPaloQue(cartaComparacion));
@@ -56,10 +56,10 @@ public class LectorJsonTest {
         ArrayList<Comodin> cartas = lectorJson.leerComodines();
 
         Comodin carta = cartas.get(0);  // Comodín descarte 30 x 1
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
         carta.modificarPuntaje(puntaje, new JugadaCartaAlta(), 2);  // 2 descartes
 
-        assertEquals(120, puntaje.calcularTotal());
+        assertEquals(60, puntaje.calcularTotal());
     }
 
     @Test
@@ -67,12 +67,12 @@ public class LectorJsonTest {
         LectorJson lectorJson = new LectorJson();
         ArrayList<Tarot> cartas = lectorJson.leerTarots();
 
-        Tarot tarot = cartas.get(0);  // Tarot sobre carta: agrega 10 x 2
+        Tarot tarot = cartas.get(0);  // Tarot sobre carta: setea 10 x 2
         Poker poker = new Poker("As", new Trebol(), 10, 1);
 
         tarot.modificar(poker);
 
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
         poker.modificarPuntaje(puntaje);
         assertEquals(20, puntaje.calcularTotal());
     }

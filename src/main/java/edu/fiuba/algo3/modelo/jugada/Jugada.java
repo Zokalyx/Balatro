@@ -20,14 +20,14 @@ public abstract class Jugada implements ModificablePorTarot {
             carta.modificarPuntaje(puntaje);
         }
 
-        puntaje.sumarMultiplicador((int)multiplicadorBase);
+        puntaje.multiplicarMultiplicador((int)multiplicadorBase);
         puntaje.sumarValorBase(valorBase);
     }
 
     @Override
     public void modificarse(int puntos, double multiplicador){
         valorBase += puntos;
-        multiplicadorBase += multiplicador;
+        multiplicadorBase *= multiplicador;
     }
 
     public abstract ArrayList<Poker> formarseConCartas(ArrayList<Poker> cartas);

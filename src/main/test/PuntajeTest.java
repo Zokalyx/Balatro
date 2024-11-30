@@ -58,11 +58,11 @@ public class PuntajeTest {
     }
 
     @Test
-    public void test07SePuedeSumarMultiplicador(){
-        Puntaje puntaje = new Puntaje(20, 1);
+    public void test07SePuedeMultiplicarMultiplicador(){
+        Puntaje puntaje = new Puntaje(20, 2);
 
-        puntaje.sumarMultiplicador(2);
+        puntaje.multiplicarMultiplicador(3);
 
-        assertEquals(60, puntaje.calcularTotal());
+        assertEquals(120, puntaje.calcularTotal());
     }
 }

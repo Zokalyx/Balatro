@@ -17,7 +17,7 @@ public class TarotTest {
         Poker carta = new Poker("7", new Diamante(), 7, 1);
         Tarot tarot = new Tarot("La Torre", "Mejora 1 carta seleccionada y la convierte en una carta de piedra.",50,1, new ActivacionTarotPokerCualquiera());
         tarot.modificar(carta);
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
 
         carta.modificarPuntaje(puntaje);
 
@@ -29,7 +29,7 @@ public class TarotTest {
         Poker carta = new Poker("7", new Diamante(), 7, 1);
         Tarot tarot = new Tarot("Justicia", "Mejora 1 carta seleccionada y la convierte en una carta de cristal", 1, 2, new ActivacionTarotPokerCualquiera());
         tarot.modificar(carta);
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
 
         carta.modificarPuntaje(puntaje);
 
@@ -39,9 +39,9 @@ public class TarotTest {
     @Test
     public void test03AplicarTarotModificaElValorNumericoDeJugada() {
         Jugada jugada = new JugadaEscalera();  // 30 x 4 normalmente
-        Tarot tarot = new Tarot("Test", "A", 10, 0, new ActivacionTarotJugadaParticular(new JugadaEscalera()));
+        Tarot tarot = new Tarot("Test", "A", 10, 1, new ActivacionTarotJugadaParticular(new JugadaEscalera()));
         tarot.modificar(jugada);
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
 
         jugada.modificarPuntaje(puntaje);
 
@@ -51,12 +51,12 @@ public class TarotTest {
     @Test
     public void test04AplicarTarotModificaElMultiplicadorDeJugada() {
         Jugada jugada = new JugadaEscalera();  // 30 x 4 normalmente
-        Tarot tarot = new Tarot("Test", "A", 0, 1, new ActivacionTarotJugadaParticular(new JugadaEscalera()));
+        Tarot tarot = new Tarot("Test", "A", 0, 2, new ActivacionTarotJugadaParticular(new JugadaEscalera()));
         tarot.modificar(jugada);
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
 
         jugada.modificarPuntaje(puntaje);
 
-        assertEquals(150, puntaje.calcularTotal());
+        assertEquals(240, puntaje.calcularTotal());
     }
 }

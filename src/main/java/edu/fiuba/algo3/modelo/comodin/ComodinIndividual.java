@@ -18,7 +18,9 @@ public class ComodinIndividual extends Comodin {
     @Override
     public void modificarPuntaje(Puntaje puntaje, Jugada jugada, int cartasDescartadas) {
         int activaciones = activacionComodin.activaciones(jugada, cartasDescartadas);
-        puntaje.sumarValorBase(puntos * activaciones);
-        puntaje.sumarMultiplicador(multiplicador * activaciones);
+        for (int i = 0; i < activaciones; i++) {
+            puntaje.sumarValorBase(puntos);
+            puntaje.multiplicarMultiplicador(multiplicador);
+        }
     }
 }

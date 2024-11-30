@@ -21,7 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ManoTest {
     @Test
     public void test01UnaManoVaciaSePuedeRepartirUnMazoYRecibe8Cartas() {
-
         Mazo mockMazo = Mockito.mock(Mazo.class);
         when(mockMazo.tomarCarta()).thenReturn(Mockito.mock(Poker.class));
         Mano mano = new Mano(mockMazo);

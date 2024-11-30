@@ -19,7 +19,7 @@ public class ComodinTest {
         Jugada jugada = new JugadaEscalera();
         comodin.modificarPuntaje(puntaje, jugada, 0);
 
-        assertEquals(27, puntaje.calcularTotal());
+        assertEquals((0 + 3) * (8 * 1), puntaje.calcularTotal());
     }
 
     //Verificar que el jugador recibe un aumento correspondiente si tiene el comodín que
@@ -28,10 +28,10 @@ public class ComodinTest {
     public void test02UsarComodinBonusPorManoJugadaAumentando3PorEscalera() {
         Comodin comodin = new ComodinIndividual("A", "B", 0, 8, new ActivacionComodinJugada(new JugadaEscalera()));
         Jugada jugada = new JugadaEscalera();
-        Puntaje puntaje = new Puntaje(2, 0);
+        Puntaje puntaje = new Puntaje(2, 1);
 
         comodin.modificarPuntaje(puntaje, jugada, 0);
 
-        assertEquals(16, puntaje.calcularTotal());
+        assertEquals((0 + 2) * (8 * 1), puntaje.calcularTotal());
     }
 }

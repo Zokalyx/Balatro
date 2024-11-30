@@ -10,7 +10,9 @@ import edu.fiuba.algo3.modelo.palo.Trebol;
 import edu.fiuba.algo3.modelo.tarot.ActivacionTarotPokerCualquiera;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import org.junit.jupiter.api.Test;
+import org.mockito.InOrder;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.Any;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,14 +48,14 @@ public class Entrega1Test {
     public void test03JugadorPuedeJugarSuMano() {
         // Arrange
         List<Poker> cartas = Arrays.asList(
-                new Poker("A", new Pica(), 10, 0),
-                new Poker("A", new Diamante(), 10, 0),
-                new Poker("A", new Trebol(), 10, 0),
-                new Poker("A", new Corazon(), 10, 0),
-                new Poker("7", new Pica(), 7, 0),
-                new Poker("7", new Diamante(), 7, 0),
-                new Poker("7", new Trebol(), 7, 0),
-                new Poker("7", new Corazon(), 7, 0)
+                new Poker("As", new Pica(), 10, 1),
+                new Poker("As", new Diamante(), 10, 1),
+                new Poker("As", new Trebol(), 10, 1),
+                new Poker("As", new Corazon(), 10, 1),
+                new Poker("7", new Pica(), 7, 1),
+                new Poker("7", new Diamante(), 7, 1),
+                new Poker("7", new Trebol(), 7, 1),
+                new Poker("7", new Corazon(), 7, 1)
         );
         AtomicInteger index = new AtomicInteger(0);
         Mazo<Poker> mazoMock = Mockito.mock(Mazo.class);
@@ -71,7 +73,10 @@ public class Entrega1Test {
 
         // Act
         Jugada jugada = mano.jugar();
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
+        // Par 10 x 2
+        // As 10 x 1
+        // As 10 x 1
         jugada.modificarPuntaje(puntaje);
         int puntajeFinal = puntaje.calcularTotal();
 
@@ -81,18 +86,16 @@ public class Entrega1Test {
 
     @Test
     public void test04ElOrdenAfectaLaPuntuacionDeCartas() {
-        //por ahora esta prueba no hace nada, cuando incorporemos los comodines si va a haber diferencia
-
         // Arrange
         List<Poker> cartas = Arrays.asList(
-                new Poker("A", new Pica(), 10, 0),
-                new Poker("A", new Diamante(), 10, 0),
-                new Poker("A", new Trebol(), 10, 0),
-                new Poker("A", new Corazon(), 10, 0),
-                new Poker("7", new Pica(), 7, 0),
-                new Poker("7", new Diamante(), 7, 0),
-                new Poker("7", new Trebol(), 7, 0),
-                new Poker("7", new Corazon(), 7, 0)
+                mock(Poker.class),
+                mock(Poker.class),
+                new Poker("As", new Trebol(), 10, 1),
+                new Poker("As", new Corazon(), 10, 1),
+                new Poker("7", new Pica(), 7, 1),
+                new Poker("7", new Diamante(), 7, 1),
+                new Poker("7", new Trebol(), 7, 1),
+                new Poker("7", new Corazon(), 7, 1)
         );
         AtomicInteger index = new AtomicInteger(0);
         Mazo<Poker> mazoMock = Mockito.mock(Mazo.class);
@@ -100,21 +103,22 @@ public class Entrega1Test {
             int currentIndex = index.getAndIncrement();
             return cartas.get(currentIndex);
         });
+
+        // Forzar que las primeras cartas hagan un par
+        when(cartas.get(0).esMismoSimboloQue(cartas.get(1))).thenReturn(true);
+        when(cartas.get(1).esMismoSimboloQue(cartas.get(0))).thenReturn(true);
         Mano mano = new Mano(mazoMock);
         mano.repartir();
-        // Par de Aces
         mano.seleccionarCarta(cartas.get(0));
         mano.seleccionarCarta(cartas.get(1));
 
-        // Act
         Jugada jugada = mano.jugar();
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
         jugada.modificarPuntaje(puntaje);
-        int puntajeFinal = puntaje.calcularTotal();
 
-        // Assert
-        assertEquals(60, puntajeFinal);
-
+        InOrder inOrder = inOrder(cartas.get(0), cartas.get(1));
+        inOrder.verify(cartas.get(0)).modificarPuntaje(any());
+        inOrder.verify(cartas.get(1)).modificarPuntaje(any());
     }
 
     @Test
@@ -122,7 +126,7 @@ public class Entrega1Test {
         Poker carta = new Poker("7", new Diamante(), 7, 1);
         Tarot tarot = new Tarot("La Torre", "Mejora 1 carta seleccionada y la convierte en una carta de piedra.",50,1, new ActivacionTarotPokerCualquiera());
         tarot.modificar(carta);
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
 
         carta.modificarPuntaje(puntaje);
 
@@ -134,7 +138,7 @@ public class Entrega1Test {
         Poker carta = new Poker("7", new Diamante(), 7, 1);
         Tarot tarot = new Tarot("Justicia", "Mejora 1 carta seleccionada y la convierte en una carta de cristal", 1, 2, new ActivacionTarotPokerCualquiera());
         tarot.modificar(carta);
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
 
         carta.modificarPuntaje(puntaje);
 

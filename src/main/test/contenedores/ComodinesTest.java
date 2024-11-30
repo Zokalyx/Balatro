@@ -17,11 +17,14 @@ public class ComodinesTest {
         Comodines comodines = new Comodines();
         comodines.agregar(new ComodinIndividual("A", "B", 1, 2, new ActivacionComodinSiempre()));
         comodines.agregar(new ComodinIndividual("C", "D", 3, 4, new ActivacionComodinSiempre()));
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
         comodines.modificarPuntaje(puntaje, new JugadaCartaAlta(), 0);
 
 
-        assertEquals(4 * 6, puntaje.calcularTotal());
+        // Comodin 1 x 2
+        // Comodin 3 x 4
+        // Total 4 x 8
+        assertEquals(4 * 8, puntaje.calcularTotal());
     }
 
     @Test

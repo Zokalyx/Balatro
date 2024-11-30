@@ -31,14 +31,14 @@ public class Adicionales {
     @Test
     public void test01JugadaCompleta() {
         List<Poker> cartas = Arrays.asList(
-                new Poker("A", new Pica(), 10, 0),
-                new Poker("A", new Diamante(), 10, 0),
-                new Poker("A", new Trebol(), 10, 0),
-                new Poker("A", new Corazon(), 10, 0),
-                new Poker("7", new Pica(), 7, 0),
-                new Poker("7", new Diamante(), 7, 0),
-                new Poker("7", new Trebol(), 7, 0),
-                new Poker("7", new Corazon(), 7, 0)
+                new Poker("A", new Pica(), 10, 1),
+                new Poker("A", new Diamante(), 10, 1),
+                new Poker("A", new Trebol(), 10, 1),
+                new Poker("A", new Corazon(), 10, 1),
+                new Poker("7", new Pica(), 7, 1),
+                new Poker("7", new Diamante(), 7, 1),
+                new Poker("7", new Trebol(), 7, 1),
+                new Poker("7", new Corazon(), 7, 1)
         );
         AtomicInteger index = new AtomicInteger(0);
         Mazo<Poker> mazoMock = Mockito.mock(Mazo.class);
@@ -50,10 +50,10 @@ public class Adicionales {
         Mano mano = new Mano(mazoMock);
         mano.repartir();
 
-        Tarot tarot = new Tarot("a", "b", 20, 0, new ActivacionTarotPokerCualquiera());
+        Tarot tarot = new Tarot("a", "b", 20, 1, new ActivacionTarotPokerCualquiera());
         tarot.modificar(cartas.get(0));
 
-        Comodin comodin1 = new ComodinIndividual("a", "b", 0, 5, new ActivacionComodinDescarte());
+        Comodin comodin1 = new ComodinIndividual("a", "b", 0, 2, new ActivacionComodinDescarte());
         Comodin comodin2 = new ComodinIndividual("b", "c", 1, 1, new ActivacionComodinJugada(new JugadaPar()));
         Comodin comodin3 = new ComodinIndividual("d", "e", 30, 30, new ActivacionComodinJugada(new JugadaPierna()));
         Comodines comodines = new Comodines();
@@ -67,18 +67,18 @@ public class Adicionales {
         // Par de A
         Jugada jugada = mano.jugar();
 
-        Puntaje puntaje = new Puntaje(0, 0);
+        Puntaje puntaje = new Puntaje(0, 1);
 
         // Par: 10 x 2
-        // Primer as (modificado por tarot): 20 x 0
-        // Segundo as: 10 x 0
+        // Primer as (modificado por tarot): 20 x 1
+        // Segundo as: 10 x 1
         jugada.modificarPuntaje(puntaje);
-        // Primer comodin: 0 x 25 (5 activaciones)
+        // Primer comodin: 0 x 2^5 (5 activaciones)
         // Segundo comodin: 1 x 1
         // Tercer comodin: No se activa.
         comodines.modificarPuntaje(puntaje, jugada, 5);
 
-        // Total: 41 x 28 = 1148
-        assertEquals(1148, puntaje.calcularTotal());
+        // Total: 41 x 64 = 1148
+        assertEquals(2624, puntaje.calcularTotal());
     }
 }
