@@ -1,8 +1,9 @@
 package edu.fiuba.algo3.modelo;
 
 import edu.fiuba.algo3.modelo.comodin.*;
+import edu.fiuba.algo3.modelo.jugada.*;
 import edu.fiuba.algo3.modelo.palo.*;
-import edu.fiuba.algo3.modelo.tarot.Tarot;
+import edu.fiuba.algo3.modelo.tarot.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -117,16 +118,49 @@ public class LectorJson {
         String sobre = (String) carta.get("sobre");
         String ejemplar = (String) carta.get("ejemplar");
 
-        return Tarot.CrearTarot(nombre, descripcion, sobre, ejemplar, puntos, multiplicador);
+        if (sobre.equals("carta")) {
+            return new Tarot(nombre, descripcion, puntos, multiplicador, new ActivacionTarotPokerCualquiera());
+        } else if (sobre.equals("mano")) {
+            return new Tarot(nombre, descripcion, puntos, multiplicador, new ActivacionTarotJugadaParticular(parsearJugada(ejemplar)));
+        }
+
+        throw new SobreNoEncontradoError("Sobre no encontrado");
     }
 
-    private Activacion parsearActivacion(Object activacionJSON) {
+    private Jugada parsearJugada(String activacionString) {
+        switch (activacionString.toLowerCase()) {
+            case "escalera real":
+                return new JugadaEscaleraReal();
+            case "escalera de color":
+                return new JugadaEscaleraColor();
+            case "poker":
+                return new JugadaPoker();
+            case "full":
+                return new JugadaFullHouse();
+            case "color":
+                return new JugadaColor();
+            case "escalera":
+                return new JugadaEscalera();
+            case "trio":
+                return new JugadaPierna();
+            case "doble par":
+                return new JugadaDoblePar();
+            case "par":
+                return new JugadaPar();
+            case "carta alta":
+                return new JugadaCartaAlta();
+            default:
+                throw new JugadaNoEncontradaError("Jugada desconocida: " + activacionString);
+        }
+    }
+
+    private ActivacionComodin parsearActivacion(Object activacionJSON) {
         if (activacionJSON instanceof String) {
             switch ((String) activacionJSON) {
                 case "Siempre":
-                    return new ActivacionSiempre();
+                    return new ActivacionComodinSiempre();
                 case "Descarte":
-                    return new ActivacionDescarte();
+                    return new ActivacionComodinDescarte();
                 default:
                     throw new RuntimeException("Activación desconocida");
             }
@@ -136,9 +170,9 @@ public class LectorJson {
             Object valor = ((JSONObject) activacionJSON).get(key);
             switch (key) {
                 case "1 en":
-                    return new ActivacionProbabilidad(Math.toIntExact((long) valor));
+                    return new ActivacionComodinProbabilidad(Math.toIntExact((long) valor));
                 case "Mano Jugada":
-                    return new ActivacionJugada((String) valor);
+                    return new ActivacionComodinJugada(parsearJugada((String) valor));
                 default:
                     throw new RuntimeException("Activación desconocida");
             }
@@ -161,11 +195,11 @@ public class LectorJson {
             return new ComodinCompuesto(nombre, descripcion, listaComodines);
 
         } else {
-            Activacion activacion = parsearActivacion(carta.get("activacion"));
+            ActivacionComodin activacionComodin = parsearActivacion(carta.get("activacion"));
             JSONObject efecto = (JSONObject) carta.get("efecto");
             int puntos = Math.toIntExact((long) efecto.get("puntos"));
             int multiplicador = Math.toIntExact((long) efecto.get("multiplicador"));
-            return new ComodinIndividual(nombre, descripcion, puntos, multiplicador, activacion);
+            return new ComodinIndividual(nombre, descripcion, puntos, multiplicador, activacionComodin);
         }
     }
 }

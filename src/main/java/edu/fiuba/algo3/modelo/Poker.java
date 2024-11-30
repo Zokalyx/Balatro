@@ -55,11 +55,6 @@ public class Poker implements ModificablePorTarot, Comparable<Poker> {
     }
 
     @Override
-    public boolean esEjemplar(String ejemplar) {
-        return true;
-    }
-
-    @Override
     public int compareTo(Poker carta) {
         return this.getValorDeCarta() - carta.getValorDeCarta();
     }

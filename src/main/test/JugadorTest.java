@@ -21,25 +21,10 @@ public class JugadorTest {
     public void test01JugadorPoseeCartasSuficientesEnElMazoParaEmpezarElJuego() {
         LectorJson lector = new LectorJson();
         ArrayList<Poker> cartas = lector.leerMazo();
-        Mazo mazo = new Mazo(cartas);
+        Mazo<Poker> mazo = new Mazo<>(cartas);
         Jugador jugador = new Jugador(mazo);
 
         assertDoesNotThrow(jugador::repartirMano);
-    }
-
-    @Test
-    public void test02JugadorObtiene0PuntosSiJuegaSinSeleccionarCartas() {
-        LectorJson lector = new LectorJson();
-        ArrayList<Poker> cartas = lector.leerMazo();
-        Mazo mazo = new Mazo(cartas);
-        Jugador jugador = new Jugador(mazo);
-        jugador.repartirMano();
-
-        // En el futuro, esto no estará permitido
-        // Ya que es una jugada nula.
-        int puntajeFinal = jugador.jugarMano();
-
-        assertEquals(puntajeFinal, 0);
     }
 
     @Test
@@ -57,7 +42,7 @@ public class JugadorTest {
         );
         AtomicInteger index = new AtomicInteger(0);
 
-        Mazo mazoMock = Mockito.mock(Mazo.class);
+        Mazo<Poker> mazoMock = Mockito.mock(Mazo.class);
 
         when(mazoMock.tomarCarta()).thenAnswer(invocation -> {
             int currentIndex = index.getAndIncrement();
@@ -94,7 +79,7 @@ public class JugadorTest {
                 new Poker("7", new Corazon(), 7, 0)
         );
         AtomicInteger index = new AtomicInteger(0);
-        Mazo mazoMock = Mockito.mock(Mazo.class);
+        Mazo<Poker> mazoMock = Mockito.mock(Mazo.class);
         when(mazoMock.tomarCarta()).thenAnswer(invocation -> {
             int currentIndex = index.getAndIncrement();
             return cartas.get(currentIndex);

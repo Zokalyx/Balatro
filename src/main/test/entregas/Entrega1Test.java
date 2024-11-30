@@ -6,6 +6,7 @@ import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.palo.Pica;
 import edu.fiuba.algo3.modelo.palo.Trebol;
+import edu.fiuba.algo3.modelo.tarot.ActivacionTarotPokerCualquiera;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -23,7 +24,7 @@ public class Entrega1Test {
     public void test01JugadorPoseeCartasSuficientesEnElMazoParaEmpezarElJuego() {
         LectorJson lector = new LectorJson();
         ArrayList<Poker> cartas = lector.leerMazo();
-        Mazo mazo = new Mazo(cartas);
+        Mazo<Poker> mazo = new Mazo<Poker>(cartas);
         Jugador jugador = new Jugador(mazo);
 
         assertDoesNotThrow(jugador::repartirMano);
@@ -32,7 +33,7 @@ public class Entrega1Test {
     @Test
     public void test02UnaManoVaciaSePuedeRepartirUsandoUnMazoYRecibe8Cartas() {
 
-        Mazo mockMazo = Mockito.mock(Mazo.class);
+        Mazo<Poker> mockMazo = Mockito.mock(Mazo.class);
         when(mockMazo.tomarCarta()).thenReturn(Mockito.mock(Poker.class));
         Mano mano = new Mano(mockMazo);
         mano.repartir();
@@ -54,7 +55,7 @@ public class Entrega1Test {
                 new Poker("7", new Corazon(), 7, 0)
         );
         AtomicInteger index = new AtomicInteger(0);
-        Mazo mazoMock = Mockito.mock(Mazo.class);
+        Mazo<Poker> mazoMock = Mockito.mock(Mazo.class);
         when(mazoMock.tomarCarta()).thenAnswer(invocation -> {
             int currentIndex = index.getAndIncrement();
             return cartas.get(currentIndex);
@@ -90,7 +91,7 @@ public class Entrega1Test {
                 new Poker("7", new Corazon(), 7, 0)
         );
         AtomicInteger index = new AtomicInteger(0);
-        Mazo mazoMock = Mockito.mock(Mazo.class);
+        Mazo<Poker> mazoMock = Mockito.mock(Mazo.class);
         when(mazoMock.tomarCarta()).thenAnswer(invocation -> {
             int currentIndex = index.getAndIncrement();
             return cartas.get(currentIndex);
@@ -112,10 +113,8 @@ public class Entrega1Test {
     @Test
     public void test05AplicarTarotModificaElValorNumericoDeCarta() {
         Poker carta = new Poker("7", new Diamante(), 7, 1);
-        Tarot tarot = Tarot.CrearTarot("La Torre", "Mejora 1 carta seleccionada y la convierte en una carta de piedra.","carta","cualquiera",50,1);
-        ArrayList<Poker> pokers = new ArrayList<>();
-        pokers.add(carta);
-        tarot.modificar(pokers);
+        Tarot tarot = new Tarot("La Torre", "Mejora 1 carta seleccionada y la convierte en una carta de piedra.",50,1, new ActivacionTarotPokerCualquiera());
+        tarot.modificar(carta);
         Puntaje puntaje = new Puntaje(0, 0);
 
         carta.modificarPuntaje(puntaje);
@@ -126,10 +125,8 @@ public class Entrega1Test {
     @Test
     public void test06AplicarTarotModificaElMultiplicadorDeCarta() {
         Poker carta = new Poker("7", new Diamante(), 7, 1);
-        Tarot tarot = Tarot.CrearTarot("Justicia", "Mejora 1 carta seleccionada y la convierte en una carta de cristal", "carta", "cualquiera", 1, 2);
-        ArrayList<Poker> pokers = new ArrayList<>();
-        pokers.add(carta);
-        tarot.modificar(pokers);
+        Tarot tarot = new Tarot("Justicia", "Mejora 1 carta seleccionada y la convierte en una carta de cristal", 1, 2, new ActivacionTarotPokerCualquiera());
+        tarot.modificar(carta);
         Puntaje puntaje = new Puntaje(0, 0);
 
         carta.modificarPuntaje(puntaje);

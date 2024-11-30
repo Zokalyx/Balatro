@@ -11,16 +11,15 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class JugadaFactoryTest {
     @Test
-    public void test01LaJugadaSinCartasEsNula() {
+    public void test01LaJugadaSinCartasLanzaUnaExcepcion() {
         JugadaFactory jugadaFactory = new JugadaFactory();
         ArrayList<Poker> cartas = new ArrayList<>();
 
-        Jugada jugada = jugadaFactory.obtenerJugada(cartas);
-
-        assertInstanceOf(JugadaNula.class, jugada);
+        assertThrows(JugadaNulaError.class, () -> jugadaFactory.obtenerJugada(cartas));
     }
 
     @Test

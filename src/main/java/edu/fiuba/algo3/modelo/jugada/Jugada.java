@@ -10,10 +10,9 @@ public abstract class Jugada implements ModificablePorTarot {
     ArrayList<Poker> cartas;
     double multiplicadorBase;
     int valorBase;
-    String nombre;
 
-    public Jugada(ArrayList<Poker> cartas) {
-        this.cartas = cartas;
+    public Jugada() {
+        this.cartas = new ArrayList<>();
     }
 
     public void modificarPuntaje(Puntaje puntaje) {
@@ -24,13 +23,16 @@ public abstract class Jugada implements ModificablePorTarot {
         puntaje.sumarMultiplicador((int)multiplicadorBase);
         puntaje.sumarValorBase(valorBase);
     }
-    @Override
-    public boolean esEjemplar(String nombre) {
-        return this.nombre.equals(nombre);
-    }
+
     @Override
     public void modificarse(int puntos, double multiplicador){
         valorBase += puntos;
         multiplicadorBase += multiplicador;
+    }
+
+    public abstract ArrayList<Poker> formarseConCartas(ArrayList<Poker> cartas);
+
+    public void setCartas(ArrayList<Poker> cartasInvolucradas) {
+        this.cartas = cartasInvolucradas;
     }
 }

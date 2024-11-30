@@ -2,7 +2,7 @@ import edu.fiuba.algo3.modelo.LectorJson;
 import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.Puntaje;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
-import edu.fiuba.algo3.modelo.jugada.JugadaNula;
+import edu.fiuba.algo3.modelo.jugada.JugadaCartaAlta;
 import edu.fiuba.algo3.modelo.palo.Trebol;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import org.junit.jupiter.api.Test;
@@ -57,7 +57,7 @@ public class LectorJsonTest {
 
         Comodin carta = cartas.get(0);  // Comodín descarte 30 x 1
         Puntaje puntaje = new Puntaje(0, 0);
-        carta.modificarPuntaje(puntaje, new JugadaNula(new ArrayList<>()), 2);  // 2 descartes
+        carta.modificarPuntaje(puntaje, new JugadaCartaAlta(), 2);  // 2 descartes
 
         assertEquals(120, puntaje.calcularTotal());
     }
@@ -69,10 +69,8 @@ public class LectorJsonTest {
 
         Tarot tarot = cartas.get(0);  // Tarot sobre carta: agrega 10 x 2
         Poker poker = new Poker("As", new Trebol(), 10, 1);
-        ArrayList<Poker> pokers = new ArrayList<>();
-        pokers.add(poker);
 
-        tarot.modificar(pokers);
+        tarot.modificar(poker);
 
         Puntaje puntaje = new Puntaje(0, 0);
         poker.modificarPuntaje(puntaje);

@@ -4,10 +4,10 @@ import edu.fiuba.algo3.modelo.jugada.Jugada;
 
 import java.util.Random;
 
-public class ActivacionProbabilidad implements Activacion {
+public class ActivacionComodinProbabilidad implements ActivacionComodin {
     int probabilidad;
 
-    public ActivacionProbabilidad(int probabilidad){
+    public ActivacionComodinProbabilidad(int probabilidad){
         this.probabilidad = probabilidad;
     }
 

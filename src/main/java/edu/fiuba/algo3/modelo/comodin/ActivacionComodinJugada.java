@@ -2,16 +2,16 @@ package edu.fiuba.algo3.modelo.comodin;
 
 import edu.fiuba.algo3.modelo.jugada.Jugada;
 
-public class ActivacionJugada implements Activacion {
-    String jugada;
+public class ActivacionComodinJugada implements ActivacionComodin {
+    Jugada jugada;
 
-    public ActivacionJugada(String jugada){
+    public ActivacionComodinJugada(Jugada jugada){
         this.jugada = jugada;
     }
 
     @Override
     public int activaciones(Jugada jugada, int cartasDescartadas) {
-        if (jugada.esEjemplar(this.jugada)) {
+        if (jugada.getClass().equals(this.jugada.getClass())) {
             return 1;
         }
 

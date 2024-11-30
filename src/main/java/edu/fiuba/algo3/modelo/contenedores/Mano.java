@@ -3,7 +3,6 @@ package edu.fiuba.algo3.modelo.contenedores;
 import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaFactory;
-import edu.fiuba.algo3.modelo.jugada.JugadaNula;
 
 import java.util.ArrayList;
 
@@ -12,14 +11,14 @@ public class Mano {
     ArrayList<Poker> cartasSeleccionadas;
     int maximoCartas = 8;
     int maximoCartasSeleccionadas = 5;
-    Jugada jugada;
     Mazo<Poker> mazo;
+    JugadaFactory jugadaFactory;
 
     public Mano(Mazo<Poker> mazo) {
         cartas = new ArrayList<>();
         cartasSeleccionadas = new ArrayList<>();
-        jugada = new JugadaNula(new ArrayList<>());
         this.mazo = mazo;
+        jugadaFactory = new JugadaFactory();
     }
 
     public void repartir() {
@@ -34,21 +33,19 @@ public class Mano {
         }
 
         cartasSeleccionadas.add(carta);
-        jugada = new JugadaFactory().obtenerJugada(cartasSeleccionadas);
     }
 
     public void deseleccionarCarta(Poker carta) {
         cartasSeleccionadas.remove(carta);
-        jugada = new JugadaFactory().obtenerJugada(cartasSeleccionadas);
     }
 
     public Jugada jugar() {
+        Jugada jugada = jugadaFactory.obtenerJugada(cartasSeleccionadas);
         cartasSeleccionadas.clear();
-
         return jugada;
     }
 
-    public int descartar(){
+    public int descartar() {
         int cartasDescartadas = 0;
         for (Poker cartaSeleccionada : cartasSeleccionadas) {
             cartas.remove(cartaSeleccionada);
@@ -56,7 +53,6 @@ public class Mano {
         }
         cartasSeleccionadas.clear();
         repartir();
-        jugada = new JugadaNula(new ArrayList<>());
         return cartasDescartadas;
     }
 

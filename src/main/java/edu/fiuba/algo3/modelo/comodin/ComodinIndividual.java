@@ -6,18 +6,18 @@ import edu.fiuba.algo3.modelo.jugada.Jugada;
 public class ComodinIndividual extends Comodin {
     int puntos;
     int multiplicador;
-    Activacion activacion;
+    ActivacionComodin activacionComodin;
 
-    public ComodinIndividual(String nombre, String descripcion, int puntos, int multiplicador, Activacion activacion) {
+    public ComodinIndividual(String nombre, String descripcion, int puntos, int multiplicador, ActivacionComodin activacionComodin) {
         super(nombre, descripcion);
         this.puntos = puntos;
         this.multiplicador = multiplicador;
-        this.activacion = activacion;
+        this.activacionComodin = activacionComodin;
     }
 
     @Override
     public void modificarPuntaje(Puntaje puntaje, Jugada jugada, int cartasDescartadas) {
-        int activaciones = activacion.activaciones(jugada, cartasDescartadas);
+        int activaciones = activacionComodin.activaciones(jugada, cartasDescartadas);
         puntaje.sumarValorBase(puntos * activaciones);
         puntaje.sumarMultiplicador(multiplicador * activaciones);
     }
