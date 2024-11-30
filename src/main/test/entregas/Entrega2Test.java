@@ -64,7 +64,7 @@ public class Entrega2Test {
     }
 
     @Test
-    public void test05seSuman10PuntosPorDescarte(){
+    public void test05seSuman10PuntosPorDescarteDisponible(){
         List<Poker> cartas = Arrays.asList(
                 new Poker("A", new Pica(), 10, 0),
                 new Poker("A", new Diamante(), 10, 0),
@@ -89,9 +89,11 @@ public class Entrega2Test {
 
         mano.repartir();
 
+        int descartesDisponibles = 4;
+
         mano.seleccionarCarta(cartas.get(2));
         mano.seleccionarCarta(cartas.get(3));
-        int cartasDescartadas = mano.descartar();
+        descartesDisponibles -= mano.descartar();
 
         // Carta alta 5 * 1 + valor de carta (7) + 10 * 2 del comodín por descarte = 32
         mano.seleccionarCarta(cartas.get(4));
@@ -99,13 +101,13 @@ public class Entrega2Test {
         Puntaje puntaje = new Puntaje(0, 0);
         Jugada jugada = mano.jugar();
         jugada.modificarPuntaje(puntaje);
-        comodin.modificarPuntaje(puntaje, jugada, cartasDescartadas);
+        comodin.modificarPuntaje(puntaje, jugada, descartesDisponibles);
 
         assertEquals(32, puntaje.calcularTotal());
     }
 
     @Test
-    public void test06seSuman10PuntosPorDescarte(){
+    public void test06seSuman10PuntosPorDescarteDisponible(){
         List<Poker> cartas = Arrays.asList(
                 new Poker("A", new Pica(), 10, 0),
                 new Poker("A", new Diamante(), 10, 0),
@@ -129,16 +131,18 @@ public class Entrega2Test {
 
         Comodin comodin = new ComodinIndividual("a", "a",  10, 0, new ActivacionComodinDescarte());
 
+        int descartesDisponibles = 4;
+
         mano.seleccionarCarta(cartas.get(2));
         mano.seleccionarCarta(cartas.get(3));
-        int cantidadDescartada = mano.descartar();
+        descartesDisponibles -= mano.descartar();
 
         // Carta alta 5 * 1 + valor de carta (7) + 10 * 2 del comodín por descarte = 32
         mano.seleccionarCarta(cartas.get(4));
         Puntaje puntaje = new Puntaje(0, 0);
         Jugada jugada = mano.jugar();
         jugada.modificarPuntaje(puntaje);
-        comodin.modificarPuntaje(puntaje, jugada, cantidadDescartada);
+        comodin.modificarPuntaje(puntaje, jugada, descartesDisponibles);
 
         assertEquals(32, puntaje.calcularTotal());
     }
