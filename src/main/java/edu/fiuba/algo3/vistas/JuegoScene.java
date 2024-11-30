@@ -33,11 +33,23 @@ public class JuegoScene extends Application {
             System.out.println("No se encontró el imagen");
         }
 
+        Button botonMazo = new Button("Mazo");
+        Button botonDescarte = new Button("Descartar");
+        Region espacioEntreBotonesIzquierda = new Region();
+        HBox.setHgrow(espacioEntreBotonesIzquierda, Priority.ALWAYS);
+        Region espacioEntreBotonesDerecha = new Region();
+        HBox.setHgrow(espacioEntreBotonesDerecha, Priority.ALWAYS);
+
+        HBox panelInferior = new HBox(botonMazo, espacioEntreBotonesIzquierda, new ManoVista(new Mano(new Mazo<>(new ArrayList<>()))), espacioEntreBotonesDerecha, botonDescarte);
+        panelInferior.setAlignment(Pos.CENTER);
+        panelInferior.setSpacing(10);
+
         ComodinesVista comodines = new ComodinesVista();
         Region espacioCentralVertical = new Region();
         VBox.setVgrow(espacioCentralVertical, Priority.ALWAYS);
-        VBox contenedorCentral = new VBox(new PanelPuntajeVista(), espacioCentralVertical, new ManoVista(new Mano(new Mazo<>(new ArrayList<>()))));
+        VBox contenedorCentral = new VBox(new PanelPuntajeVista(), espacioCentralVertical, panelInferior);
         contenedorCentral.prefHeightProperty().bind(root.heightProperty());
+        contenedorCentral.setMinWidth(600);
 
         TarotsVista tarots = new TarotsVista();
 
