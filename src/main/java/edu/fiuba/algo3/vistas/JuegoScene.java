@@ -5,8 +5,10 @@ import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import javafx.application.Application;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
@@ -21,7 +23,7 @@ public class JuegoScene extends Application {
 
     @Override
     public void start(Stage stage) {
-        HBox root = new HBox();
+        Pane root = new Pane();
 
         try {
             Image image = new Image(new FileInputStream("src/main/resources/freepik_poker_table_background.jpg"));
@@ -46,7 +48,14 @@ public class JuegoScene extends Application {
         Region espacioAntesTarots = new Region();
         HBox.setHgrow(espacioAntesTarots, Priority.ALWAYS);
 
-        root.getChildren().addAll(comodines, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarots);
+        HBox hboxMadre = new HBox(comodines, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarots);
+        hboxMadre.prefWidthProperty().bind(root.widthProperty());
+
+        Button botonSalir = new Button();
+        botonSalir.setText("X");
+        botonSalir.setOnAction(e -> new MenuScene().start(stage));
+
+        root.getChildren().addAll(hboxMadre, botonSalir);
 
         Scene scene = new Scene(root, 1000, 600);
         stage.setTitle("Balatro - Partida");

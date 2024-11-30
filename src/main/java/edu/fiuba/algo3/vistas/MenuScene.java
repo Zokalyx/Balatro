@@ -17,7 +17,7 @@ import java.io.FileNotFoundException;
 public class MenuScene extends Application {
     @Override
     public void start(Stage stage) {
-        HBox root = new HBox();
+        Pane root = new Pane();
 
         try {
             Image image = new Image(new FileInputStream("src/main/resources/freepik_poker_table_background.jpg"));
@@ -46,7 +46,7 @@ public class MenuScene extends Application {
         buttonBox.setSpacing(50);
 
         btnReglas.setOnAction(e -> System.out.println("Mostrar las reglas del juego."));
-        btnJugar.setOnAction(e -> System.out.println("Iniciar el juego."));
+        btnJugar.setOnAction(e -> new JuegoScene().start(stage));
         btnSalir.setOnAction(e -> stage.close());
 
         Region margenIzquierda = new Region();
@@ -61,9 +61,15 @@ public class MenuScene extends Application {
         columnaCentral.setMaxWidth(600);
         columnaCentral.setSpacing(100);
 
-        root.getChildren().addAll(margenIzquierda, columnaCentral, margenDerecha);
+        HBox hboxMadre = new HBox(margenIzquierda, columnaCentral, margenDerecha);
+        hboxMadre.prefWidthProperty().bind(root.widthProperty());
 
-        Scene scene = new Scene(root, 800, 400);
+        VBox vboxMadre = new VBox(hboxMadre, new CartasMenuVista());
+        vboxMadre.prefHeightProperty().bind(root.heightProperty());
+
+        root.getChildren().addAll(vboxMadre);
+
+        Scene scene = new Scene(root, 1000, 600);
         stage.setTitle("Balatro - Menú Principal");
         stage.setScene(scene);
         stage.show();
