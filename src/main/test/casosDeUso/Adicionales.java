@@ -8,18 +8,18 @@ import edu.fiuba.algo3.modelo.comodin.ComodinIndividual;
 import edu.fiuba.algo3.modelo.contenedores.Comodines;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
-import edu.fiuba.algo3.modelo.jugada.Jugada;
-import edu.fiuba.algo3.modelo.jugada.JugadaPar;
-import edu.fiuba.algo3.modelo.jugada.JugadaPierna;
+import edu.fiuba.algo3.modelo.jugada.*;
 import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.palo.Pica;
 import edu.fiuba.algo3.modelo.palo.Trebol;
+import edu.fiuba.algo3.modelo.tarot.ActivacionTarotJugadaParticular;
 import edu.fiuba.algo3.modelo.tarot.ActivacionTarotPokerCualquiera;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -47,7 +47,7 @@ public class Adicionales {
             return cartas.get(currentIndex);
         });
 
-        Mano mano = new Mano(mazoMock);
+        Mano mano = new Mano(mazoMock, new JugadaManager());
         mano.repartir();
 
         Tarot tarot = new Tarot("a", "b", 20, 1, new ActivacionTarotPokerCualquiera());
@@ -80,5 +80,30 @@ public class Adicionales {
 
         // Total: 41 x 64 = 1148
         assertEquals(2624, puntaje.calcularTotal());
+    }
+
+    @Test
+    public void test02MejorarUnaJugadaConUnTarotEsPermanente() {
+        JugadaManager jugadaManager = new JugadaManager();
+        Jugada jugada = jugadaManager.getJugada(new JugadaEscalera());
+        Tarot tarot = new Tarot("a", "b", 20, 3, new ActivacionTarotJugadaParticular(new JugadaEscalera()));
+        tarot.modificar(jugada);
+
+        ArrayList<Poker> cartas = new ArrayList<>();
+        cartas.add(new Poker("3", new Trebol(), 0, 1));
+        cartas.add(new Poker("4", new Diamante(), 0, 1));
+        cartas.add(new Poker("5", new Trebol(), 0, 1));
+        cartas.add(new Poker("6", new Trebol(), 0, 1));
+        cartas.add(new Poker("7", new Trebol(), 0, 1));
+        jugadaManager.calcularJugada(cartas);
+
+        Puntaje puntaje = new Puntaje(0, 1);
+        jugada.modificarPuntaje(puntaje);
+
+        // Debería seguir estando el tarot activo.
+        // Escalera: 30 x 4
+        // Tarot: 20 x 3
+        // Total: 50 x 12
+        assertEquals(600, puntaje.calcularTotal());
     }
 }

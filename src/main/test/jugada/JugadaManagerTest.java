@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class JugadaFactoryTest {
+public class JugadaManagerTest {
     @Test
     public void test01LaJugadaSinCartasLanzaUnaExcepcion() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
 
         assertThrows(JugadaNulaError.class, () -> jugadaFactory.calcularJugada(cartas));
@@ -24,7 +24,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test02JugarUnaCartaEsCartaAlta() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("As", new Pica(), 0, 0));
 
@@ -35,7 +35,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test03JugarCartasQueNoFormanNadaEsCartaAlta() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("As", new Pica(), 0, 0));
         cartas.add(new Poker("Jota", new Pica(), 0, 0));
@@ -50,7 +50,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test04DosCartasConMismoSimboloFormanUnPar() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("As", new Pica(), 0, 0));
         cartas.add(new Poker("As", new Trebol(), 0, 0));
@@ -62,7 +62,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test05UnParEntreOtrasCartasFormanUnPar() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("As", new Pica(), 0, 0));
         cartas.add(new Poker("As", new Trebol(), 0, 0));
@@ -76,7 +76,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test06TresCartasConMismoSimboloFormanUnaPierna() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("As", new Pica(), 0, 0));
         cartas.add(new Poker("As", new Trebol(), 0, 0));
@@ -89,7 +89,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test07UnaPiernaEntreOtrasCartasFormanUnaPierna() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("As", new Pica(), 0, 0));
         cartas.add(new Poker("As", new Trebol(), 0, 0));
@@ -104,7 +104,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test08CuatroCartasConMismoSimboloFormanUnPoker() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("As", new Pica(), 0, 0));
         cartas.add(new Poker("As", new Trebol(), 0, 0));
@@ -119,7 +119,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test09CincoCartasConMismoPaloFormanUnColor() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("As", new Pica(), 0, 0));
         cartas.add(new Poker("2", new Pica(), 0, 0));
@@ -134,7 +134,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test10SePuedeFormarUnFullHouse() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("As", new Pica(), 0, 0));
         cartas.add(new Poker("As", new Corazon(), 0, 0));
@@ -149,7 +149,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test11SePuedeFormarUnaEscaleraNormal() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("2", new Pica(), 0, 0));
         cartas.add(new Poker("3", new Corazon(), 0, 0));
@@ -164,7 +164,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test12SePuedeFormarUnaEscaleraDeColor() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("2", new Pica(), 0, 0));
         cartas.add(new Poker("3", new Pica(), 0, 0));
@@ -179,7 +179,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test13SePuedeFormarUnaEscaleraReal() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("Reina", new Pica(), 0, 0));
         cartas.add(new Poker("Rey", new Pica(), 0, 0));
@@ -194,7 +194,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test14NoSePuedeFormarUnaEscaleraQueTengaAsEnMedio() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("Reina", new Pica(), 0, 0));
         cartas.add(new Poker("Rey", new Diamante(), 0, 0));
@@ -209,7 +209,7 @@ public class JugadaFactoryTest {
 
     @Test
     public void test15DosParesDistintosFormanUnDoblePar() {
-        JugadaFactory jugadaFactory = new JugadaFactory();
+        JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("2", new Pica(), 0, 0));
         cartas.add(new Poker("3", new Diamante(), 0, 0));

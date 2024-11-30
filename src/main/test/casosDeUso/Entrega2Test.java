@@ -5,10 +5,7 @@ import edu.fiuba.algo3.modelo.comodin.*;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import edu.fiuba.algo3.modelo.contenedores.SinCartasError;
-import edu.fiuba.algo3.modelo.jugada.Jugada;
-import edu.fiuba.algo3.modelo.jugada.JugadaCartaAlta;
-import edu.fiuba.algo3.modelo.jugada.JugadaColor;
-import edu.fiuba.algo3.modelo.jugada.JugadaEscalera;
+import edu.fiuba.algo3.modelo.jugada.*;
 import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.palo.Pica;
@@ -82,7 +79,7 @@ public class Entrega2Test {
             int currentIndex = index.getAndIncrement();
             return cartas.get(currentIndex);
         });
-        Mano mano = new Mano(mazoMock);
+        Mano mano = new Mano(mazoMock, new JugadaManager());
 
         Comodin comodin = new ComodinIndividual("a", "a",  10, 1, new ActivacionComodinDescarte());
 
@@ -128,7 +125,7 @@ public class Entrega2Test {
             int currentIndex = index.getAndIncrement();
             return cartas.get(currentIndex);
         });
-        Mano mano = new Mano(mazoMock);
+        Mano mano = new Mano(mazoMock, new JugadaManager());
         mano.repartir();
 
         Comodin comodin = new ComodinIndividual("a", "a",  10, 1, new ActivacionComodinDescarte());

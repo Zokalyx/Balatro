@@ -17,4 +17,8 @@ public class Mazo<T> {
         }
         return cartas.remove(0);
     }
+
+    public void agregar(ArrayList<T> cartas) {
+        this.cartas.addAll(cartas);
+    }
 }

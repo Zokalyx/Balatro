@@ -5,10 +5,10 @@ import edu.fiuba.algo3.modelo.Poker;
 
 import java.util.ArrayList;
 
-public class JugadaFactory {
+public class JugadaManager {
     ArrayList<Jugada> jugadas;
 
-    public JugadaFactory() {
+    public JugadaManager() {
         jugadas = new ArrayList<>();
         jugadas.add(new JugadaEscaleraReal());
         jugadas.add(new JugadaEscaleraColor());
@@ -32,5 +32,15 @@ public class JugadaFactory {
        }
 
        throw new JugadaNulaError("Hay que seleccionar por lo menos una carta");
+    }
+
+    public Jugada getJugada(Jugada jugadaAEncontrar) {
+        for (Jugada jugada : jugadas) {
+            if (jugada.getClass().equals(jugadaAEncontrar.getClass())) {
+                return jugada;
+            }
+        }
+
+        throw new JugadaNoEncontradaError("No se encontró la jugada");
     }
 }

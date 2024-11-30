@@ -3,6 +3,7 @@ package edu.fiuba.algo3.vistas;
 
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
+import edu.fiuba.algo3.modelo.jugada.JugadaManager;
 import javafx.application.Application;
 
 import javafx.geometry.Pos;
@@ -40,7 +41,7 @@ public class JuegoScene extends Application {
         Region espacioEntreBotonesDerecha = new Region();
         HBox.setHgrow(espacioEntreBotonesDerecha, Priority.ALWAYS);
 
-        HBox panelInferior = new HBox(botonMazo, espacioEntreBotonesIzquierda, new ManoVista(new Mano(new Mazo<>(new ArrayList<>()))), espacioEntreBotonesDerecha, botonDescarte);
+        HBox panelInferior = new HBox(botonMazo, espacioEntreBotonesIzquierda, new ManoVista(new Mano(new Mazo<>(new ArrayList<>()), new JugadaManager())), espacioEntreBotonesDerecha, botonDescarte);
         panelInferior.setAlignment(Pos.CENTER);
         panelInferior.setSpacing(10);
 

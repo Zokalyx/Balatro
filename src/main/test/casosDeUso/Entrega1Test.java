@@ -3,6 +3,7 @@ import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
+import edu.fiuba.algo3.modelo.jugada.JugadaManager;
 import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.palo.Pica;
@@ -28,7 +29,7 @@ public class Entrega1Test {
         LectorJson lector = new LectorJson();
         ArrayList<Poker> cartas = lector.leerMazo();
         Mazo<Poker> mazo = new Mazo<>(cartas);
-        Mano mano = new Mano(mazo);
+        Mano mano = new Mano(mazo, new JugadaManager());
 
         assertDoesNotThrow(mano::repartir);
     }
@@ -38,7 +39,7 @@ public class Entrega1Test {
 
         Mazo<Poker> mockMazo = Mockito.mock(Mazo.class);
         when(mockMazo.tomarCarta()).thenReturn(Mockito.mock(Poker.class));
-        Mano mano = new Mano(mockMazo);
+        Mano mano = new Mano(mockMazo, new JugadaManager());
         mano.repartir();
 
         verify(mockMazo, times(8)).tomarCarta();
@@ -64,7 +65,7 @@ public class Entrega1Test {
             return cartas.get(currentIndex);
         });
 
-        Mano mano = new Mano(mazoMock);
+        Mano mano = new Mano(mazoMock, new JugadaManager());
         mano.repartir();
 
         // Par de Aces
@@ -107,7 +108,7 @@ public class Entrega1Test {
         // Forzar que las primeras cartas hagan un par
         when(cartas.get(0).esMismoSimboloQue(cartas.get(1))).thenReturn(true);
         when(cartas.get(1).esMismoSimboloQue(cartas.get(0))).thenReturn(true);
-        Mano mano = new Mano(mazoMock);
+        Mano mano = new Mano(mazoMock, new JugadaManager());
         mano.repartir();
         mano.seleccionarCarta(cartas.get(0));
         mano.seleccionarCarta(cartas.get(1));
