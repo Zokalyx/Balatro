@@ -19,6 +19,9 @@ public class MenuScene extends Application {
     public void start(Stage stage) {
         Pane root = new Pane();
 
+        Font.loadFont(getClass().getResourceAsStream("/PressStart2P-Regular.ttf"), 20);
+        root.setStyle("-fx-font-family: 'Press Start 2P';");
+
         try {
             Image image = new Image(new FileInputStream("src/main/resources/freepik_poker_table_background.jpg"));
             BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
@@ -28,8 +31,10 @@ public class MenuScene extends Application {
         }
 
         Text title = new Text("BALATRO");
-        title.setFont(Font.font("Arial Black", 36));
-        title.setFill(Color.BLACK);
+        title.setStyle("-fx-font-size: 60;");
+        title.setStroke(Color.BLACK);
+        title.setStrokeWidth(2);
+        title.setFill(Color.SKYBLUE);
 
         Button btnReglas = new Button("Reglas");
         btnReglas.setStyle("-fx-background-color: #E0E0E0; -fx-font-size: 16;");

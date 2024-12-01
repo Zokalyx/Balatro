@@ -4,7 +4,9 @@ package edu.fiuba.algo3.modelo;
 import edu.fiuba.algo3.modelo.palo.Palo;
 import edu.fiuba.algo3.modelo.tarot.ModificablePorTarot;
 
-public class Poker implements ModificablePorTarot, Comparable<Poker> {
+import java.util.Observable;
+
+public class Poker extends Observable implements ModificablePorTarot, Comparable<Poker> {
     String simbolo;
     Palo palo;
     int valorNumerico;
@@ -98,6 +100,14 @@ public class Poker implements ModificablePorTarot, Comparable<Poker> {
 
     public String getSimbolo() {
         return simbolo;
+    }
+
+    public int getValorNumerico() {
+        return valorNumerico;
+    }
+
+    public double getMultiplicador() {
+        return multiplicador;
     }
 }
 

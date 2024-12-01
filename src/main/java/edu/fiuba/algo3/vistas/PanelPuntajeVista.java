@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.vistas;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.HBox;
@@ -12,7 +13,8 @@ public class PanelPuntajeVista extends HBox {
 
         puntaje.setStyle("-fx-text-fill: white;");
         ronda.setStyle("-fx-text-fill: white;");
-        setStyle("-fx-background-color: #2c2c2c; -fx-min-width: 400; -fx-min-height: 100; -fx-background-radius: 0 0 20 20; -fx-padding: 10; -fx-font-size: 20");
+        setStyle("-fx-background-color: #2c2c2c; -fx-min-width: 400; -fx-min-height: 100; -fx-max-height: 100; -fx-background-radius: 0 0 20 20; -fx-padding: 10; -fx-font-size: 20");
+        setAlignment(Pos.CENTER);
 
         DropShadow dropShadow = new DropShadow();
         dropShadow.setColor(Color.BLACK);
