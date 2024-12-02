@@ -39,7 +39,9 @@ public class JuegoScene extends Application {
         }
 
         Button botonMazo = new Button("Mazo");
+        botonMazo.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
         Button botonDescarte = new Button("Descartar");
+        botonDescarte.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
         Region espacioEntreBotonesIzquierda = new Region();
         HBox.setHgrow(espacioEntreBotonesIzquierda, Priority.ALWAYS);
         Region espacioEntreBotonesDerecha = new Region();
@@ -70,10 +72,11 @@ public class JuegoScene extends Application {
         botonSalir.setOnAction(e -> new MenuScene().start(stage));
         AnchorPane.setTopAnchor(botonSalir, 10.0);
         AnchorPane.setRightAnchor(botonSalir, 10.0);
+        botonSalir.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
 
         root.getChildren().addAll(hboxMadre, botonSalir);
 
-        Scene scene = new Scene(root, 1000, 600);
+        Scene scene = new Scene(root, 1100, 700);
         stage.setTitle("Balatro - Partida");
         stage.setScene(scene);
         stage.show();

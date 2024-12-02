@@ -22,4 +22,12 @@ public class Tarot {
 
         modificablePorTarot.modificarse(puntos, multiplicador);
     }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
 }

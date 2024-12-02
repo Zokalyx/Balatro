@@ -34,8 +34,8 @@ public class PokerVista extends CartaVista implements Observer {
         Label nombreLabel = new Label(simbolo);
         Label paloLabel = new Label(palo);
 
-        nombreLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: " + color + ";");
-        paloLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: " + color + ";");
+        nombreLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: " + color + "; -fx-font-size: 14;");
+        paloLabel.setStyle("-fx-font-weight: bold; -fx-text-fill: " + color + "; -fx-font-size: 14;");
 
         return new VBox(nombreLabel, paloLabel);
     }

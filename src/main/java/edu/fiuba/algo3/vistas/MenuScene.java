@@ -34,16 +34,16 @@ public class MenuScene extends Application {
         title.setStyle("-fx-font-size: 60;");
         title.setStroke(Color.BLACK);
         title.setStrokeWidth(2);
-        title.setFill(Color.SKYBLUE);
+        title.setFill(Color.GOLD);
 
         Button btnReglas = new Button("Reglas");
-        btnReglas.setStyle("-fx-background-color: #E0E0E0; -fx-font-size: 16;");
+        btnReglas.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
 
         Button btnJugar = new Button("Jugar");
-        btnJugar.setStyle("-fx-background-color: #E0E0E0; -fx-font-size: 16;");
+        btnJugar.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
 
         Button btnSalir = new Button("Salir");
-        btnSalir.setStyle("-fx-background-color: #E0E0E0; -fx-font-size: 16;");
+        btnSalir.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
 
         HBox buttonBox = new HBox();
         buttonBox.setAlignment(Pos.CENTER);
@@ -74,7 +74,7 @@ public class MenuScene extends Application {
 
         root.getChildren().addAll(vboxMadre);
 
-        Scene scene = new Scene(root, 1000, 600);
+        Scene scene = new Scene(root, 1100, 700);
         stage.setTitle("Balatro - Menú Principal");
         stage.setScene(scene);
         stage.show();

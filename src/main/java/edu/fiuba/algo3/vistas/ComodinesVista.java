@@ -11,11 +11,11 @@ import java.util.ArrayList;
 public class ComodinesVista extends VBox {
     public ComodinesVista() {
         ArrayList<ComodinVista> cartas = new ArrayList<>();
-        cartas.add(new ComodinVista(new ComodinIndividual("a", "b", 1, 2, new ActivacionComodinSiempre())));
-        cartas.add(new ComodinVista(new ComodinIndividual("a", "b", 1, 2, new ActivacionComodinSiempre())));
-        cartas.add(new ComodinVista(new ComodinIndividual("a", "b", 1, 2, new ActivacionComodinSiempre())));
-        cartas.add(new ComodinVista(new ComodinIndividual("a", "b", 1, 2, new ActivacionComodinSiempre())));
-        cartas.add(new ComodinVista(new ComodinIndividual("a", "b", 1, 2, new ActivacionComodinSiempre())));
+        cartas.add(new ComodinVista(new ComodinIndividual("Comodin", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 1, 2, new ActivacionComodinSiempre())));
+        cartas.add(new ComodinVista(new ComodinIndividual("Comodin", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 1, 2, new ActivacionComodinSiempre())));
+        cartas.add(new ComodinVista(new ComodinIndividual("Comodin", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 1, 2, new ActivacionComodinSiempre())));
+        cartas.add(new ComodinVista(new ComodinIndividual("Comodin", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 1, 2, new ActivacionComodinSiempre())));
+        cartas.add(new ComodinVista(new ComodinIndividual("Comodin", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 1, 2, new ActivacionComodinSiempre())));
 
         setSpacing(-80);
         setAlignment(Pos.CENTER);

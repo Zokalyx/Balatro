@@ -1,5 +1,6 @@
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.modelo.juego.ConfiguracionJuego;
 import edu.fiuba.algo3.modelo.jugada.JugadaCartaAlta;
 import edu.fiuba.algo3.modelo.palo.Trebol;
 import edu.fiuba.algo3.modelo.tarot.Tarot;

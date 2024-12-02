@@ -15,4 +15,12 @@ public abstract class Comodin {
     // La jugada y las cartas descartadas son la "Acción" del jugador.
     // No necesariamente todos sus datos serán utilizados en el método.
     public abstract void modificarPuntaje(Puntaje puntaje, Jugada jugada, int descartesDisponibles);
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
 }

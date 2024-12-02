@@ -11,10 +11,10 @@ import java.util.ArrayList;
 public class TarotsVista extends VBox {
     public TarotsVista() {
         ArrayList<TarotVista> cartas = new ArrayList<>();
-        cartas.add(new TarotVista(new Tarot("T", "A", 1, 2.0, new ActivacionTarotPokerCualquiera())));
-        cartas.add(new TarotVista(new Tarot("T", "A", 1, 2.0, new ActivacionTarotPokerCualquiera())));
-        cartas.add(new TarotVista(new Tarot("T", "A", 1, 2.0, new ActivacionTarotPokerCualquiera())));
-        cartas.add(new TarotVista(new Tarot("T", "A", 1, 2.0, new ActivacionTarotPokerCualquiera())));
+        cartas.add(new TarotVista(new Tarot("Tarot", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 1, 2.0, new ActivacionTarotPokerCualquiera())));
+        cartas.add(new TarotVista(new Tarot("Tarot", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 1, 2.0, new ActivacionTarotPokerCualquiera())));
+        cartas.add(new TarotVista(new Tarot("Tarot", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 1, 2.0, new ActivacionTarotPokerCualquiera())));
+        cartas.add(new TarotVista(new Tarot("Tarot", "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", 1, 2.0, new ActivacionTarotPokerCualquiera())));
 
         setSpacing(-80);
         setAlignment(Pos.CENTER);

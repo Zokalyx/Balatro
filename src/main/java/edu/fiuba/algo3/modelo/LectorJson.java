@@ -2,6 +2,8 @@ package edu.fiuba.algo3.modelo;
 
 import edu.fiuba.algo3.modelo.comodin.*;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
+import edu.fiuba.algo3.modelo.juego.ConfiguracionJuego;
+import edu.fiuba.algo3.modelo.juego.ConfiguracionRonda;
 import edu.fiuba.algo3.modelo.jugada.*;
 import edu.fiuba.algo3.modelo.palo.*;
 import edu.fiuba.algo3.modelo.tarot.*;

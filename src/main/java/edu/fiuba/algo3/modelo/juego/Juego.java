@@ -1,6 +1,4 @@
-package edu.fiuba.algo3.modelo;
-
-import java.util.ArrayList;
+package edu.fiuba.algo3.modelo.juego;
 
 public class Juego {
     int rondaActual;
@@ -18,6 +16,10 @@ public class Juego {
     }
 
     public void jugarTurno(int puntajeObtenido) {
+        if (gano() || perdio()) {
+            throw new JuegoYaTerminadoError("Ya se terminó el juego");
+        }
+
         turnoActual++;
         puntajeActual += puntajeObtenido;
 
