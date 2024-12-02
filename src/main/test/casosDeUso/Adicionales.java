@@ -8,6 +8,7 @@ import edu.fiuba.algo3.modelo.comodin.ComodinIndividual;
 import edu.fiuba.algo3.modelo.contenedores.Comodines;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
+import edu.fiuba.algo3.modelo.contenedores.Tienda;
 import edu.fiuba.algo3.modelo.jugada.*;
 import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Diamante;
@@ -105,5 +106,48 @@ public class Adicionales {
         // Tarot: 20 x 3
         // Total: 50 x 12
         assertEquals(600, puntaje.calcularTotal());
+    }
+
+    @Test
+    public void test03SeCargaUnaPartidaYSeJuegaUnTurno() {
+        LectorJson lector = new LectorJson();
+
+        ConfiguracionJuego configuracion = lector.leerConfiguracion();
+        JugadaManager jugadaManager = new JugadaManager();
+        Mano mano = new Mano(configuracion.getMazo(), jugadaManager);
+        Juego juego = new Juego(configuracion);
+
+        // Inicio de ronda
+        int rondaActual = juego.getRondaActual();
+        int descartesDisponibles = configuracion.getDescartes(rondaActual);
+        mano.setDescartesDisponibles(descartesDisponibles);
+        Tienda tienda = new Tienda(configuracion.getComodines(rondaActual), configuracion.getTarots(rondaActual), configuracion.getPokers(rondaActual));
+        Comodines comodines = new Comodines();
+        ArrayList<Tarot> tarots = new ArrayList<>();
+
+        // Cumbre mística: x15 por descarte disponible
+        Comodin comodin = tienda.getComodinesDisponibles().get(1);
+        tienda.comprarComodin(comodin);
+
+        // Inicio de turno
+        mano.repartir();
+        ArrayList<Poker> cartas = mano.getCartas();
+        mano.seleccionarCarta(cartas.get(0));
+        descartesDisponibles -= mano.descartar();
+
+        cartas = mano.getCartas();
+        Poker cartaAJugar = cartas.get(0);
+        mano.seleccionarCarta(cartaAJugar);
+
+        Jugada jugada = mano.jugar();
+        Puntaje puntaje = new Puntaje(0, 1);
+        jugada.modificarPuntaje(puntaje);
+        comodines.modificarPuntaje(puntaje, jugada, descartesDisponibles);
+
+        juego.jugarTurno(puntaje.calcularTotal());
+        juego.gano();
+        juego.perdio();
+
+        assertTrue(puntaje.calcularTotal() > 0);
     }
 }

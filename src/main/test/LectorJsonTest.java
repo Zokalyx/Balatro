@@ -1,6 +1,4 @@
-import edu.fiuba.algo3.modelo.LectorJson;
-import edu.fiuba.algo3.modelo.Poker;
-import edu.fiuba.algo3.modelo.Puntaje;
+import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.jugada.JugadaCartaAlta;
 import edu.fiuba.algo3.modelo.palo.Trebol;
@@ -75,5 +73,13 @@ public class LectorJsonTest {
         Puntaje puntaje = new Puntaje(0, 1);
         poker.modificarPuntaje(puntaje);
         assertEquals(20, puntaje.calcularTotal());
+    }
+
+    @Test
+    public void test07SePuedeLeerLaConfiguracion() {
+        LectorJson lectorJson = new LectorJson();
+        ConfiguracionJuego configuracion = lectorJson.leerConfiguracion();
+
+        assertEquals(8, configuracion.getRondaMaxima());
     }
 }

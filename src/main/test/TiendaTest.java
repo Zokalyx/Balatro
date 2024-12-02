@@ -10,6 +10,8 @@ import edu.fiuba.algo3.modelo.tarot.Tarot;
 import edu.fiuba.algo3.modelo.LectorJson;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -18,11 +20,8 @@ public class TiendaTest {
     public void test01SePuedeComprarUnTarot() {
         LectorJson lector = new LectorJson();
 
-        Mazo<Comodin> mazoComodines = new Mazo<>(lector.leerComodines());
-        Mazo<Tarot> mazoTarots = new Mazo<>(lector.leerTarots());
 
-        Tienda tienda = new Tienda(mazoComodines, mazoTarots);
-        tienda.refrescar();
+        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Tarot tarotAComprar = tienda.getTarotsDisponibles().get(0);
         Tarot tarotRecibido = tienda.comprarTarot(tarotAComprar);
@@ -34,11 +33,7 @@ public class TiendaTest {
     public void test02SePuedeComprarUnComodin() {
         LectorJson lector = new LectorJson();
 
-        Mazo<Comodin> mazoComodines = new Mazo<>(lector.leerComodines());
-        Mazo<Tarot> mazoTarots = new Mazo<>(lector.leerTarots());
-
-        Tienda tienda = new Tienda(mazoComodines, mazoTarots);
-        tienda.refrescar();
+        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Comodin comodinAComprar = tienda.getComodinesDisponibles().get(0);
         Comodin comodinRecibido = tienda.comprarComodin(comodinAComprar);
@@ -50,11 +45,7 @@ public class TiendaTest {
     public void test03NoSePuedeComprarUnComodinDosVeces() {
         LectorJson lector = new LectorJson();
 
-        Mazo<Comodin> mazoComodines = new Mazo<>(lector.leerComodines());
-        Mazo<Tarot> mazoTarots = new Mazo<>(lector.leerTarots());
-
-        Tienda tienda = new Tienda(mazoComodines, mazoTarots);
-        tienda.refrescar();
+        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Comodin comodinAComprar = tienda.getComodinesDisponibles().get(0);
         tienda.comprarComodin(comodinAComprar);
@@ -66,11 +57,7 @@ public class TiendaTest {
     public void test04NoSePuedeComprarUnTarotDosVeces() {
         LectorJson lector = new LectorJson();
 
-        Mazo<Comodin> mazoComodines = new Mazo<>(lector.leerComodines());
-        Mazo<Tarot> mazoTarots = new Mazo<>(lector.leerTarots());
-
-        Tienda tienda = new Tienda(mazoComodines, mazoTarots);
-        tienda.refrescar();
+        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Tarot tarotAComprar = tienda.getTarotsDisponibles().get(0);
         tienda.comprarTarot(tarotAComprar);
@@ -82,11 +69,7 @@ public class TiendaTest {
     public void test05NoSePuedeComprarUnComodinQueNoEsDeLaTienda() {
         LectorJson lector = new LectorJson();
 
-        Mazo<Comodin> mazoComodines = new Mazo<>(lector.leerComodines());
-        Mazo<Tarot> mazoTarots = new Mazo<>(lector.leerTarots());
-
-        Tienda tienda = new Tienda(mazoComodines, mazoTarots);
-        tienda.refrescar();
+        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Comodin comodinAComprar = new ComodinIndividual("A", "B", 1, 2, new ActivacionComodinSiempre());
 
@@ -97,74 +80,10 @@ public class TiendaTest {
     public void test06NoSePuedeComprarUnTarotQueNoEsDeLaTienda() {
         LectorJson lector = new LectorJson();
 
-        Mazo<Comodin> mazoComodines = new Mazo<>(lector.leerComodines());
-        Mazo<Tarot> mazoTarots = new Mazo<>(lector.leerTarots());
-
-        Tienda tienda = new Tienda(mazoComodines, mazoTarots);
-        tienda.refrescar();
+        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Tarot tarotAComprar = new Tarot("a", "b", 1, 2, new ActivacionTarotJugadaParticular(new JugadaEscalera()));
 
         assertThrows(CartaNoDisponibleError.class, () -> tienda.comprarTarot(tarotAComprar));
-    }
-
-    @Test
-    public void test07LosComodinesDisponiblesSon2() {
-        LectorJson lector = new LectorJson();
-
-        Mazo<Comodin> mazoComodines = new Mazo<>(lector.leerComodines());
-        Mazo<Tarot> mazoTarots = new Mazo<>(lector.leerTarots());
-
-        Tienda tienda = new Tienda(mazoComodines, mazoTarots);
-        tienda.refrescar();
-
-        assertEquals(2, tienda.getComodinesDisponibles().size());
-    }
-
-    @Test
-    public void test08LosTarotsDisponiblesSon2() {
-        LectorJson lector = new LectorJson();
-
-        Mazo<Comodin> mazoComodines = new Mazo<>(lector.leerComodines());
-        Mazo<Tarot> mazoTarots = new Mazo<>(lector.leerTarots());
-
-        Tienda tienda = new Tienda(mazoComodines, mazoTarots);
-        tienda.refrescar();
-
-        assertEquals(2, tienda.getTarotsDisponibles().size());
-    }
-
-    @Test
-    public void test09RefrescarVuelveLosComodinesDisponiblesA2() {
-        LectorJson lector = new LectorJson();
-
-        Mazo<Comodin> mazoComodines = new Mazo<>(lector.leerComodines());
-        Mazo<Tarot> mazoTarots = new Mazo<>(lector.leerTarots());
-
-        Tienda tienda = new Tienda(mazoComodines, mazoTarots);
-        tienda.refrescar();
-
-        tienda.comprarComodin(tienda.getComodinesDisponibles().get(0));
-        tienda.comprarComodin(tienda.getComodinesDisponibles().get(0));
-
-        tienda.refrescar();
-        assertEquals(2, tienda.getComodinesDisponibles().size());
-    }
-
-    @Test
-    public void test10RefrescarVuelveLosTarotsDisponiblesA2() {
-        LectorJson lector = new LectorJson();
-
-        Mazo<Comodin> mazoComodines = new Mazo<>(lector.leerComodines());
-        Mazo<Tarot> mazoTarots = new Mazo<>(lector.leerTarots());
-
-        Tienda tienda = new Tienda(mazoComodines, mazoTarots);
-        tienda.refrescar();
-
-        tienda.comprarTarot(tienda.getTarotsDisponibles().get(0));
-        tienda.comprarTarot(tienda.getTarotsDisponibles().get(0));
-
-        tienda.refrescar();
-        assertEquals(2, tienda.getTarotsDisponibles().size());
     }
 }

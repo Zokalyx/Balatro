@@ -1,43 +1,51 @@
 package edu.fiuba.algo3.modelo;
 
+import java.util.ArrayList;
+
 public class Juego {
     int rondaActual;
+    int rondaMaxima;
     int puntajeActual;
     int puntajeObjetivo;
     int turnoActual;
+    int turnoMaximo;
+    ConfiguracionJuego configuracion;
 
-    public Juego() {
-        rondaActual = 1;
-        turnoActual = 1;
-        puntajeObjetivo = calcularPuntajeObjetivo(rondaActual);
-        puntajeActual = 0;
+    public Juego(ConfiguracionJuego configuracion) {
+        this.configuracion = configuracion;
+        rondaMaxima = configuracion.getRondaMaxima();
+        cargarRonda(0);
     }
 
     public void jugarTurno(int puntajeObtenido) {
-        puntajeActual += puntajeObtenido;
         turnoActual++;
+        puntajeActual += puntajeObtenido;
 
         if (puntajeActual >= puntajeObjetivo) {
-            avanzarRonda();
+            rondaActual++;
+            if (rondaActual < rondaMaxima) {
+                cargarRonda(rondaActual);
+            }
         }
     }
 
     public boolean gano() {
-        return rondaActual > 8;
+        return this.rondaActual >= this.rondaMaxima;
     }
 
     public boolean perdio() {
-        return turnoActual > 5;
+        return this.turnoActual >= this.turnoMaximo;
     }
 
-    private void avanzarRonda() {
-        turnoActual = 0;
-        rondaActual++;
+    public int getRondaActual() {
+        return rondaActual;
+    }
+
+    private void cargarRonda(int ronda) {
+        rondaActual = ronda;
+        puntajeObjetivo = configuracion.getPuntajeObjetivo(ronda);
+        turnoMaximo = configuracion.getTurnoMaximo(ronda);
         puntajeActual = 0;
-        puntajeObjetivo = calcularPuntajeObjetivo(rondaActual);
-    }
-
-    private int calcularPuntajeObjetivo(int ronda) {
-        return ronda * 100;
+        turnoActual = 0;
     }
 }

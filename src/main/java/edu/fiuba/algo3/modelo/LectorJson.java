@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.modelo;
 
 import edu.fiuba.algo3.modelo.comodin.*;
+import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import edu.fiuba.algo3.modelo.jugada.*;
 import edu.fiuba.algo3.modelo.palo.*;
 import edu.fiuba.algo3.modelo.tarot.*;
@@ -24,14 +25,8 @@ public class LectorJson {
             throw new RuntimeException("No se pudo parsear el contenido JSON");
         }
 
-        ArrayList<Poker> pokers = new ArrayList<>();
         JSONArray mazo = (JSONArray) archivo.get("mazo");
-        for (Object carta : mazo) {
-            Poker poker = parsearPoker((JSONObject) carta);
-            pokers.add(poker);
-        }
-
-        return pokers;
+        return parsearMazo(mazo);
     }
 
     public ArrayList<Comodin> leerComodines() {
@@ -44,18 +39,7 @@ public class LectorJson {
             throw new RuntimeException("No se pudo parsear el contenido JSON");
         }
 
-        ArrayList<Comodin> listaComodines = new ArrayList<>();
-        for (Object key : archivo.keySet()) {
-            String categoria = (String) key;
-            JSONArray comodines = (JSONArray) ((JSONObject) archivo.get(key)).get("comodines");
-            for (Object obj : comodines) {
-                JSONObject comodin = (JSONObject) obj;
-                boolean compuesto = categoria.equals("Combinación");
-                listaComodines.add(parsearComodin(comodin, compuesto));
-            }
-        }
-
-        return listaComodines;
+        return parsearCategoriasDeComodines(archivo);
     }
 
     public ArrayList<Tarot> leerTarots() {
@@ -68,20 +52,91 @@ public class LectorJson {
             throw new RuntimeException("No se pudo parsear el contenido JSON");
         }
 
-        ArrayList<Tarot> tarots = new ArrayList<>();
-        JSONArray mazo = (JSONArray) archivo.get("tarots");
-        for (Object carta : mazo) {
-            Tarot tarot = parsearTarot((JSONObject) carta);
-            tarots.add(tarot);
+        JSONArray tarots = (JSONArray) archivo.get("tarots");
+        return parsearTarots(tarots);
+    }
+
+    public ConfiguracionJuego leerConfiguracion() {
+        JSONObject archivo;
+        try {
+            archivo = parsearArchivo("src/test/resources/json/balatro.json");
+        } catch (IOException e) {
+            throw new RuntimeException("No se pudo abrir el archivo");
+        } catch (ParseException e) {
+            throw new RuntimeException("No se pudo parsear el contenido JSON");
         }
 
-        return tarots;
+        ArrayList<ConfiguracionRonda> configuracionRondas = new ArrayList<>();
+        JSONArray rondas = (JSONArray) archivo.get("rondas");
+        for (Object ronda : rondas) {
+            ConfiguracionRonda configuracionRonda = parsearRonda((JSONObject) ronda);
+            configuracionRondas.add(configuracionRonda);
+        }
+
+        Mazo<Poker> mazo = new Mazo<>(parsearMazo((JSONArray) archivo.get("mazo")));
+
+        return new ConfiguracionJuego(configuracionRondas, mazo);
+    }
+
+    private ConfiguracionRonda parsearRonda(JSONObject ronda) {
+        int turnos = Math.toIntExact((long) ronda.get("manos"));
+        int descartes = Math.toIntExact((long) ronda.get("descartes"));
+        int puntajeObjetivo = Math.toIntExact((long) ronda.get("puntajeASuperar"));
+        JSONObject tienda =  (JSONObject) ronda.get("tienda");
+        ArrayList<Tarot> tarots = parsearTarots((JSONArray) tienda.get("tarots"));
+        ArrayList<Comodin> comodines = parsearListaDeComodines((JSONArray) tienda.get("comodines"));
+        ArrayList<Poker> cartas = new ArrayList<>();
+        cartas.add(parsearPoker((JSONObject) tienda.get("carta")));
+
+        return new ConfiguracionRonda(puntajeObjetivo, turnos, descartes, comodines, tarots, cartas);
     }
 
     private JSONObject parsearArchivo(String nombreArchivo) throws IOException, ParseException {
         FileReader reader = new FileReader(nombreArchivo);
         JSONParser parser = new JSONParser();
         return (JSONObject) parser.parse(reader);
+    }
+
+    private ArrayList<Poker> parsearMazo(JSONArray mazo) {
+        ArrayList<Poker> pokers = new ArrayList<>();
+        for (Object carta : mazo) {
+            Poker poker = parsearPoker((JSONObject) carta);
+            pokers.add(poker);
+        }
+        return pokers;
+    }
+
+    private ArrayList<Comodin> parsearCategoriasDeComodines(JSONObject archivo) {
+        ArrayList<Comodin> listaComodines = new ArrayList<>();
+        for (Object key : archivo.keySet()) {
+            JSONArray comodines = (JSONArray) ((JSONObject) archivo.get(key)).get("comodines");
+            for (Object obj : comodines) {
+                JSONObject comodin = (JSONObject) obj;
+                listaComodines.add(parsearComodin(comodin));
+            }
+        }
+
+        return listaComodines;
+    }
+
+    private ArrayList<Comodin> parsearListaDeComodines(JSONArray comodines) {
+        ArrayList<Comodin> listaComodines = new ArrayList<>();
+        for (Object comodin : comodines) {
+            Comodin comodinParseado = parsearComodin((JSONObject) comodin);
+            listaComodines.add(comodinParseado);
+        }
+
+        return listaComodines;
+    }
+
+    private ArrayList<Tarot> parsearTarots(JSONArray tarots) {
+        ArrayList<Tarot> listaTarots = new ArrayList<>();
+        for (Object carta : tarots) {
+            Tarot tarot = parsearTarot((JSONObject) carta);
+            listaTarots.add(tarot);
+        }
+
+        return listaTarots;
     }
 
     private Poker parsearPoker(JSONObject carta) {
@@ -181,15 +236,16 @@ public class LectorJson {
         throw new RuntimeException("Activación no parseable");
     }
 
-    private Comodin parsearComodin(JSONObject carta, boolean compuesto) {
+    private Comodin parsearComodin(JSONObject carta) {
         String nombre = (String) carta.get("nombre");
         String descripcion = (String) carta.get("descripcion");
-        if (compuesto) {
-            JSONArray comodines =  (JSONArray) carta.get("comodines");
+
+        JSONArray comodines = (JSONArray) carta.get("comodines");
+        if (comodines != null) {
             ArrayList<Comodin> listaComodines = new ArrayList<>();
             for (Object obj : comodines) {
                 JSONObject comodin = (JSONObject) obj;
-                Comodin comodinIndividual = parsearComodin(comodin, false);
+                Comodin comodinIndividual = parsearComodin(comodin);
                 listaComodines.add(comodinIndividual);
             }
             return new ComodinCompuesto(nombre, descripcion, listaComodines);
