@@ -151,6 +151,7 @@ public class JuegoScene implements Observer {
             boolean deshabilitarBotones = seleccionadas.isEmpty();
             botonDescarte.setDisable(deshabilitarBotones);
             botonJugar.setDisable(deshabilitarBotones);
+
         }
     }
 

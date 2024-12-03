@@ -36,10 +36,14 @@ public class Mano extends Observable {
         }
 
         cartasSeleccionadas.add(carta);
+        setChanged();
+        notifyObservers();
     }
 
     public void deseleccionarCarta(Poker carta) {
         cartasSeleccionadas.remove(carta);
+        setChanged();
+        notifyObservers();
     }
 
     public Jugada jugar() {

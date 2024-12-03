@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.vistas;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -14,6 +15,8 @@ public class App extends Application {
     public void start(Stage stage) {
         this.stage = stage;
         stage.setScene(new MenuScene(this).getScene());
+        stage.setTitle("Balatro");
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/balatro.png")));
         stage.setMaximized(true);
         stage.show();
     }

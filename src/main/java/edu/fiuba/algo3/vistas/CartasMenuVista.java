@@ -30,7 +30,8 @@ public class CartasMenuVista extends HBox {
                 vista = new ComodinVista(comodines.tomarCarta());
             }
             vista.setRotate((i + 0.5 - (double) n / 2) * 10);
-            vista.agregarAnimacion(0, 40);
+
+            vista.setOffset(0,40);
             vistas.add(vista);
         }
 

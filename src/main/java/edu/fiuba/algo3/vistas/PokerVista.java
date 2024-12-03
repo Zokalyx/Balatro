@@ -13,9 +13,13 @@ import java.util.Observer;
 
 public class PokerVista extends CartaVista implements Observer {
 
-    public PokerVista(Poker poker) {
-        agregarAnimacion(40, 20);
+    Poker poker;
 
+    public PokerVista(Poker poker) {
+       offsetX=40;
+       offsetY=20;
+
+        this.poker=poker;
         String simbolo = simboloVisible(poker.getSimbolo());
         Palo palo = poker.getPalo();
 
@@ -95,4 +99,9 @@ public class PokerVista extends CartaVista implements Observer {
     @Override
     public void update(Observable o, Object arg) {
     }
+
+    public boolean esPokerVista(Poker poker) {
+        return this.poker.equals(poker);
+    }
+
 }

@@ -6,7 +6,8 @@ import javafx.scene.layout.VBox;
 
 public class TarotVista extends CartaVista {
     public TarotVista(Tarot tarot) {
-        agregarAnimacion(20, 40);
+        offsetX=20;
+        offsetY=40;
 
         Label titulo = new Label(tarot.getNombre());
         Label descripcion = new Label(tarot.getDescripcion());
