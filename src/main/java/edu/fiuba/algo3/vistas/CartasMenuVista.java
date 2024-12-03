@@ -3,15 +3,10 @@ package edu.fiuba.algo3.vistas;
 import edu.fiuba.algo3.modelo.LectorJson;
 import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
-import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
-import edu.fiuba.algo3.modelo.palo.Diamante;
-import edu.fiuba.algo3.modelo.palo.Pica;
-import edu.fiuba.algo3.modelo.palo.Trebol;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
 
@@ -35,6 +30,7 @@ public class CartasMenuVista extends HBox {
                 vista = new ComodinVista(comodines.tomarCarta());
             }
             vista.setRotate((i + 0.5 - (double) n / 2) * 10);
+            vista.agregarAnimacion(0, 40);
             vistas.add(vista);
         }
 

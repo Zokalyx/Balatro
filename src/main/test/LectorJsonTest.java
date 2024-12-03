@@ -66,14 +66,14 @@ public class LectorJsonTest {
         LectorJson lectorJson = new LectorJson();
         ArrayList<Tarot> cartas = lectorJson.leerTarots();
 
-        Tarot tarot = cartas.get(0);  // Tarot sobre carta: setea 10 x 2
+        Tarot tarot = cartas.get(0);  // Tarot sobre carta: agrega 10 x 2
         Poker poker = new Poker("As", new Trebol(), 10, 1);
 
         tarot.modificar(poker);
 
         Puntaje puntaje = new Puntaje(0, 1);
         poker.modificarPuntaje(puntaje);
-        assertEquals(20, puntaje.calcularTotal());
+        assertEquals(40, puntaje.calcularTotal());
     }
 
     @Test

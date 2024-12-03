@@ -2,6 +2,7 @@ package edu.fiuba.algo3.vistas;
 
 import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
+import edu.fiuba.algo3.modelo.palo.Corazon;
 import edu.fiuba.algo3.modelo.palo.Diamante;
 import edu.fiuba.algo3.modelo.palo.Pica;
 import edu.fiuba.algo3.modelo.palo.Trebol;
@@ -19,9 +20,10 @@ public class ManoVista extends HBox {
         }
 
         // SACAR
-        vistas.add(new PokerVista(new Poker("As", new Diamante(), 0, 0)));
-        vistas.add(new PokerVista(new Poker("Rey", new Trebol(), 0, 0)));
-        vistas.add(new PokerVista(new Poker("7", new Pica(), 0, 0)));
+        vistas.add(new PokerVista(new Poker("As", new Diamante(), 10, 5)));
+        vistas.add(new PokerVista(new Poker("Rey", new Trebol(), 2, 1)));
+        vistas.add(new PokerVista(new Poker("7", new Pica(), 3, 1)));
+        vistas.add(new PokerVista(new Poker("7", new Corazon(), 3, 1)));
 
         setSpacing(-50);
         setAlignment(Pos.CENTER);

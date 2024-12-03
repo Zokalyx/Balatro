@@ -50,10 +50,8 @@ public class Poker extends Observable implements ModificablePorTarot, Comparable
 
     @Override
     public void modificarse(int puntos, double multiplicador) {
-        if(puntos!=1){
-            valorNumerico = puntos;
-        }
-        this.multiplicador = multiplicador;
+        this.valorNumerico += puntos;
+        this.multiplicador *= multiplicador;
     }
 
     @Override

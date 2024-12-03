@@ -73,7 +73,7 @@ public class Adicionales {
         Puntaje puntaje = new Puntaje(0, 1);
 
         // Par: 10 x 2
-        // Primer as (modificado por tarot): 20 x 1
+        // Primer as (modificado por tarot): 30 x 1
         // Segundo as: 10 x 1
         jugada.modificarPuntaje(puntaje);
         // Primer comodin: 0 x 2^5 (5 activaciones)
@@ -81,8 +81,8 @@ public class Adicionales {
         // Tercer comodin: No se activa.
         comodines.modificarPuntaje(puntaje, jugada, 5);
 
-        // Total: 41 x 64 = 1148
-        assertEquals(2624, puntaje.calcularTotal());
+        // Total: 51 x 64 = 1148
+        assertEquals(3264, puntaje.calcularTotal());
     }
 
     @Test
@@ -150,7 +150,7 @@ public class Adicionales {
             // hacer algo
         } else if (juego.perdio()) {
             // hacer algo
-        };
+        }
 
         assertTrue(puntaje.calcularTotal() > 0);
     }

@@ -12,18 +12,27 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class PokerVista extends CartaVista implements Observer {
+
     public PokerVista(Poker poker) {
+        agregarAnimacion(40, 20);
+
         String simbolo = simboloVisible(poker.getSimbolo());
         Palo palo = poker.getPalo();
 
         Pane conjuntoSuperior = crearConjuntoSimboloPalo(simbolo, palo);
         Pane conjuntoInferior = crearConjuntoSimboloPalo(simbolo, palo);
+        HBox panelCentral = new HBox();
+        panelCentral.setAlignment(Pos.CENTER);
+        Label puntaje = new Label("" + poker.getValorNumerico());
+        Label multiplicacionSimbolo = new Label(" x ");
+        Label multiplicador = new Label("" + poker.getMultiplicador());
+        panelCentral.getChildren().addAll(puntaje, multiplicacionSimbolo, multiplicador);
         conjuntoInferior.setRotate(180);
 
         StackPane.setAlignment(conjuntoSuperior, Pos.TOP_LEFT);
         StackPane.setAlignment(conjuntoInferior, Pos.BOTTOM_RIGHT);
 
-        getChildren().addAll(conjuntoSuperior, conjuntoInferior);
+        getChildren().addAll(conjuntoSuperior, conjuntoInferior, panelCentral);
     }
 
     private ImageView paloVisible(Palo palo) {
@@ -43,8 +52,14 @@ public class PokerVista extends CartaVista implements Observer {
     }
 
     private String colorPalo(Palo palo) {
-        if (palo.equals(new Diamante()) || palo.equals(new Corazon())) {
+        if (palo.equals(new Diamante())) {
+            return "orange";
+        } else if (palo.equals(new Corazon())) {
             return "red";
+        } else if (palo.equals(new Pica())) {
+            return "black";
+        } else if (palo.equals(new Trebol())) {
+            return "blue";
         } else {
             return "black";
         }

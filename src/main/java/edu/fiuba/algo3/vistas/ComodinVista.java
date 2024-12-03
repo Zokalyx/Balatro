@@ -6,6 +6,8 @@ import javafx.scene.layout.VBox;
 
 public class ComodinVista extends CartaVista {
     public ComodinVista(Comodin comodin) {
+        agregarAnimacion(-20, 40);
+
         Label titulo = new Label(comodin.getNombre());
         Label descripcion = new Label(comodin.getDescripcion());
         VBox vbox = new VBox(titulo, descripcion);

@@ -4,7 +4,6 @@ package edu.fiuba.algo3.vistas;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
 import edu.fiuba.algo3.modelo.jugada.JugadaManager;
-import edu.fiuba.algo3.modelo.tarot.Tarot;
 import javafx.application.Application;
 
 import javafx.geometry.Pos;
@@ -38,8 +37,8 @@ public class JuegoScene extends Application {
             System.out.println("No se encontró la imagen");
         }
 
-        Button botonMazo = new Button("Mazo");
-        botonMazo.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
+        Button botonJugar = new Button("Jugar");
+        botonJugar.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
         Button botonDescarte = new Button("Descartar");
         botonDescarte.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
         Region espacioEntreBotonesIzquierda = new Region();
@@ -47,14 +46,14 @@ public class JuegoScene extends Application {
         Region espacioEntreBotonesDerecha = new Region();
         HBox.setHgrow(espacioEntreBotonesDerecha, Priority.ALWAYS);
 
-        HBox panelInferior = new HBox(botonMazo, espacioEntreBotonesIzquierda, new ManoVista(new Mano(new Mazo<>(new ArrayList<>()), new JugadaManager())), espacioEntreBotonesDerecha, botonDescarte);
+        HBox panelInferior = new HBox(botonJugar, espacioEntreBotonesIzquierda, new ManoVista(new Mano(new Mazo<>(new ArrayList<>()), new JugadaManager())), espacioEntreBotonesDerecha, botonDescarte);
         panelInferior.setAlignment(Pos.CENTER);
         panelInferior.setSpacing(10);
 
         ComodinesVista comodines = new ComodinesVista();
         Region espacioCentralVertical = new Region();
         VBox.setVgrow(espacioCentralVertical, Priority.ALWAYS);
-        VBox contenedorCentral = new VBox(new PanelPuntajeVista(), espacioCentralVertical, panelInferior);
+        VBox contenedorCentral = new VBox(new PanelPuntajeVista(null), espacioCentralVertical, panelInferior);
         contenedorCentral.prefHeightProperty().bind(root.heightProperty());
         contenedorCentral.setMinWidth(600);
 

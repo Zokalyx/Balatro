@@ -21,19 +21,19 @@ public class TarotTest {
 
         carta.modificarPuntaje(puntaje);
 
-        assertEquals(50, puntaje.calcularTotal());
+        assertEquals(57, puntaje.calcularTotal());
     }
 
     @Test
     public void test02AplicarTarotModificaElMultiplicadorDeCarta() {
         Poker carta = new Poker("7", new Diamante(), 7, 1);
-        Tarot tarot = new Tarot("Justicia", "Mejora 1 carta seleccionada y la convierte en una carta de cristal", 1, 2, new ActivacionTarotPokerCualquiera());
+        Tarot tarot = new Tarot("Justicia", "Mejora 1 carta seleccionada y la convierte en una carta de cristal", 10, 2, new ActivacionTarotPokerCualquiera());
         tarot.modificar(carta);
         Puntaje puntaje = new Puntaje(0, 1);
 
         carta.modificarPuntaje(puntaje);
 
-        assertEquals(14, puntaje.calcularTotal());
+        assertEquals(34, puntaje.calcularTotal());
     }
 
     @Test
