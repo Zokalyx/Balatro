@@ -5,8 +5,9 @@ import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaManager;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class Mano {
+public class Mano extends Observable {
     ArrayList<Poker> cartas;
     ArrayList<Poker> cartasSeleccionadas;
     ArrayList<Poker> cartasDescartadas;
@@ -69,5 +70,9 @@ public class Mano {
 
     public ArrayList<Poker> getCartas() {
         return cartas;
+    }
+
+    public ArrayList<Poker> getSeleccion() {
+        return cartasSeleccionadas;
     }
 }

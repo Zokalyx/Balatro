@@ -1,5 +1,6 @@
 package edu.fiuba.algo3.vistas;
 
+import edu.fiuba.algo3.controllers.ControladorPoker;
 import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.palo.Corazon;
@@ -16,14 +17,10 @@ public class ManoVista extends HBox {
         ArrayList<Poker> cartas = mano.getCartas();
         ArrayList<PokerVista> vistas = new ArrayList<>();
         for (Poker poker : cartas) {
-            vistas.add(new PokerVista(poker));
+            PokerVista vista = new PokerVista(poker);
+            vista.setOnMouseClicked(new ControladorPoker());
+            vistas.add(vista);
         }
-
-        // SACAR
-        vistas.add(new PokerVista(new Poker("As", new Diamante(), 10, 5)));
-        vistas.add(new PokerVista(new Poker("Rey", new Trebol(), 2, 1)));
-        vistas.add(new PokerVista(new Poker("7", new Pica(), 3, 1)));
-        vistas.add(new PokerVista(new Poker("7", new Corazon(), 3, 1)));
 
         setSpacing(-50);
         setAlignment(Pos.CENTER);

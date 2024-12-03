@@ -14,9 +14,10 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class MenuScene extends Application {
-    @Override
-    public void start(Stage stage) {
+public class MenuScene {
+    Scene scene;
+
+    public MenuScene(App app) {
         Pane root = new Pane();
 
         Font.loadFont(getClass().getResourceAsStream("/PressStart2P-Regular.ttf"), 20);
@@ -51,8 +52,8 @@ public class MenuScene extends Application {
         buttonBox.setSpacing(50);
 
         btnReglas.setOnAction(e -> System.out.println("Mostrar las reglas del juego."));
-        btnJugar.setOnAction(e -> new JuegoScene().start(stage));
-        btnSalir.setOnAction(e -> stage.close());
+        btnJugar.setOnAction(e -> app.iniciarJuego());
+        btnSalir.setOnAction(e -> app.cerrarVentana());
 
         Region margenIzquierda = new Region();
         Region margenDerecha = new Region();
@@ -74,14 +75,11 @@ public class MenuScene extends Application {
 
         root.getChildren().addAll(vboxMadre);
 
-        Scene scene = new Scene(root, 1100, 700);
-        stage.setTitle("Balatro - Menú Principal");
-        stage.setScene(scene);
-        stage.show();
+        scene = new Scene(root);
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    public Scene getScene() {
+        return scene;
     }
 }
 
