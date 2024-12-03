@@ -1,12 +1,14 @@
 package edu.fiuba.algo3.modelo.juego;
 
+import edu.fiuba.algo3.modelo.contenedores.DescartesInsuficientesError;
+
 public class Juego {
     int rondaActual;
     int rondaMaxima;
     int puntajeActual;
     int puntajeObjetivo;
-    int turnoActual;
-    int turnoMaximo;
+    int turnosDisponibles;
+    int descartesDisponibles;
     ConfiguracionJuego configuracion;
 
     public Juego(ConfiguracionJuego configuracion) {
@@ -20,7 +22,7 @@ public class Juego {
             throw new JuegoYaTerminadoError("Ya se terminó el juego");
         }
 
-        turnoActual++;
+        turnosDisponibles--;
         puntajeActual += puntajeObtenido;
 
         if (puntajeActual >= puntajeObjetivo) {
@@ -31,12 +33,20 @@ public class Juego {
         }
     }
 
+    public void utilizarDescarte() {
+        if (descartesDisponibles == 0) {
+            throw new DescartesInsuficientesError("No quedan más descartes disponibles.");
+        }
+
+        descartesDisponibles--;
+    }
+
     public boolean gano() {
         return this.rondaActual >= this.rondaMaxima;
     }
 
     public boolean perdio() {
-        return this.turnoActual >= this.turnoMaximo;
+        return this.turnosDisponibles == 0;
     }
 
     public int getRondaActual() {
@@ -46,8 +56,8 @@ public class Juego {
     private void cargarRonda(int ronda) {
         rondaActual = ronda;
         puntajeObjetivo = configuracion.getPuntajeObjetivo(ronda);
-        turnoMaximo = configuracion.getTurnoMaximo(ronda);
+        turnosDisponibles = configuracion.getTurnoMaximo(ronda);
+        descartesDisponibles = configuracion.getDescartes(ronda);
         puntajeActual = 0;
-        turnoActual = 0;
     }
 }

@@ -85,11 +85,12 @@ public class Entrega2Test {
 
         mano.repartir();
 
-        int descartesDisponibles = 4;
+        int descartesDisponibles = 3;
 
         mano.seleccionarCarta(cartas.get(2));
         mano.seleccionarCarta(cartas.get(3));
-        descartesDisponibles -= mano.descartar();
+        mano.descartar();
+        descartesDisponibles--;
 
         mano.seleccionarCarta(cartas.get(4));
 
@@ -130,11 +131,12 @@ public class Entrega2Test {
 
         Comodin comodin = new ComodinIndividual("a", "a",  10, 1, new ActivacionComodinDescarte());
 
-        int descartesDisponibles = 4;
+        int descartesDisponibles = 3;
 
         mano.seleccionarCarta(cartas.get(2));
         mano.seleccionarCarta(cartas.get(3));
-        descartesDisponibles -= mano.descartar();
+        mano.descartar();
+        descartesDisponibles--;
 
         mano.seleccionarCarta(cartas.get(4));
         Puntaje puntaje = new Puntaje(0, 1);

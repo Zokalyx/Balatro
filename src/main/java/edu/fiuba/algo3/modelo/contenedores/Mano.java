@@ -14,7 +14,6 @@ public class Mano {
     int maximoCartasSeleccionadas = 5;
     Mazo<Poker> mazo;
     JugadaManager jugadaManager;
-    int descartesDisponibles;
 
     public Mano(Mazo<Poker> mazo, JugadaManager jugadaManager) {
         cartas = new ArrayList<>();
@@ -22,7 +21,6 @@ public class Mano {
         cartasDescartadas = new ArrayList<>();
         this.mazo = mazo;
         this.jugadaManager = jugadaManager;
-        descartesDisponibles = 5;
     }
 
     public void repartir() {
@@ -53,27 +51,18 @@ public class Mano {
         return jugada;
     }
 
-    public int descartar() {
-        int cantidadDescartada = cartasSeleccionadas.size();
-        if (cantidadDescartada > descartesDisponibles) {
-            throw new DescartesInsuficientesError("No quedan descartes");
-        }
-        descartesDisponibles -= cantidadDescartada;
-
+    public void descartar() {
         for (Poker cartaSeleccionada : cartasSeleccionadas) {
             cartas.remove(cartaSeleccionada);
         }
         cartasDescartadas.addAll(cartasSeleccionadas);
         cartasSeleccionadas.clear();
         repartir();
-        return cantidadDescartada;
     }
 
-    public void setDescartesDisponibles(int descartesDisponibles) {
-        this.descartesDisponibles = descartesDisponibles;
-    }
-
-    public void retornarDescarteAMazo() {
+    public void retornarCartasAMazo() {
+        mazo.agregar(cartas);
+        cartas.clear();
         mazo.agregar(cartasDescartadas);
         cartasDescartadas.clear();
     }

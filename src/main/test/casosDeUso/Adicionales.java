@@ -122,7 +122,6 @@ public class Adicionales {
         // Inicio de ronda
         int rondaActual = juego.getRondaActual();
         int descartesDisponibles = configuracion.getDescartes(rondaActual);
-        mano.setDescartesDisponibles(descartesDisponibles);
         Tienda tienda = new Tienda(configuracion.getComodines(rondaActual), configuracion.getTarots(rondaActual), configuracion.getPokers(rondaActual));
         Comodines comodines = new Comodines();
         ArrayList<Tarot> tarots = new ArrayList<>();
@@ -135,7 +134,7 @@ public class Adicionales {
         mano.repartir();
         ArrayList<Poker> cartas = mano.getCartas();
         mano.seleccionarCarta(cartas.get(0));
-        descartesDisponibles -= mano.descartar();
+        descartesDisponibles--;
 
         cartas = mano.getCartas();
         Poker cartaAJugar = cartas.get(0);
@@ -147,8 +146,11 @@ public class Adicionales {
         comodines.modificarPuntaje(puntaje, jugada, descartesDisponibles);
 
         juego.jugarTurno(puntaje.calcularTotal());
-        juego.gano();
-        juego.perdio();
+        if (juego.gano()) {
+            // hacer algo
+        } else if (juego.perdio()) {
+            // hacer algo
+        };
 
         assertTrue(puntaje.calcularTotal() > 0);
     }

@@ -85,68 +85,8 @@ public class ManoTest {
         mano.seleccionarCarta(cartas.get(4));
 
         mano.jugar();
-        mano.retornarDescarteAMazo();
+        mano.retornarCartasAMazo();
 
         assertDoesNotThrow(mano::repartir);
-    }
-
-    @Test
-    public void test04NoSePuedeDescartarMasQueLosDescartesDisponibles() {
-        ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        ArrayList<Poker> cartasMazo = new ArrayList<>(cartas);
-
-        Mano mano = new Mano(new Mazo<>(cartasMazo), new JugadaManager());
-        mano.repartir();
-
-        mano.seleccionarCarta(cartas.get(0));
-        mano.seleccionarCarta(cartas.get(1));
-        mano.seleccionarCarta(cartas.get(2));
-        mano.seleccionarCarta(cartas.get(3));
-        mano.seleccionarCarta(cartas.get(4));
-
-        mano.setDescartesDisponibles(2);
-
-        assertThrows(DescartesInsuficientesError.class, mano::descartar);
-    }
-
-    @Test
-    public void test05NoSePuedeDescartarMasQueLosDescartesDisponibles() {
-        ArrayList<Poker> cartas = new ArrayList<>();
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        cartas.add(new Poker("As", new Pica(), 10, 1));
-        ArrayList<Poker> cartasMazo = new ArrayList<>(cartas);
-
-        Mano mano = new Mano(new Mazo<>(cartasMazo), new JugadaManager());
-        mano.repartir();
-
-        mano.seleccionarCarta(cartas.get(0));
-        mano.seleccionarCarta(cartas.get(1));
-        mano.seleccionarCarta(cartas.get(2));
-        mano.seleccionarCarta(cartas.get(3));
-
-        mano.descartar();
-
-        mano.seleccionarCarta(cartas.get(4));
-        mano.seleccionarCarta(cartas.get(5));
-
-        assertThrows(DescartesInsuficientesError.class, mano::descartar);
     }
 }
