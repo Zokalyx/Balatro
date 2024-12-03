@@ -19,20 +19,24 @@ public class Juego extends Observable {
         cargarRonda(0);
     }
 
-    public void jugarTurno(int puntajeObtenido) {
+    public boolean jugarTurno(int puntajeObtenido) {
         if (gano() || perdio()) {
             throw new JuegoYaTerminadoError("Ya se terminó el juego");
         }
-
+        boolean pasoDeRonda=false;
         turnosDisponibles--;
         puntajeActual += puntajeObtenido;
 
         if (puntajeActual >= puntajeObjetivo) {
             rondaActual++;
+            pasoDeRonda=true;
             if (rondaActual < rondaMaxima) {
                 cargarRonda(rondaActual);
             }
         }
+        setChanged();
+        notifyObservers();
+        return pasoDeRonda;
     }
 
     public void utilizarDescarte() {

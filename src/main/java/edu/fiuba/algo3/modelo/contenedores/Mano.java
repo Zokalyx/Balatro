@@ -3,6 +3,7 @@ package edu.fiuba.algo3.modelo.contenedores;
 import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaManager;
+import edu.fiuba.algo3.modelo.jugada.JugadaNula;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -15,6 +16,7 @@ public class Mano extends Observable {
     int maximoCartasSeleccionadas = 5;
     Mazo<Poker> mazo;
     JugadaManager jugadaManager;
+    Jugada jugadaActiva;
 
     public Mano(Mazo<Poker> mazo, JugadaManager jugadaManager) {
         cartas = new ArrayList<>();
@@ -28,6 +30,8 @@ public class Mano extends Observable {
         while (cartas.size() < maximoCartas) {
             cartas.add(mazo.tomarCarta());
         }
+        setChanged();
+        notifyObservers();
     }
 
     public void seleccionarCarta(Poker carta) {
@@ -36,24 +40,31 @@ public class Mano extends Observable {
         }
 
         cartasSeleccionadas.add(carta);
+        jugadaActiva=jugadaManager.calcularJugada(cartasSeleccionadas);
+
         setChanged();
         notifyObservers();
     }
 
     public void deseleccionarCarta(Poker carta) {
         cartasSeleccionadas.remove(carta);
+
+        jugadaActiva=jugadaManager.calcularJugada(cartasSeleccionadas);
         setChanged();
         notifyObservers();
     }
 
     public Jugada jugar() {
-        Jugada jugada = jugadaManager.calcularJugada(cartasSeleccionadas);
         for (Poker cartaSeleccionada : cartasSeleccionadas) {
             cartas.remove(cartaSeleccionada);
         }
         cartasDescartadas.addAll(cartasSeleccionadas);
         cartasSeleccionadas.clear();
-        return jugada;
+        setChanged();
+        notifyObservers();
+        Jugada jugadaARetornar = jugadaActiva;
+        jugadaActiva=new JugadaNula();
+        return jugadaARetornar;
     }
 
     public void descartar() {
@@ -72,6 +83,8 @@ public class Mano extends Observable {
         cartas.clear();
         mazo.agregar(cartasDescartadas);
         cartasDescartadas.clear();
+        setChanged();
+        notifyObservers();
     }
 
     public ArrayList<Poker> getCartas() {
@@ -84,5 +97,9 @@ public class Mano extends Observable {
 
     public ArrayList<Poker> getDescartadas() {
         return cartasDescartadas;
+    }
+
+    public Jugada getJugada(){
+        return jugadaActiva;
     }
 }

@@ -35,4 +35,12 @@ public abstract class Jugada implements ModificablePorTarot {
     public void setCartas(ArrayList<Poker> cartasInvolucradas) {
         this.cartas = cartasInvolucradas;
     }
+
+    public int getValor() {
+        return valorBase;
+    }
+
+    public double getMultiplicador() {
+        return multiplicadorBase;
+    }
 }

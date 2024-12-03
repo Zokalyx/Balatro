@@ -2,7 +2,9 @@ package edu.fiuba.algo3.vistas;
 
 
 import edu.fiuba.algo3.controllers.ControladorDescarte;
+import edu.fiuba.algo3.controllers.ControladorJugar;
 import edu.fiuba.algo3.modelo.*;
+import edu.fiuba.algo3.modelo.contenedores.Comodines;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.juego.ConfiguracionJuego;
 import edu.fiuba.algo3.modelo.juego.Juego;
@@ -31,6 +33,7 @@ import java.util.Observer;
 
 
 public class JuegoScene implements Observer {
+
     Label turnosDisponibles;
     Button botonDescarte;
     Button botonJugar;
@@ -38,7 +41,8 @@ public class JuegoScene implements Observer {
     Label descartesDisponibles;
     Juego juego;
     Mano mano;
-
+    Comodines comodines;
+    Puntaje puntaje;
 
     public JuegoScene(App app) {
         AnchorPane root = new AnchorPane();
@@ -52,6 +56,8 @@ public class JuegoScene implements Observer {
         this.mano = new Mano(configuracion.getMazo(), new JugadaManager());
         mano.repartir();
         this.juego = new Juego(lectorJson.leerConfiguracion());
+        this.comodines = new Comodines();
+        this.puntaje = new Puntaje(0,1);
 
         // Objetos de layout
         Label labelJugar = new Label("Jugar");
@@ -74,15 +80,15 @@ public class JuegoScene implements Observer {
 
         HBox panelInferior = new HBox(botonJugar, espacioEntreBotonesIzquierda, manoVista, espacioEntreBotonesDerecha, botonDescarte);
 
-        PanelPuntajeVista panelPuntajeVista = new PanelPuntajeVista(juego);
+        PanelPuntajeVista panelPuntajeVista = new PanelPuntajeVista(juego,mano,puntaje);
         Region espacioCentralVertical = new Region();
         VBox contenedorCentral = new VBox(panelPuntajeVista, espacioCentralVertical, panelInferior);
 
-        ComodinesVista comodines = new ComodinesVista();
+        ComodinesVista comodinesVista = new ComodinesVista();
         Region espacioDespuesComodines = new Region();
         Region espacioAntesTarots = new Region();
         TarotsVista tarots = new TarotsVista();
-        HBox hboxMadre = new HBox(comodines, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarots);
+        HBox hboxMadre = new HBox(comodinesVista, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarots);
 
         Button botonSalir = new Button("X");
 
@@ -101,10 +107,11 @@ public class JuegoScene implements Observer {
         AnchorPane.setRightAnchor(botonSalir, 10.0);
 
         panelInferior.setAlignment(Pos.CENTER);
-        panelInferior.setSpacing(10);
+        panelInferior.setSpacing(40);
 
         contenedorCentral.prefHeightProperty().bind(root.heightProperty());
         contenedorCentral.setMinWidth(600);
+        contenedorCentral.setAlignment(Pos.CENTER);
 
         VBox.setVgrow(espacioCentralVertical, Priority.ALWAYS);
         HBox.setHgrow(espacioEntreBotonesIzquierda, Priority.ALWAYS);
@@ -128,7 +135,7 @@ public class JuegoScene implements Observer {
         botonDescarte.setDisable(true);
 
         botonDescarte.setOnMouseClicked(new ControladorDescarte(mano,juego));
-
+        botonJugar.setOnMouseClicked(new ControladorJugar(mano,juego,comodines,puntaje));
         mano.addObserver(this);
         juego.addObserver(this);
 

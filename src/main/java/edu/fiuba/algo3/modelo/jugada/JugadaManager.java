@@ -31,7 +31,7 @@ public class JugadaManager {
            }
        }
 
-       throw new JugadaNulaError("Hay que seleccionar por lo menos una carta");
+        return new JugadaNula();
     }
 
     public Jugada getJugada(Jugada jugadaAEncontrar) {
