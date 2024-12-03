@@ -60,4 +60,16 @@ public class Juego {
         descartesDisponibles = configuracion.getDescartes(ronda);
         puntajeActual = 0;
     }
+
+    public int getPuntajeActual() {
+        return puntajeActual;
+    }
+
+    public int getPuntajeObjetivo() {
+        return puntajeObjetivo;
+    }
+
+    public int getRondaObjetivo() {
+        return rondaMaxima;
+    }
 }
