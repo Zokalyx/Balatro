@@ -72,4 +72,12 @@ public class Juego {
     public int getRondaObjetivo() {
         return rondaMaxima;
     }
+
+    public int getTurnosDisponibles() {
+        return turnosDisponibles;
+    }
+
+    public int getDescartesDisponibles() {
+        return descartesDisponibles;
+    }
 }

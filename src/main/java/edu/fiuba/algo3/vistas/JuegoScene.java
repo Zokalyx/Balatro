@@ -4,6 +4,7 @@ package edu.fiuba.algo3.vistas;
 import edu.fiuba.algo3.modelo.LectorJson;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Mazo;
+import edu.fiuba.algo3.modelo.juego.ConfiguracionJuego;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugada.JugadaManager;
 import javafx.application.Application;
@@ -12,15 +13,17 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 
 public class JuegoScene extends Application {
@@ -32,15 +35,30 @@ public class JuegoScene extends Application {
         cargarFondo(root);
 
         // Objetos de modelo
-        Mano mano = new Mano(new Mazo<>(new ArrayList<>()), new JugadaManager());
-        Juego juego = new Juego(new LectorJson().leerConfiguracion());
+        LectorJson lectorJson = new LectorJson();
+        ConfiguracionJuego configuracion = lectorJson.leerConfiguracion();
+        Mano mano = new Mano(configuracion.getMazo(), new JugadaManager());
+        Juego juego = new Juego(lectorJson.leerConfiguracion());
 
         // Objetos de layout
-        Button botonJugar = new Button("Jugar");
+        Label labelJugar = new Label("Jugar");
+        Label turnosDisponibles = new Label("(" + juego.getTurnosDisponibles() + ")");
+        VBox contenidoBotonJugar = new VBox(labelJugar, turnosDisponibles);
+        Button botonJugar = new Button();
+        botonJugar.setGraphic(contenidoBotonJugar);
+
         Region espacioEntreBotonesIzquierda = new Region();
+
         ManoVista manoVista = new ManoVista(mano);
+
         Region espacioEntreBotonesDerecha = new Region();
-        Button botonDescarte = new Button("Descartar");
+
+        Label labelDescarte = new Label("Descartar");
+        Label descartesDisponibles = new Label("(" + juego.getDescartesDisponibles() + ")");
+        VBox contenidoBotonDescarte = new VBox(labelDescarte, descartesDisponibles);
+        Button botonDescarte = new Button();
+        botonDescarte.setGraphic(contenidoBotonDescarte);
+
         HBox panelInferior = new HBox(botonJugar, espacioEntreBotonesIzquierda, manoVista, espacioEntreBotonesDerecha, botonDescarte);
 
         PanelPuntajeVista panelPuntajeVista = new PanelPuntajeVista(juego);
@@ -58,6 +76,11 @@ public class JuegoScene extends Application {
         root.getChildren().addAll(hboxMadre, botonSalir);
 
         // Estilo y posicionamiento
+        contenidoBotonDescarte.setAlignment(Pos.CENTER);
+        contenidoBotonJugar.setAlignment(Pos.CENTER);
+        contenidoBotonDescarte.setSpacing(10);
+        contenidoBotonJugar.setSpacing(10);
+
         botonJugar.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
         botonDescarte.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
         botonSalir.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
@@ -77,6 +100,14 @@ public class JuegoScene extends Application {
         HBox.setHgrow(espacioAntesTarots, Priority.ALWAYS);
 
         hboxMadre.prefWidthProperty().bind(root.widthProperty());
+
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setColor(Color.BLACK);
+        dropShadow.setRadius(5);
+
+        botonJugar.setEffect(dropShadow);
+        botonDescarte.setEffect(dropShadow);
+        botonSalir.setEffect(dropShadow);
 
         // Controladores
         botonSalir.setOnAction(e -> new MenuScene().start(stage));
