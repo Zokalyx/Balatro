@@ -63,6 +63,8 @@ public class Mano extends Observable {
         cartasDescartadas.addAll(cartasSeleccionadas);
         cartasSeleccionadas.clear();
         repartir();
+        setChanged();
+        notifyObservers();
     }
 
     public void retornarCartasAMazo() {
@@ -78,5 +80,9 @@ public class Mano extends Observable {
 
     public ArrayList<Poker> getSeleccion() {
         return cartasSeleccionadas;
+    }
+
+    public ArrayList<Poker> getDescartadas() {
+        return cartasDescartadas;
     }
 }

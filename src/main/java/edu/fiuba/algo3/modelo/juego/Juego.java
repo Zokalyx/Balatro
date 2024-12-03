@@ -2,7 +2,9 @@ package edu.fiuba.algo3.modelo.juego;
 
 import edu.fiuba.algo3.modelo.contenedores.DescartesInsuficientesError;
 
-public class Juego {
+import java.util.Observable;
+
+public class Juego extends Observable {
     int rondaActual;
     int rondaMaxima;
     int puntajeActual;
@@ -39,6 +41,8 @@ public class Juego {
         }
 
         descartesDisponibles--;
+        setChanged();
+        notifyObservers();
     }
 
     public boolean gano() {

@@ -37,15 +37,32 @@ public class ManoVista extends HBox implements Observer {
 
             ArrayList<Poker> seleccionadas = mano.getSeleccion();
             ArrayList<Poker> cartas = mano.getCartas();
+
             for(Poker carta:cartas){
                 PokerVista vista = obtenerPokerVista(carta);
-                if(seleccionadas.contains(carta)){
-                    vista.resaltar();
-                    vista.setSeleccionado(true);
+                if(vista!=null){
+                    if(seleccionadas.contains(carta)){
+                        vista.resaltar();
+                        vista.setSeleccionado(true);
+                    }
+                    else{
+                        vista.desresaltar();
+                        vista.setSeleccionado(false);
+                    }
+                }else{
+                    PokerVista vista2 = new PokerVista(carta);
+                    getChildren().add(vista2);
+                    vista2.setOnMouseClicked(new ControladorPoker(mano,carta));
+                    vistas.add(vista2);
                 }
-                else{
-                    vista.desresaltar();
-                    vista.setSeleccionado(false);
+
+            }
+
+            for(Poker carta:mano.getDescartadas()){
+                PokerVista vista = obtenerPokerVista(carta);
+                if(vista!=null){
+                    getChildren().remove(vista);
+                    vistas.remove(vista);
                 }
             }
         }
@@ -57,6 +74,6 @@ public class ManoVista extends HBox implements Observer {
                 return vista;
             }
         }
-        throw new RuntimeException("No se encontro poker vista");
+        return null;
     }
 }
