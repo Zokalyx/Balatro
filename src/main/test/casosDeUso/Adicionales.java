@@ -122,7 +122,8 @@ public class Adicionales {
         // Inicio de ronda
         int rondaActual = juego.getRondaActual();
         int descartesDisponibles = configuracion.getDescartes(rondaActual);
-        Tienda tienda = new Tienda(configuracion.getComodines(rondaActual), configuracion.getTarots(rondaActual), configuracion.getPokers(rondaActual));
+        Tienda tienda = new Tienda();
+        tienda.abrir(configuracion.getComodines(rondaActual), configuracion.getTarots(rondaActual), configuracion.getPokers(rondaActual));
         Comodines comodines = new Comodines();
         ArrayList<Tarot> tarots = new ArrayList<>();
 

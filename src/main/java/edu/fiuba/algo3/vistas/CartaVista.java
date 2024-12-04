@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.vistas;
 
 import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.effect.DropShadow;
@@ -12,8 +13,9 @@ public abstract class CartaVista extends StackPane {
 
     int offsetX;
     int offsetY;
-    TranslateTransition transicion;
-    ScaleTransition scaleTransition;
+    TranslateTransition transicionOffset;
+    ScaleTransition transicionEscala;
+    RotateTransition transicionRotacion;
     private boolean seleccionado;
 
     public CartaVista() {
@@ -26,13 +28,33 @@ public abstract class CartaVista extends StackPane {
         shadow.setColor(Color.BLACK);
         shadow.setRadius(5);
         setEffect(shadow);
-        this.transicion = new TranslateTransition(Duration.millis(100), this);
-        transicion.setInterpolator(Interpolator.EASE_OUT);
-        this.scaleTransition = new ScaleTransition(Duration.millis(300), this);
-        scaleTransition.setInterpolator(Interpolator.EASE_OUT);
+        this.transicionOffset = new TranslateTransition(Duration.millis(100), this);
+        transicionOffset.setInterpolator(Interpolator.EASE_OUT);
+        this.transicionEscala = new ScaleTransition(Duration.millis(300), this);
+        transicionEscala.setInterpolator(Interpolator.EASE_OUT);
+        this.transicionRotacion = new RotateTransition(Duration.millis(100), this);
+        transicionRotacion.setInterpolator(Interpolator.EASE_OUT);
         agrandar();
         this.seleccionado=false;
+    }
 
+    public void setAnimacionRotacion() {
+        this.setOnMouseEntered(e -> {
+            transicionRotacion.setToAngle(10);
+            transicionRotacion.stop();
+            transicionRotacion.play();
+        });
+
+        this.setOnMouseExited(e -> {
+            transicionRotacion.setToAngle(0);
+            transicionRotacion.stop();
+            transicionRotacion.play();
+        });
+    }
+
+    public void setAnimacion(int offsetX, int offsetY) {
+        this.offsetY = offsetY;
+        this.offsetX = offsetX;
         this.setOnMouseEntered(event -> {
             if(!seleccionado){
                 resaltar();
@@ -43,28 +65,22 @@ public abstract class CartaVista extends StackPane {
                 desresaltar();
             }
         });
-
-    }
-
-    public void setOffset(int offsetX, int offsetY) {
-        this.offsetY = offsetY;
-        this.offsetX = offsetX;
     }
 
     public void resaltar(){
 
-        transicion.setToX(-offsetX);
-        transicion.setToY(-offsetY);
-        transicion.stop();
-        transicion.play();
+        transicionOffset.setToX(-offsetX);
+        transicionOffset.setToY(-offsetY);
+        transicionOffset.stop();
+        transicionOffset.play();
     }
 
     public void desresaltar(){
 
-        transicion.setToX(0);
-        transicion.setToY(0);
-        transicion.stop();
-        transicion.play();
+        transicionOffset.setToX(0);
+        transicionOffset.setToY(0);
+        transicionOffset.stop();
+        transicionOffset.play();
     }
 
     public void setSeleccionado(boolean seleccionado){
@@ -72,16 +88,16 @@ public abstract class CartaVista extends StackPane {
     }
 
     public void agrandar(){
-        scaleTransition.setToX(1);
-        scaleTransition.setToY(1);
-        scaleTransition.stop();
-        scaleTransition.play();
+        transicionEscala.setToX(1);
+        transicionEscala.setToY(1);
+        transicionEscala.stop();
+        transicionEscala.play();
     }
 
     public void achicar(){
-        scaleTransition.setToX(0);
-        scaleTransition.setToY(0);
-        scaleTransition.stop();
-        scaleTransition.play();
+        transicionEscala.setToX(0);
+        transicionEscala.setToY(0);
+        transicionEscala.stop();
+        transicionEscala.play();
     }
 }

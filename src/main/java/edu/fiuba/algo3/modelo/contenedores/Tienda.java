@@ -5,16 +5,28 @@ import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class Tienda {
+public class Tienda extends Observable {
     ArrayList<Comodin> comodinesDisponibles;
     ArrayList<Tarot> tarotsDisponibles;
     ArrayList<Poker> pokerDisponibles;
+    boolean visible;
 
-    public Tienda(ArrayList<Comodin> comodines, ArrayList<Tarot> tarots, ArrayList<Poker> pokers) {
+    public void abrir(ArrayList<Comodin> comodines, ArrayList<Tarot> tarots, ArrayList<Poker> pokers) {
         this.comodinesDisponibles = comodines;
         this.tarotsDisponibles = tarots;
         this.pokerDisponibles = pokers;
+
+        visible = true;
+        setChanged();
+        notifyObservers();
+    }
+
+    public void cerrar() {
+        visible = false;
+        setChanged();
+        notifyObservers();
     }
 
     public ArrayList<Comodin> getComodinesDisponibles() {
@@ -35,6 +47,8 @@ public class Tienda {
         }
 
         comodinesDisponibles.remove(comodin);
+        setChanged();
+        notifyObservers();
         return comodin;
     }
 
@@ -44,6 +58,8 @@ public class Tienda {
         }
 
         tarotsDisponibles.remove(tarot);
+        setChanged();
+        notifyObservers();
         return tarot;
     }
 
@@ -53,6 +69,12 @@ public class Tienda {
         }
 
         pokerDisponibles.remove(poker);
+        setChanged();
+        notifyObservers();
         return poker;
+    }
+
+    public boolean getEstado() {
+        return visible;
     }
 }

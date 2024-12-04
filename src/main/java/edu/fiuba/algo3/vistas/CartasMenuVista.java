@@ -31,7 +31,7 @@ public class CartasMenuVista extends HBox {
             }
             vista.setRotate((i + 0.5 - (double) n / 2) * 10);
 
-            vista.setOffset(0,40);
+            vista.setAnimacion(0,40);
             vistas.add(vista);
         }
 

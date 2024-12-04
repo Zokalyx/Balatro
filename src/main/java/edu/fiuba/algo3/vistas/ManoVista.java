@@ -20,12 +20,13 @@ public class ManoVista extends HBox implements Observer {
             PokerVista vista = new PokerVista(poker);
             vista.setOnMouseClicked(new ControladorPoker(mano,poker));
             vistas.add(vista);
-
+            vista.setAnimacion(20, 40);
         }
 
         mano.addObserver(this);
         setSpacing(-25);
         setAlignment(Pos.CENTER);
+        setMinHeight(180);
 
         getChildren().addAll(vistas);
     }
@@ -53,6 +54,7 @@ public class ManoVista extends HBox implements Observer {
                     PokerVista vista2 = new PokerVista(carta);
                     getChildren().add(vista2);
                     vista2.setOnMouseClicked(new ControladorPoker(mano,carta));
+                    vista2.setAnimacion(20, 40);
                     vistas.add(vista2);
                 }
 

@@ -3,9 +3,11 @@ package edu.fiuba.algo3.vistas;
 
 import edu.fiuba.algo3.controllers.ControladorDescarte;
 import edu.fiuba.algo3.controllers.ControladorJugar;
+import edu.fiuba.algo3.controllers.ControladorRepartir;
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.contenedores.Comodines;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
+import edu.fiuba.algo3.modelo.contenedores.Tarots;
 import edu.fiuba.algo3.modelo.contenedores.Tienda;
 import edu.fiuba.algo3.modelo.juego.ConfiguracionJuego;
 import edu.fiuba.algo3.modelo.juego.Juego;
@@ -37,6 +39,7 @@ public class JuegoScene implements Observer {
 
     Label turnosDisponibles;
     Button botonDescarte;
+    Button botonRepartir;
     Button botonJugar;
     Scene scene;
     Label descartesDisponibles;
@@ -44,6 +47,8 @@ public class JuegoScene implements Observer {
     Mano mano;
     Comodines comodines;
     Puntaje puntaje;
+    TiendaVista tiendaVista;
+    Tienda tienda;
 
     public JuegoScene(App app) {
         AnchorPane root = new AnchorPane();
@@ -55,14 +60,15 @@ public class JuegoScene implements Observer {
         LectorJson lectorJson = new LectorJson();
         ConfiguracionJuego configuracion = lectorJson.leerConfiguracion();
         this.mano = new Mano(configuracion.getMazo(), new JugadaManager());
-        mano.repartir();
         this.juego = new Juego(lectorJson.leerConfiguracion());
         this.comodines = new Comodines();
         this.puntaje = new Puntaje(0,1);
-        Tienda tienda = new Tienda(configuracion.getComodines(juego.getRondaActual()), configuracion.getTarots(juego.getRondaActual()), configuracion.getPokers(juego.getRondaActual()));
+        Tarots tarots = new Tarots();
+        tienda = new Tienda();
+        tienda.abrir(configuracion.getComodines(juego.getRondaActual()), configuracion.getTarots(juego.getRondaActual()), configuracion.getPokers(juego.getRondaActual()));
 
         // Objetos de layout
-        TiendaVista tiendaVista = new TiendaVista(tienda);
+        tiendaVista = new TiendaVista(tienda, mano, comodines, tarots);
 
         Label labelJugar = new Label("Jugar");
         turnosDisponibles = new Label("(" + juego.getTurnosDisponibles() + ")");
@@ -81,19 +87,20 @@ public class JuegoScene implements Observer {
         VBox contenidoBotonDescarte = new VBox(labelDescarte, descartesDisponibles);
         botonDescarte = new Button();
         botonDescarte.setGraphic(contenidoBotonDescarte);
+        botonRepartir = new Button("Repartir");
 
-        HBox panelInferior = new HBox(botonJugar, espacioEntreBotonesIzquierda, manoVista, espacioEntreBotonesDerecha, botonDescarte);
+        HBox panelInferior = new HBox(botonJugar, espacioEntreBotonesIzquierda, manoVista, espacioEntreBotonesDerecha, botonDescarte, botonRepartir);
 
         PanelPuntajeVista panelPuntajeVista = new PanelPuntajeVista(juego,mano,puntaje);
         Region espacioCentralVerticalSuperior = new Region();
         Region espacioCentralVerticalInferior = new Region();
         VBox contenedorCentral = new VBox(panelPuntajeVista, espacioCentralVerticalSuperior, tiendaVista, espacioCentralVerticalInferior, panelInferior);
 
-        ComodinesVista comodinesVista = new ComodinesVista();
+        ComodinesVista comodinesVista = new ComodinesVista(comodines);
         Region espacioDespuesComodines = new Region();
         Region espacioAntesTarots = new Region();
-        TarotsVista tarots = new TarotsVista();
-        HBox hboxMadre = new HBox(comodinesVista, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarots);
+        TarotsVista tarotsVista = new TarotsVista(tarots);
+        HBox hboxMadre = new HBox(comodinesVista, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarotsVista);
 
         Button botonSalir = new Button("X");
 
@@ -105,6 +112,9 @@ public class JuegoScene implements Observer {
         contenidoBotonDescarte.setSpacing(10);
         contenidoBotonJugar.setSpacing(10);
 
+        actualizarBotonDescarte();
+        actualizarBotonRepartir();
+        botonRepartir.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
         botonJugar.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
         botonDescarte.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
         botonSalir.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
@@ -140,10 +150,13 @@ public class JuegoScene implements Observer {
         botonJugar.setDisable(true);
         botonDescarte.setDisable(true);
 
+        botonRepartir.setOnMouseClicked(new ControladorRepartir(mano));
         botonDescarte.setOnMouseClicked(new ControladorDescarte(mano,juego));
         botonJugar.setOnMouseClicked(new ControladorJugar(mano,juego,comodines,puntaje));
+
         mano.addObserver(this);
         juego.addObserver(this);
+        tienda.addObserver(this);
 
         scene = new Scene(root);
     }
@@ -168,6 +181,7 @@ public class JuegoScene implements Observer {
         if (o instanceof Mano) {
             Mano mano = (Mano) o;
 
+            actualizarBotonRepartir();
             actualizarBotonJuego();
             actualizarBotonDescarte();
         }
@@ -175,9 +189,35 @@ public class JuegoScene implements Observer {
             Juego juego = (Juego) o;
             actualizarBotonDescarte();
         }
+        else if (o instanceof Tienda) {
+            Tienda tienda = (Tienda) o;
+
+            actualizarBotonRepartir();
+            tiendaVista.setVisible(tienda.getEstado());
+        }
+    }
+
+    private void actualizarBotonRepartir() {
+        if (mano.estaLlena()) {
+            botonRepartir.setManaged(false);
+            botonRepartir.setVisible(false);
+        } else {
+            botonRepartir.setManaged(true);
+            botonRepartir.setVisible(true);
+            botonRepartir.setDisable(tienda.getEstado());
+        }
     }
 
     private void actualizarBotonDescarte() {
+
+        if (!mano.estaLlena()) {
+            botonDescarte.setManaged(false);
+            botonDescarte.setVisible(false);
+            return;
+        }
+
+        botonDescarte.setManaged(true);
+        botonDescarte.setVisible(true);
 
         ArrayList<Poker> seleccionadas = mano.getSeleccion();
 
@@ -193,7 +233,7 @@ public class JuegoScene implements Observer {
 
         ArrayList<Poker> seleccionadas = mano.getSeleccion();
 
-        if(juego.getTurnosDisponibles()!=0 && !seleccionadas.isEmpty()){
+        if(juego.getTurnosDisponibles()!=0 && !seleccionadas.isEmpty() && mano.estaLlena()){
             botonJugar.setDisable(false);
         }else{
             botonJugar.setDisable(true);

@@ -5,8 +5,9 @@ import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class Comodines {
+public class Comodines extends Observable {
     ArrayList<Comodin> cartas;
     int capacidad;
 
@@ -28,5 +29,11 @@ public class Comodines {
             throw new ComodinesLlenoError("No entran más comodines.");
         }
         cartas.add(comodin);
+        setChanged();
+        notifyObservers();
+    }
+
+    public ArrayList<Comodin> getArray() {
+        return cartas;
     }
 }

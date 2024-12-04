@@ -24,6 +24,7 @@ public class Mano extends Observable {
         cartasDescartadas = new ArrayList<>();
         this.mazo = mazo;
         this.jugadaManager = jugadaManager;
+        jugadaActiva = new JugadaNula();
     }
 
     public void repartir() {
@@ -87,6 +88,12 @@ public class Mano extends Observable {
         notifyObservers();
     }
 
+    public void agregarCartaExterna(Poker carta) {
+        cartas.add(carta);
+        setChanged();
+        notifyObservers();
+    }
+
     public ArrayList<Poker> getCartas() {
         return cartas;
     }
@@ -101,5 +108,9 @@ public class Mano extends Observable {
 
     public Jugada getJugada(){
         return jugadaActiva;
+    }
+
+    public boolean estaLlena() {
+        return cartas.size() == maximoCartas;
     }
 }

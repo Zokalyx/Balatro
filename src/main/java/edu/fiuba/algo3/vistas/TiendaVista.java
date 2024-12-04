@@ -1,8 +1,12 @@
 package edu.fiuba.algo3.vistas;
 
+import edu.fiuba.algo3.controllers.ControladorTienda;
 import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
+import edu.fiuba.algo3.modelo.contenedores.Comodines;
+import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Tienda;
+import edu.fiuba.algo3.modelo.contenedores.Tarots;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -20,17 +24,23 @@ public class TiendaVista extends StackPane {
     double anguloRotacion = 0;
     boolean pausarAnimacion = false;
 
-    public TiendaVista(Tienda tienda) {
+    public TiendaVista(Tienda tienda, Mano mano, Comodines comodines, Tarots tarots) {
         ArrayList<CartaVista> vistas = new ArrayList<>();
 
         for (Comodin comodin : tienda.getComodinesDisponibles()) {
-            vistas.add(new ComodinVista(comodin));
+            CartaVista vista = new ComodinVista(comodin);
+            vistas.add(vista);
+            vista.setOnMouseClicked(new ControladorTienda(comodin, tienda, mano, comodines, tarots));
         }
         for (Tarot tarot : tienda.getTarotsDisponibles()) {
-            vistas.add(new TarotVista(tarot));
+            CartaVista vista = new TarotVista(tarot);
+            vistas.add(vista);
+            vista.setOnMouseClicked(new ControladorTienda(tarot, tienda, mano, comodines, tarots));
         }
         for (Poker poker : tienda.getCartasDisponibles()) {
-            vistas.add(new PokerVista(poker));
+            CartaVista vista = new PokerVista(poker);
+            vistas.add(vista);
+            vista.setOnMouseClicked(new ControladorTienda(poker, tienda, mano, comodines, tarots));
         }
 
         Label tiendaLabel = new Label("Tienda");
@@ -53,7 +63,7 @@ public class TiendaVista extends StackPane {
         int n = vistas.size();
         for (int i = 0; i < n; i++) {
             CartaVista vista = vistas.get(i);
-            vista.setOffset(0, 0);
+            vista.setAnimacionRotacion();
             double angulo = 2 * Math.PI * i / n;
             vista.setTranslateX(150 * Math.cos(angulo));
             vista.setTranslateY(150 * Math.sin(angulo));

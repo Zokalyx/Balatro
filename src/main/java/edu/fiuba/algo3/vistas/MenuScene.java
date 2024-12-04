@@ -1,15 +1,22 @@
 package edu.fiuba.algo3.vistas;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,20 +38,36 @@ public class MenuScene {
             System.out.println("No se encontró el imagen");
         }
 
-        Text title = new Text("BALATRO");
-        title.setStyle("-fx-font-size: 60;");
-        title.setStroke(Color.BLACK);
-        title.setStrokeWidth(2);
-        title.setFill(Color.GOLD);
+        HBox titulo = new HBox();
+        titulo.setAlignment(Pos.CENTER);
+        for (int i = 0; i < "BALATRO".length(); i++) {
+            char letra = "BALATRO".toCharArray()[i];
+            Text label = new Text(Character.toString(letra));
+            label.setStroke(Color.BLACK);
+            label.setFill(Color.AQUA);
+            label.setStrokeWidth(2);
+            label.setStyle("-fx-font-size: 80;");
+            titulo.getChildren().add(label);
+
+            Timeline timeline = new Timeline(
+                    new KeyFrame(Duration.ZERO, new KeyValue(label.translateYProperty(), 0, Interpolator.EASE_BOTH)),
+                    new KeyFrame(Duration.seconds(1), new KeyValue(label.translateYProperty(), -20, Interpolator.EASE_BOTH)),
+                    new KeyFrame(Duration.seconds(2), new KeyValue(label.translateYProperty(), 0, Interpolator.EASE_BOTH))
+            );
+            timeline.setDelay(Duration.seconds((double) i / 12));
+            timeline.setCycleCount(Timeline.INDEFINITE);
+            timeline.setAutoReverse(true);
+            timeline.play();
+        }
 
         Button btnReglas = new Button("Reglas");
-        btnReglas.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
+        btnReglas.setStyle("-fx-background-color: #4aba91; -fx-font-size: 20; -fx-padding: 20;");
 
         Button btnJugar = new Button("Jugar");
-        btnJugar.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
+        btnJugar.setStyle("-fx-background-color: #4aba91; -fx-font-size: 20; -fx-padding: 20;");
 
         Button btnSalir = new Button("Salir");
-        btnSalir.setStyle("-fx-background-color: #4aba91; -fx-font-size: 16; -fx-padding: 10;");
+        btnSalir.setStyle("-fx-background-color: #4aba91; -fx-font-size: 20; -fx-padding: 20;");
 
         HBox buttonBox = new HBox();
         buttonBox.setAlignment(Pos.CENTER);
@@ -62,7 +85,7 @@ public class MenuScene {
 
         VBox columnaCentral = new VBox();
         columnaCentral.setAlignment(Pos.CENTER);
-        columnaCentral.getChildren().addAll(title, buttonBox);
+        columnaCentral.getChildren().addAll(titulo, buttonBox);
         columnaCentral.prefHeightProperty().bind(root.heightProperty());
         columnaCentral.setMaxWidth(600);
         columnaCentral.setSpacing(100);
@@ -74,6 +97,15 @@ public class MenuScene {
         vboxMadre.prefHeightProperty().bind(root.heightProperty());
 
         root.getChildren().addAll(vboxMadre);
+
+        DropShadow shadow = new DropShadow();
+        shadow.setColor(Color.BLACK);
+        shadow.setRadius(5);
+        root.setEffect(shadow);
+        btnJugar.setEffect(shadow);
+        btnSalir.setEffect(shadow);
+        btnReglas.setEffect(shadow);
+        titulo.setEffect(shadow);
 
         scene = new Scene(root);
     }

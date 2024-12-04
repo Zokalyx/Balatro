@@ -32,7 +32,7 @@ public class PanelPuntajeVista extends HBox implements Observer {
         // Objetos de layout
         fichas = new Label("0");
         Label puntajeSimboloMultiplicacion = new Label("x");
-        multiplicador = new Label("1");
+        multiplicador = new Label("1.0");
 
         nombreJugada = new Label("");
 

@@ -21,7 +21,8 @@ public class TiendaTest {
         LectorJson lector = new LectorJson();
 
 
-        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
+        Tienda tienda = new Tienda();
+        tienda.abrir(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Tarot tarotAComprar = tienda.getTarotsDisponibles().get(0);
         Tarot tarotRecibido = tienda.comprarTarot(tarotAComprar);
@@ -33,7 +34,8 @@ public class TiendaTest {
     public void test02SePuedeComprarUnComodin() {
         LectorJson lector = new LectorJson();
 
-        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
+        Tienda tienda = new Tienda();
+        tienda.abrir(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Comodin comodinAComprar = tienda.getComodinesDisponibles().get(0);
         Comodin comodinRecibido = tienda.comprarComodin(comodinAComprar);
@@ -45,7 +47,8 @@ public class TiendaTest {
     public void test03NoSePuedeComprarUnComodinDosVeces() {
         LectorJson lector = new LectorJson();
 
-        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
+        Tienda tienda = new Tienda();
+        tienda.abrir(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Comodin comodinAComprar = tienda.getComodinesDisponibles().get(0);
         tienda.comprarComodin(comodinAComprar);
@@ -57,7 +60,8 @@ public class TiendaTest {
     public void test04NoSePuedeComprarUnTarotDosVeces() {
         LectorJson lector = new LectorJson();
 
-        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
+        Tienda tienda = new Tienda();
+        tienda.abrir(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Tarot tarotAComprar = tienda.getTarotsDisponibles().get(0);
         tienda.comprarTarot(tarotAComprar);
@@ -69,7 +73,8 @@ public class TiendaTest {
     public void test05NoSePuedeComprarUnComodinQueNoEsDeLaTienda() {
         LectorJson lector = new LectorJson();
 
-        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
+        Tienda tienda = new Tienda();
+        tienda.abrir(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Comodin comodinAComprar = new ComodinIndividual("A", "B", 1, 2, new ActivacionComodinSiempre());
 
