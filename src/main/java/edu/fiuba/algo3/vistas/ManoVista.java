@@ -41,30 +41,37 @@ public class ManoVista extends HBox implements Observer {
     private void reconstruirVista(Mano mano) {
         List<PokerVista> nuevasVistas = new ArrayList<>();
 
+        // Agregar y seleccionar
         for (Poker poker : mano.getCartas()) {
             PokerVista vista = obtenerPokerVista(poker);
             if (vista == null) {
                 vista = new PokerVista(poker);
                 vista.setAnimacion(20, 40);
                 vista.setOnMouseClicked(new ControladorPoker(mano, poker));
-            } else if (mano.getSeleccion().contains(poker)) {
-                vista.resaltar();
-                vista.setSeleccionado(true);
-            } else {
-                vista.desresaltar();
-                vista.setSeleccionado(false);
-                vista.fireEvent(new MouseEvent(MouseEvent.MOUSE_EXITED, 0, 0, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
+                vistas.add(vista);
+                getChildren().add(vista);
 
+            } else if (mano.getSeleccion().contains(poker)) {
+                vista.setSeleccionado(true);
+                vista.resaltar();
+
+            } else {
+                vista.setSeleccionado(false);
+                vista.desresaltar();
             }
-            // Reutilizamos la vista si ya existe
-            nuevasVistas.add(vista);
         }
 
-        getChildren().clear();
-        getChildren().addAll(nuevasVistas);
-
-        vistas.clear();
-        vistas.addAll(nuevasVistas);
+        // Eliminar viejas
+        ArrayList<PokerVista> vistasAEliminar = new ArrayList<>();
+        for (PokerVista vista : vistas) {
+            if (!mano.getCartas().contains(vista.getPoker())) {
+                vistasAEliminar.add(vista);
+            }
+        }
+        for (PokerVista vista : vistasAEliminar) {
+            vistas.remove(vista);
+            getChildren().remove(vista);
+        }
     }
 
     private PokerVista obtenerPokerVista(Poker poker){

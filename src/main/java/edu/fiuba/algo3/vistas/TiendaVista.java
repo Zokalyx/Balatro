@@ -9,7 +9,9 @@ import edu.fiuba.algo3.modelo.contenedores.Tienda;
 import edu.fiuba.algo3.modelo.contenedores.Tarots;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
+import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
+import javafx.animation.ScaleTransition;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -33,6 +35,7 @@ public class TiendaVista extends StackPane implements Observer {
     Tarots tarots;
     ArrayList<CartaVista> vistas;
     Juego juego;
+    ScaleTransition transicionEscala;
 
     public TiendaVista(Tienda tienda, Mano mano, Comodines comodines, Tarots tarots, Juego juego) {
         this.mano = mano;
@@ -72,9 +75,12 @@ public class TiendaVista extends StackPane implements Observer {
         textoCentral.setAlignment(Pos.CENTER);
         StackPane.setAlignment(textoCentral, Pos.CENTER);
 
-        actualizarVista(tienda);
-
         tienda.addObserver(this);
+
+        transicionEscala = new ScaleTransition(Duration.millis(300), this);
+        transicionEscala.setInterpolator(Interpolator.EASE_OUT);
+
+        actualizarVista(tienda);
     }
 
     @Override
@@ -119,6 +125,10 @@ public class TiendaVista extends StackPane implements Observer {
 
         setVisible(habilitado);
         setManaged(habilitado);
+
+        if (habilitado) {
+            agrandar();
+        }
     }
 
     private void posicionarVistas() {
@@ -131,5 +141,14 @@ public class TiendaVista extends StackPane implements Observer {
             // Descomentar para efecto raro pero copado
             // vista.setRotate(-Math.toDegrees(angulo));
         }
+    }
+
+    public void agrandar(){
+        setScaleX(0);
+        setScaleY(0);
+        transicionEscala.setToX(1);
+        transicionEscala.setToY(1);
+        transicionEscala.stop();
+        transicionEscala.play();
     }
 }

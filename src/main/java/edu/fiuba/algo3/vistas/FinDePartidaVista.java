@@ -1,10 +1,7 @@
 package edu.fiuba.algo3.vistas;
 
 import edu.fiuba.algo3.modelo.juego.Juego;
-import javafx.animation.Interpolator;
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
+import javafx.animation.*;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
@@ -19,6 +16,7 @@ import java.util.Observer;
 
 public class FinDePartidaVista extends StackPane implements Observer {
     Label resultado;
+    ScaleTransition transicionEscala;
 
     public FinDePartidaVista(Juego juego) {
         resultado = new Label();
@@ -28,6 +26,9 @@ public class FinDePartidaVista extends StackPane implements Observer {
         StackPane.setAlignment(contenedor, Pos.CENTER);
 
         getChildren().addAll(contenedor, resultado);
+
+        transicionEscala = new ScaleTransition(Duration.millis(300), this);
+        transicionEscala.setInterpolator(Interpolator.EASE_OUT);
 
         actualizar(juego);
 
@@ -43,7 +44,6 @@ public class FinDePartidaVista extends StackPane implements Observer {
         resultado.setStyle("-fx-font-size: 30;");
 
         juego.addObserver(this);
-
 
         Rotate rotacion = new Rotate();
         rotacion.setPivotX(150);
@@ -69,8 +69,14 @@ public class FinDePartidaVista extends StackPane implements Observer {
     }
 
     private void actualizar(Juego juego) {
-        setVisible(juego.gano() || juego.perdio());
-        setManaged(juego.gano() || juego.perdio());
+        boolean habilitado = juego.gano() || juego.perdio();
+
+        setVisible(habilitado);
+        setManaged(habilitado);
+
+        if (habilitado) {
+            agrandar();
+        }
 
         if (juego.gano()) {
             resultado.setText("Ganaste!");
@@ -79,5 +85,14 @@ public class FinDePartidaVista extends StackPane implements Observer {
             resultado.setText("Perdiste!");
             resultado.setTextFill(Color.RED);
         }
+    }
+
+    public void agrandar(){
+        setScaleX(0);
+        setScaleY(0);
+        transicionEscala.setToX(1);
+        transicionEscala.setToY(1);
+        transicionEscala.stop();
+        transicionEscala.play();
     }
 }

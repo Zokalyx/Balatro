@@ -40,6 +40,10 @@ public class PokerVista extends CartaVista implements Observer {
         getChildren().addAll(conjuntoSuperior, conjuntoInferior, panelCentral);
     }
 
+    public Poker getPoker() {
+        return poker;
+    }
+
     private ImageView paloVisible(Palo palo) {
         Image image;
         if (palo.equals(new Diamante())) {
