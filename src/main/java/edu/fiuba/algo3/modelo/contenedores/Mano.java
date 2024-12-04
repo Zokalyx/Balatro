@@ -40,8 +40,16 @@ public class Mano extends Observable {
             throw new SeleccionInvalidaError("Máximo de cartas ya seleccionadas");
         }
 
+        // Preservar el orden dentro de la mano
         cartasSeleccionadas.add(carta);
-        jugadaActiva=jugadaManager.calcularJugada(cartasSeleccionadas);
+        ArrayList<Poker> cartasSeleccionadasAuxiliar = new ArrayList<>();
+        for (Poker poker : cartas) {
+            if (cartasSeleccionadas.contains(poker)) {
+                cartasSeleccionadasAuxiliar.add(poker);
+            }
+        }
+        cartasSeleccionadas = cartasSeleccionadasAuxiliar;
+        actualizarJugada();
 
         setChanged();
         notifyObservers();
@@ -50,7 +58,7 @@ public class Mano extends Observable {
     public void deseleccionarCarta(Poker carta) {
         cartasSeleccionadas.remove(carta);
 
-        jugadaActiva=jugadaManager.calcularJugada(cartasSeleccionadas);
+        actualizarJugada();
         setChanged();
         notifyObservers();
     }
@@ -64,7 +72,7 @@ public class Mano extends Observable {
         setChanged();
         notifyObservers();
         Jugada jugadaARetornar = jugadaActiva;
-        jugadaActiva=new JugadaNula();
+        actualizarJugada();
         return jugadaARetornar;
     }
 
@@ -74,6 +82,7 @@ public class Mano extends Observable {
         }
         cartasDescartadas.addAll(cartasSeleccionadas);
         cartasSeleccionadas.clear();
+        actualizarJugada();
         repartir();
         setChanged();
         notifyObservers();
@@ -84,6 +93,7 @@ public class Mano extends Observable {
         cartas.clear();
         mazo.agregar(cartasDescartadas);
         cartasDescartadas.clear();
+        actualizarJugada();
         setChanged();
         notifyObservers();
     }
@@ -92,6 +102,10 @@ public class Mano extends Observable {
         cartas.add(carta);
         setChanged();
         notifyObservers();
+    }
+
+    private void actualizarJugada() {
+        jugadaActiva = jugadaManager.calcularJugada(cartasSeleccionadas);
     }
 
     public ArrayList<Poker> getCartas() {

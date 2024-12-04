@@ -69,6 +69,7 @@ public class JuegoScene implements Observer {
 
         // Objetos de layout
         tiendaVista = new TiendaVista(tienda, mano, comodines, tarots);
+        JugadaVista jugadaVista = new JugadaVista(mano, tienda);
 
         Label labelJugar = new Label("Jugar");
         turnosDisponibles = new Label("(" + juego.getTurnosDisponibles() + ")");
@@ -94,7 +95,7 @@ public class JuegoScene implements Observer {
         PanelPuntajeVista panelPuntajeVista = new PanelPuntajeVista(juego,mano,puntaje);
         Region espacioCentralVerticalSuperior = new Region();
         Region espacioCentralVerticalInferior = new Region();
-        VBox contenedorCentral = new VBox(panelPuntajeVista, espacioCentralVerticalSuperior, tiendaVista, espacioCentralVerticalInferior, panelInferior);
+        VBox contenedorCentral = new VBox(panelPuntajeVista, espacioCentralVerticalSuperior, tiendaVista, jugadaVista, espacioCentralVerticalInferior, panelInferior);
 
         ComodinesVista comodinesVista = new ComodinesVista(comodines);
         Region espacioDespuesComodines = new Region();
@@ -193,7 +194,6 @@ public class JuegoScene implements Observer {
             Tienda tienda = (Tienda) o;
 
             actualizarBotonRepartir();
-            tiendaVista.setVisible(tienda.getEstado());
         }
     }
 

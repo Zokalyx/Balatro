@@ -4,6 +4,7 @@ import edu.fiuba.algo3.controllers.ControladorPoker;
 import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import javafx.geometry.Pos;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
 import java.util.ArrayList;
@@ -49,6 +50,7 @@ public class ManoVista extends HBox implements Observer {
                     else{
                         vista.desresaltar();
                         vista.setSeleccionado(false);
+                        vista.fireEvent(new MouseEvent(MouseEvent.MOUSE_EXITED, 0, 0, 0, 0, null, 0, false, false, false, false, false, false, false, false, false, false, null));
                     }
                 }else{
                     PokerVista vista2 = new PokerVista(carta);

@@ -19,8 +19,10 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class TiendaVista extends StackPane {
+public class TiendaVista extends StackPane implements Observer {
     double anguloRotacion = 0;
     boolean pausarAnimacion = false;
 
@@ -92,5 +94,17 @@ public class TiendaVista extends StackPane {
 
         getChildren().add(textoCentral);
         getChildren().addAll(vistas);
+
+        tienda.addObserver(this);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Tienda) {
+            Tienda tienda = (Tienda) o;
+
+            setVisible(tienda.getEstado());
+            setManaged(tienda.getEstado());
+        }
     }
 }

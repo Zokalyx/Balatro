@@ -18,7 +18,11 @@ public class JugadaCartaAlta extends Jugada{
         if (!cartas.isEmpty()) {
             ArrayList<Poker> cartasAuxiliar = new ArrayList<>(cartas);
             Collections.sort(cartasAuxiliar);
-            cartasInvolucradas.add(cartasAuxiliar.get(0));
+            if (cartasAuxiliar.get(0).esAs()) {
+                cartasInvolucradas.add(cartasAuxiliar.get(0));
+            } else {
+                cartasInvolucradas.add(cartasAuxiliar.get(cartasAuxiliar.size() - 1));
+            }
         }
 
         return cartasInvolucradas;
