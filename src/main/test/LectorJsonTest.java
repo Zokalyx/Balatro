@@ -69,7 +69,7 @@ public class LectorJsonTest {
         Tarot tarot = cartas.get(0);  // Tarot sobre carta: agrega 10 x 2
         Poker poker = new Poker("As", new Trebol(), 10, 1);
 
-        tarot.modificar(poker);
+        tarot.utilizarSobre(poker);
 
         Puntaje puntaje = new Puntaje(0, 1);
         poker.modificarPuntaje(puntaje);

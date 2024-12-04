@@ -1,12 +1,8 @@
 package edu.fiuba.algo3.controllers;
 
-import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Tarots;
-import edu.fiuba.algo3.modelo.jugada.Jugada;
-import edu.fiuba.algo3.modelo.jugada.JugadaEscalera;
 import edu.fiuba.algo3.modelo.jugada.JugadaManager;
-import edu.fiuba.algo3.modelo.tarot.ModificablePorTarot;
 import edu.fiuba.algo3.modelo.tarot.SeleccionParaTarotInvalidaError;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import javafx.event.EventHandler;
@@ -28,7 +24,7 @@ public class ControladorTarot implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent mouseEvent) {
         try {
-            tarot.consumir(mano, jugadaManager);
+            tarot.encontrarObjetivoYUtilizar(mano, jugadaManager);
             tarots.consumir(tarot);
         } catch (SeleccionParaTarotInvalidaError e) {
             // Nada.

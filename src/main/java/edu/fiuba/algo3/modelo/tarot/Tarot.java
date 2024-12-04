@@ -13,13 +13,17 @@ public class Tarot {
     public Tarot(String nombre, String descripcion, int puntos, double multiplicador, ActivacionTarot activacion) {
         this.puntos = puntos;
         this.multiplicador = multiplicador;
-        this.nombre=nombre;
-        this.descripcion=descripcion;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
         this.activacion = activacion;
     }
 
-    public void consumir(Mano mano, JugadaManager jugadaManager) {
+    public void encontrarObjetivoYUtilizar(Mano mano, JugadaManager jugadaManager) {
         ModificablePorTarot modificable = activacion.encontrarObjetoASerModificado(mano, jugadaManager);
+        utilizarSobre(modificable);
+    }
+
+    public void utilizarSobre(ModificablePorTarot modificable) {
         modificable.modificarse(puntos, multiplicador);
     }
 

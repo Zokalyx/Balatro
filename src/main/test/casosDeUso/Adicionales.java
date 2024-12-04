@@ -54,7 +54,7 @@ public class Adicionales {
         mano.repartir();
 
         Tarot tarot = new Tarot("a", "b", 20, 1, new ActivacionTarotPokerCualquiera());
-        tarot.modificar(cartas.get(0));
+        tarot.utilizarSobre(cartas.get(0));
 
         Comodin comodin1 = new ComodinIndividual("a", "b", 0, 2, new ActivacionComodinDescarte());
         Comodin comodin2 = new ComodinIndividual("b", "c", 1, 1, new ActivacionComodinJugada(new JugadaPar()));
@@ -90,7 +90,7 @@ public class Adicionales {
         JugadaManager jugadaManager = new JugadaManager();
         Jugada jugada = jugadaManager.getJugada(new JugadaEscalera());
         Tarot tarot = new Tarot("a", "b", 20, 3, new ActivacionTarotJugadaParticular(new JugadaEscalera()));
-        tarot.modificar(jugada);
+        tarot.utilizarSobre(jugada);
 
         ArrayList<Poker> cartas = new ArrayList<>();
         cartas.add(new Poker("3", new Trebol(), 0, 1));
