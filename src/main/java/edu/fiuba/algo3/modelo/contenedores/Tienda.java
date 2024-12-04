@@ -25,6 +25,10 @@ public class Tienda {
         return tarotsDisponibles;
     }
 
+    public ArrayList<Poker> getCartasDisponibles() {
+        return pokerDisponibles;
+    }
+
     public Comodin comprarComodin(Comodin comodin) {
         if (!comodinesDisponibles.contains(comodin)) {
             throw new CartaNoDisponibleError("Esa carta no está disponible en la tienda");

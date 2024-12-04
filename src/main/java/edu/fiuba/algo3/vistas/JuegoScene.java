@@ -6,6 +6,7 @@ import edu.fiuba.algo3.controllers.ControladorJugar;
 import edu.fiuba.algo3.modelo.*;
 import edu.fiuba.algo3.modelo.contenedores.Comodines;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
+import edu.fiuba.algo3.modelo.contenedores.Tienda;
 import edu.fiuba.algo3.modelo.juego.ConfiguracionJuego;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugada.JugadaManager;
@@ -58,8 +59,11 @@ public class JuegoScene implements Observer {
         this.juego = new Juego(lectorJson.leerConfiguracion());
         this.comodines = new Comodines();
         this.puntaje = new Puntaje(0,1);
+        Tienda tienda = new Tienda(configuracion.getComodines(juego.getRondaActual()), configuracion.getTarots(juego.getRondaActual()), configuracion.getPokers(juego.getRondaActual()));
 
         // Objetos de layout
+        TiendaVista tiendaVista = new TiendaVista(tienda);
+
         Label labelJugar = new Label("Jugar");
         turnosDisponibles = new Label("(" + juego.getTurnosDisponibles() + ")");
         VBox contenidoBotonJugar = new VBox(labelJugar, turnosDisponibles);
@@ -81,8 +85,9 @@ public class JuegoScene implements Observer {
         HBox panelInferior = new HBox(botonJugar, espacioEntreBotonesIzquierda, manoVista, espacioEntreBotonesDerecha, botonDescarte);
 
         PanelPuntajeVista panelPuntajeVista = new PanelPuntajeVista(juego,mano,puntaje);
-        Region espacioCentralVertical = new Region();
-        VBox contenedorCentral = new VBox(panelPuntajeVista, espacioCentralVertical, panelInferior);
+        Region espacioCentralVerticalSuperior = new Region();
+        Region espacioCentralVerticalInferior = new Region();
+        VBox contenedorCentral = new VBox(panelPuntajeVista, espacioCentralVerticalSuperior, tiendaVista, espacioCentralVerticalInferior, panelInferior);
 
         ComodinesVista comodinesVista = new ComodinesVista();
         Region espacioDespuesComodines = new Region();
@@ -113,7 +118,8 @@ public class JuegoScene implements Observer {
         contenedorCentral.setMinWidth(600);
         contenedorCentral.setAlignment(Pos.CENTER);
 
-        VBox.setVgrow(espacioCentralVertical, Priority.ALWAYS);
+        VBox.setVgrow(espacioCentralVerticalSuperior, Priority.ALWAYS);
+        VBox.setVgrow(espacioCentralVerticalInferior, Priority.ALWAYS);
         HBox.setHgrow(espacioEntreBotonesIzquierda, Priority.ALWAYS);
         HBox.setHgrow(espacioEntreBotonesDerecha, Priority.ALWAYS);
         HBox.setHgrow(espacioDespuesComodines, Priority.ALWAYS);
