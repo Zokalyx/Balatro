@@ -24,7 +24,7 @@ public class JugadaEscaleraReal extends Jugada {
         ArrayList<Poker> cartasAuxiliar = new ArrayList<>(cartas);
         Collections.sort(cartasAuxiliar);
 
-        if (!cartasAuxiliar.get(0).esAs()) {
+        if (!cartasAuxiliar.get(0).esAs() || !cartasAuxiliar.get(0).esSimboloSiguienteA(cartasAuxiliar.get(4))) {
             return cartasInvolucradas;
         }
 
