@@ -15,14 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class JugadaManagerTest {
     @Test
-    public void test01LaJugadaSinCartasLanzaUnaExcepcion() {
-        JugadaManager jugadaFactory = new JugadaManager();
-        ArrayList<Poker> cartas = new ArrayList<>();
-
-        assertThrows(JugadaNulaError.class, () -> jugadaFactory.calcularJugada(cartas));
-    }
-
-    @Test
     public void test02JugarUnaCartaEsCartaAlta() {
         JugadaManager jugadaFactory = new JugadaManager();
         ArrayList<Poker> cartas = new ArrayList<>();

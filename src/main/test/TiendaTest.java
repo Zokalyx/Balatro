@@ -85,7 +85,8 @@ public class TiendaTest {
     public void test06NoSePuedeComprarUnTarotQueNoEsDeLaTienda() {
         LectorJson lector = new LectorJson();
 
-        Tienda tienda = new Tienda(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
+        Tienda tienda = new Tienda();
+        tienda.abrir(lector.leerComodines(), lector.leerTarots(), new ArrayList<>());
 
         Tarot tarotAComprar = new Tarot("a", "b", 1, 2, new ActivacionTarotJugadaParticular(new JugadaEscalera()));
 
