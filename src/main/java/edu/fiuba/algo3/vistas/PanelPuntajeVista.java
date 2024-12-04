@@ -38,15 +38,17 @@ public class PanelPuntajeVista extends HBox implements Observer {
 
         Region espacioIntermedio = new Region();
 
+        Label textoPuntaje = new Label("Fichas: ");
         puntajeActual = new Label("" + juego.getPuntajeActual());
         Label barraPuntaje = new Label("/");
         puntajeObjetivo = new Label("" + juego.getPuntajeObjetivo());
-        HBox conjuntoPuntaje = new HBox(puntajeActual, barraPuntaje, puntajeObjetivo);
+        HBox conjuntoPuntaje = new HBox(textoPuntaje, puntajeActual, barraPuntaje, puntajeObjetivo);
 
+        Label textoRonda = new Label("Ronda: ");
         rondaActual = new Label("" + juego.getRondaActual());
         Label barraRonda = new Label("/");
         rondaObjetivo = new Label("" + juego.getRondaObjetivo());
-        HBox conjuntoRonda =  new HBox(rondaActual, barraRonda, rondaObjetivo);
+        HBox conjuntoRonda =  new HBox(textoRonda, rondaActual, barraRonda, rondaObjetivo);
 
         VBox conjuntoRondaPuntaje = new VBox(conjuntoPuntaje, conjuntoRonda);
 
@@ -60,6 +62,8 @@ public class PanelPuntajeVista extends HBox implements Observer {
 
         HBox.setHgrow(espacioIntermedio, Priority.ALWAYS);
 
+        textoRonda.setStyle("-fx-text-fill: white;");
+        textoPuntaje.setStyle("-fx-text-fill: white;");
         puntajeActual.setStyle("-fx-text-fill: white;");
         barraPuntaje.setStyle("-fx-text-fill: white;");
         puntajeObjetivo.setStyle("-fx-text-fill: white;");
