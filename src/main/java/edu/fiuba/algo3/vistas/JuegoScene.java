@@ -68,8 +68,9 @@ public class JuegoScene implements Observer {
         tienda.abrir(configuracion.getComodines(juego.getRondaActual()), configuracion.getTarots(juego.getRondaActual()), configuracion.getPokers(juego.getRondaActual()));
 
         // Objetos de layout
-        tiendaVista = new TiendaVista(tienda, mano, comodines, tarots);
-        JugadaVista jugadaVista = new JugadaVista(mano, tienda);
+        tiendaVista = new TiendaVista(tienda, mano, comodines, tarots, juego);
+        JugadaVista jugadaVista = new JugadaVista(mano, tienda, juego);
+        FinDePartidaVista finDePartidaVista = new FinDePartidaVista(juego);
 
         Label labelJugar = new Label("Jugar");
         turnosDisponibles = new Label("(" + juego.getTurnosDisponibles() + ")");
@@ -95,7 +96,7 @@ public class JuegoScene implements Observer {
         PanelPuntajeVista panelPuntajeVista = new PanelPuntajeVista(juego,mano,puntaje);
         Region espacioCentralVerticalSuperior = new Region();
         Region espacioCentralVerticalInferior = new Region();
-        VBox contenedorCentral = new VBox(panelPuntajeVista, espacioCentralVerticalSuperior, tiendaVista, jugadaVista, espacioCentralVerticalInferior, panelInferior);
+        VBox contenedorCentral = new VBox(panelPuntajeVista, espacioCentralVerticalSuperior, tiendaVista, jugadaVista, finDePartidaVista, espacioCentralVerticalInferior, panelInferior);
 
         ComodinesVista comodinesVista = new ComodinesVista(comodines);
         Region espacioDespuesComodines = new Region();
@@ -142,6 +143,7 @@ public class JuegoScene implements Observer {
         dropShadow.setColor(Color.BLACK);
         dropShadow.setRadius(5);
 
+        botonRepartir.setEffect(dropShadow);
         botonJugar.setEffect(dropShadow);
         botonDescarte.setEffect(dropShadow);
         botonSalir.setEffect(dropShadow);

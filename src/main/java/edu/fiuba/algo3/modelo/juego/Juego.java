@@ -13,6 +13,9 @@ public class Juego extends Observable {
     int descartesDisponibles;
     ConfiguracionJuego configuracion;
 
+    boolean gano;
+    boolean perdio;
+
     public Juego(ConfiguracionJuego configuracion) {
         this.configuracion = configuracion;
         rondaMaxima = configuracion.getRondaMaxima();
@@ -35,6 +38,16 @@ public class Juego extends Observable {
                 cargarRonda(rondaActual);
             }
         }
+
+        gano = this.rondaActual >= this.rondaMaxima;
+        if (gano) {
+            // Evitar pasar a una ronda que no existe
+            rondaActual--;
+        }
+
+        perdio = this.turnosDisponibles == 0;
+
+
         setChanged();
         notifyObservers();
         return pasoDeRonda;
@@ -51,11 +64,11 @@ public class Juego extends Observable {
     }
 
     public boolean gano() {
-        return this.rondaActual >= this.rondaMaxima;
+        return gano;
     }
 
     public boolean perdio() {
-        return this.turnosDisponibles == 0;
+        return perdio;
     }
 
     public int getRondaActual() {

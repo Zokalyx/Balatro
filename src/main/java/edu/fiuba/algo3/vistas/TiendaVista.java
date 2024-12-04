@@ -7,6 +7,7 @@ import edu.fiuba.algo3.modelo.contenedores.Comodines;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Tienda;
 import edu.fiuba.algo3.modelo.contenedores.Tarots;
+import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -31,11 +32,13 @@ public class TiendaVista extends StackPane implements Observer {
     Comodines comodines;
     Tarots tarots;
     ArrayList<CartaVista> vistas;
+    Juego juego;
 
-    public TiendaVista(Tienda tienda, Mano mano, Comodines comodines, Tarots tarots) {
+    public TiendaVista(Tienda tienda, Mano mano, Comodines comodines, Tarots tarots, Juego juego) {
         this.mano = mano;
         this.comodines = comodines;
         this.tarots = tarots;
+        this.juego = juego;
         vistas = new ArrayList<>();
 
         setOnMouseEntered(e -> pausarAnimacion = true);
@@ -112,8 +115,10 @@ public class TiendaVista extends StackPane implements Observer {
         getChildren().addAll(vistas);
         StackPane.setAlignment(textoCentral, Pos.CENTER);
 
-        setVisible(tienda.getEstado());
-        setManaged(tienda.getEstado());
+        boolean habilitado = tienda.getEstado() && !juego.gano() && !juego.perdio();
+
+        setVisible(habilitado);
+        setManaged(habilitado);
     }
 
     private void posicionarVistas() {

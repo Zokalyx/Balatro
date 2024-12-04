@@ -45,6 +45,8 @@ public class ControladorJugar  implements EventHandler<MouseEvent> {
                     mano.retornarCartasAMazo();
                     int rondaActual = juego.getRondaActual();
                     tienda.abrir(configuracion.getComodines(rondaActual), configuracion.getTarots(rondaActual), configuracion.getPokers(rondaActual));
+                } else {
+                    mano.repartir();
                 }
                 puntaje.reiniciar();
             });
