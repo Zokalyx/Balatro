@@ -43,4 +43,8 @@ public class JugadaManager {
 
         throw new JugadaNoEncontradaError("No se encontró la jugada");
     }
+
+    public ArrayList<Jugada> getJugadas() {
+        return jugadas;
+    }
 }

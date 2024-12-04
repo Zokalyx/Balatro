@@ -25,9 +25,11 @@ public class PanelPuntajeVista extends HBox implements Observer {
     Label rondaActual;
     Label rondaObjetivo;
     Label nombreJugada;
-    public PanelPuntajeVista(Juego juego, Mano mano, Puntaje puntaje) {
-        // Objetos de modelo
+    Mano mano;
 
+    public PanelPuntajeVista(Juego juego, Mano mano, Puntaje puntaje, JugadaManager jugadaManager) {
+        // Objetos de modelo
+        this.mano = mano;
 
         // Objetos de layout
         fichas = new Label("0");
@@ -95,7 +97,9 @@ public class PanelPuntajeVista extends HBox implements Observer {
         juego.addObserver(this);
         mano.addObserver(this);
         puntaje.addObserver(this);
-
+        for (Jugada jugada : jugadaManager.getJugadas()) {
+            jugada.addObserver(this);
+        }
     }
 
     @Override
@@ -107,18 +111,30 @@ public class PanelPuntajeVista extends HBox implements Observer {
             rondaActual.setText("" + (juego.getRondaActual() + 1));
             rondaObjetivo.setText("" + juego.getRondaObjetivo());
         }
+
         if(o instanceof Mano){
             Mano mano = (Mano) o;
-            Jugada jugada =mano.getJugada();
+            Jugada jugada = mano.getJugada();
+
             fichas.setText("" + jugada.getValor());
             multiplicador.setText("" + jugada.getMultiplicador());
             nombreJugada.setText(obtenerNombreJugada(jugada));
 
         }
+
         if(o instanceof Puntaje){
             Puntaje puntaje = (Puntaje) o;
             fichas.setText("" + puntaje.getValor());
             multiplicador.setText("" + puntaje.getMultiplicador());
+        }
+
+        // Si justo modificamos la jugada con tarot cuando está "seleccionada"
+        if (o instanceof Jugada) {
+            Jugada jugada = (Jugada) o;
+            if (jugada.equals(mano.getJugada())) {
+                fichas.setText("" + jugada.getValor());
+                multiplicador.setText("" + jugada.getMultiplicador());
+            }
         }
     }
 

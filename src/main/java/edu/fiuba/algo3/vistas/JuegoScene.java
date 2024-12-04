@@ -94,7 +94,7 @@ public class JuegoScene implements Observer {
 
         HBox panelInferior = new HBox(botonJugar, espacioEntreBotonesIzquierda, manoVista, espacioEntreBotonesDerecha, botonDescarte, botonRepartir);
 
-        PanelPuntajeVista panelPuntajeVista = new PanelPuntajeVista(juego,mano,puntaje);
+        PanelPuntajeVista panelPuntajeVista = new PanelPuntajeVista(juego,mano,puntaje,jugadaManager);
         Region espacioCentralVerticalSuperior = new Region();
         Region espacioCentralVerticalInferior = new Region();
         VBox contenedorCentral = new VBox(panelPuntajeVista, espacioCentralVerticalSuperior, tiendaVista, jugadaVista, finDePartidaVista, espacioCentralVerticalInferior, panelInferior);
