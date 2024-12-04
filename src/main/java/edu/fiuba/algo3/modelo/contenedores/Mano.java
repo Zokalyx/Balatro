@@ -90,9 +90,12 @@ public class Mano extends Observable {
 
     public void retornarCartasAMazo() {
         mazo.agregar(cartas);
-        cartas.clear();
         mazo.agregar(cartasDescartadas);
+
+        cartas.clear();
         cartasDescartadas.clear();
+        cartasSeleccionadas.clear();
+
         actualizarJugada();
         setChanged();
         notifyObservers();

@@ -1,6 +1,7 @@
 package edu.fiuba.algo3.vistas;
 
 
+import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.comodin.ActivacionComodinSiempre;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import edu.fiuba.algo3.modelo.comodin.ComodinIndividual;
@@ -9,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,19 +20,13 @@ public class ComodinesVista extends VBox implements Observer {
     public ComodinesVista(Comodines comodines) {
         vistas = new ArrayList<>();
 
-        for (Comodin comodin : comodines.getArray()) {
-            ComodinVista vista = new ComodinVista(comodin);
-            vista.setAnimacion(40, 20);
-            vistas.add(vista);
-        }
+        actualizarVista(comodines);
 
         setSpacing(-80);
         setAlignment(Pos.CENTER);
         setMinWidth(120);
 
         comodines.addObserver(this);
-
-        getChildren().addAll(vistas);
     }
 
     @Override
@@ -38,15 +34,35 @@ public class ComodinesVista extends VBox implements Observer {
         if (o instanceof Comodines) {
             Comodines comodines = (Comodines) o;
 
-            vistas.clear();
-            for (Comodin comodin : comodines.getArray()) {
-                ComodinVista vista = new ComodinVista(comodin);
-                vista.setAnimacion(-40, 20);
-                vistas.add(vista);
-            }
-
-            getChildren().clear();
-            getChildren().addAll(vistas);
+            actualizarVista(comodines);
         }
+    }
+
+    private void actualizarVista(Comodines comodines) {
+        List<ComodinVista> nuevasVistas = new ArrayList<>();
+
+        for (Comodin comodin : comodines.getArray()) {
+            ComodinVista vista = obtenerComodinVista(comodin);
+            if (vista == null) {
+                vista = new ComodinVista(comodin);
+            }
+            // Reutilizamos la vista si ya existe
+            nuevasVistas.add(vista);
+        }
+
+        getChildren().clear();
+        getChildren().addAll(nuevasVistas);
+
+        vistas.clear();
+        vistas.addAll(nuevasVistas);
+    }
+
+    private ComodinVista obtenerComodinVista(Comodin comodin) {
+        for (ComodinVista vista : vistas) {
+            if (vista.esComodinVista(comodin)) {
+                return vista;
+            }
+        }
+        return null;
     }
 }

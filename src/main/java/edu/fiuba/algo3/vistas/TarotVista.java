@@ -5,7 +5,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class TarotVista extends CartaVista {
+    Tarot tarot;
+
     public TarotVista(Tarot tarot) {
+        this.tarot = tarot;
+
         offsetX=20;
         offsetY=40;
 
@@ -20,5 +24,9 @@ public class TarotVista extends CartaVista {
 
 
         getChildren().addAll(vbox);
+    }
+
+    public boolean esTarotVista(Tarot tarot) {
+        return this.tarot.equals(tarot);
     }
 }

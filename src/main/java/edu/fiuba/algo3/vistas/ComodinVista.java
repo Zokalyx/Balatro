@@ -5,7 +5,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class ComodinVista extends CartaVista {
+    Comodin comodin;
+
     public ComodinVista(Comodin comodin) {
+        this.comodin = comodin;
+
         offsetX=-20;
         offsetY=40;
 
@@ -20,5 +24,9 @@ public class ComodinVista extends CartaVista {
 
 
         getChildren().addAll(vbox);
+    }
+
+    public boolean esComodinVista(Comodin comodin) {
+        return comodin.equals(this.comodin);
     }
 }

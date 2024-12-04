@@ -13,6 +13,7 @@ import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -25,34 +26,20 @@ import java.util.Observer;
 public class TiendaVista extends StackPane implements Observer {
     double anguloRotacion = 0;
     boolean pausarAnimacion = false;
+    VBox textoCentral;
+    Mano mano;
+    Comodines comodines;
+    Tarots tarots;
+    ArrayList<CartaVista> vistas;
 
     public TiendaVista(Tienda tienda, Mano mano, Comodines comodines, Tarots tarots) {
-        ArrayList<CartaVista> vistas = new ArrayList<>();
+        this.mano = mano;
+        this.comodines = comodines;
+        this.tarots = tarots;
+        vistas = new ArrayList<>();
 
-        for (Comodin comodin : tienda.getComodinesDisponibles()) {
-            CartaVista vista = new ComodinVista(comodin);
-            vistas.add(vista);
-            vista.setOnMouseClicked(new ControladorTienda(comodin, tienda, mano, comodines, tarots));
-        }
-        for (Tarot tarot : tienda.getTarotsDisponibles()) {
-            CartaVista vista = new TarotVista(tarot);
-            vistas.add(vista);
-            vista.setOnMouseClicked(new ControladorTienda(tarot, tienda, mano, comodines, tarots));
-        }
-        for (Poker poker : tienda.getCartasDisponibles()) {
-            CartaVista vista = new PokerVista(poker);
-            vistas.add(vista);
-            vista.setOnMouseClicked(new ControladorTienda(poker, tienda, mano, comodines, tarots));
-        }
-
-        Label tiendaLabel = new Label("Tienda");
-        Label instruccionLabel = new Label("Elegir 1");
-        tiendaLabel.setStyle("-fx-text-fill: white; -fx-font-size: 20;");
-        instruccionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12;");
-        VBox textoCentral = new VBox(tiendaLabel, instruccionLabel);
-        textoCentral.setSpacing(10);
-        textoCentral.setAlignment(Pos.CENTER);
-        StackPane.setAlignment(textoCentral, Pos.CENTER);
+        setOnMouseEntered(e -> pausarAnimacion = true);
+        setOnMouseExited(e -> pausarAnimacion = false);
 
         setMinSize(400, 400);
         setMaxSize(400, 400);
@@ -62,38 +49,27 @@ public class TiendaVista extends StackPane implements Observer {
         shadow.setRadius(20);
         setEffect(shadow);
 
-        int n = vistas.size();
-        for (int i = 0; i < n; i++) {
-            CartaVista vista = vistas.get(i);
-            vista.setAnimacionRotacion();
-            double angulo = 2 * Math.PI * i / n;
-            vista.setTranslateX(150 * Math.cos(angulo));
-            vista.setTranslateY(150 * Math.sin(angulo));
-        }
-
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(16), event -> {
             if (!pausarAnimacion) {
                 anguloRotacion += 0.5;
             } else {
                 anguloRotacion += 0.1;
             }
-            for (int i = 0; i < n; i++) {
-                CartaVista vista = vistas.get(i);
-                double angulo = (2 * Math.PI * i / n) + Math.toRadians(anguloRotacion);
-                vista.setTranslateX(150 * Math.cos(angulo));
-                vista.setTranslateY(150 * Math.sin(angulo));
-                // Descomentar para efecto raro pero copado
-                // vista.setRotate(-Math.toDegrees(angulo));
-            }
+            posicionarVistas();
         }));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
-        setOnMouseEntered(e -> pausarAnimacion = true);
-        setOnMouseExited(e -> pausarAnimacion = false);
+        Label tiendaLabel = new Label("Tienda");
+        Label instruccionLabel = new Label("Elegir 1");
+        tiendaLabel.setStyle("-fx-text-fill: white; -fx-font-size: 20;");
+        instruccionLabel.setStyle("-fx-text-fill: white; -fx-font-size: 12;");
+        textoCentral = new VBox(tiendaLabel, instruccionLabel);
+        textoCentral.setSpacing(10);
+        textoCentral.setAlignment(Pos.CENTER);
+        StackPane.setAlignment(textoCentral, Pos.CENTER);
 
-        getChildren().add(textoCentral);
-        getChildren().addAll(vistas);
+        actualizarVista(tienda);
 
         tienda.addObserver(this);
     }
@@ -103,8 +79,52 @@ public class TiendaVista extends StackPane implements Observer {
         if (o instanceof Tienda) {
             Tienda tienda = (Tienda) o;
 
-            setVisible(tienda.getEstado());
-            setManaged(tienda.getEstado());
+            actualizarVista(tienda);
+        }
+    }
+
+    private void actualizarVista(Tienda tienda) {
+        vistas = new ArrayList<>();
+
+        for (Comodin comodin : tienda.getComodinesDisponibles()) {
+            CartaVista vista = new ComodinVista(comodin);
+            vistas.add(vista);
+            vista.setOnMouseClicked(new ControladorTienda(comodin, tienda, mano, comodines, tarots));
+            vista.setAnimacionRotacion();
+        }
+        for (Tarot tarot : tienda.getTarotsDisponibles()) {
+            CartaVista vista = new TarotVista(tarot);
+            vistas.add(vista);
+            vista.setOnMouseClicked(new ControladorTienda(tarot, tienda, mano, comodines, tarots));
+            vista.setAnimacionRotacion();
+        }
+        for (Poker poker : tienda.getCartasDisponibles()) {
+            CartaVista vista = new PokerVista(poker);
+            vistas.add(vista);
+            vista.setOnMouseClicked(new ControladorTienda(poker, tienda, mano, comodines, tarots));
+            vista.setAnimacionRotacion();
+        }
+
+        posicionarVistas();
+
+        getChildren().clear();
+        getChildren().add(textoCentral);
+        getChildren().addAll(vistas);
+        StackPane.setAlignment(textoCentral, Pos.CENTER);
+
+        setVisible(tienda.getEstado());
+        setManaged(tienda.getEstado());
+    }
+
+    private void posicionarVistas() {
+        int n = vistas.size();
+        for (int i = 0; i < n; i++) {
+            CartaVista vista = vistas.get(i);
+            double angulo = (2 * Math.PI * i / n) + Math.toRadians(anguloRotacion);
+            vista.setTranslateX(150 * Math.cos(angulo));
+            vista.setTranslateY(150 * Math.sin(angulo));
+            // Descomentar para efecto raro pero copado
+            // vista.setRotate(-Math.toDegrees(angulo));
         }
     }
 }

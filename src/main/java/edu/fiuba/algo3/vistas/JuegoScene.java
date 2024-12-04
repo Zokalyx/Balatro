@@ -153,7 +153,7 @@ public class JuegoScene implements Observer {
 
         botonRepartir.setOnMouseClicked(new ControladorRepartir(mano));
         botonDescarte.setOnMouseClicked(new ControladorDescarte(mano,juego));
-        botonJugar.setOnMouseClicked(new ControladorJugar(mano,juego,comodines,puntaje));
+        botonJugar.setOnMouseClicked(new ControladorJugar(mano,juego,comodines,puntaje, tienda, configuracion));
 
         mano.addObserver(this);
         juego.addObserver(this);

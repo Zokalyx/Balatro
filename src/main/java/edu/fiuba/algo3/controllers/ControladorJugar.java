@@ -3,6 +3,8 @@ package edu.fiuba.algo3.controllers;
 import edu.fiuba.algo3.modelo.Puntaje;
 import edu.fiuba.algo3.modelo.contenedores.Comodines;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
+import edu.fiuba.algo3.modelo.contenedores.Tienda;
+import edu.fiuba.algo3.modelo.juego.ConfiguracionJuego;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
 import javafx.animation.PauseTransition;
@@ -16,12 +18,17 @@ public class ControladorJugar  implements EventHandler<MouseEvent> {
     Juego juego;
     Mano mano;
     Puntaje puntaje;
+    Tienda tienda;
+    ConfiguracionJuego configuracion;
 
-    public ControladorJugar(Mano mano, Juego juego, Comodines comodines, Puntaje puntaje){
+
+    public ControladorJugar(Mano mano, Juego juego, Comodines comodines, Puntaje puntaje, Tienda tienda, ConfiguracionJuego configuracion){
         this.mano = mano;
         this.juego = juego;
         this.comodines=comodines;
         this.puntaje=puntaje;
+        this.tienda = tienda;
+        this.configuracion = configuracion;
     }
 
     @Override
@@ -34,9 +41,10 @@ public class ControladorJugar  implements EventHandler<MouseEvent> {
             pausa2.setOnFinished(e2 -> {
                 comodines.modificarPuntaje(puntaje, jugada, juego.getDescartesDisponibles());
                 boolean pasoDeRonda = juego.jugarTurno(puntaje.calcularTotal());
-                mano.repartir();
                 if (pasoDeRonda) {
                     mano.retornarCartasAMazo();
+                    int rondaActual = juego.getRondaActual();
+                    tienda.abrir(configuracion.getComodines(rondaActual), configuracion.getTarots(rondaActual), configuracion.getPokers(rondaActual));
                 }
                 puntaje.reiniciar();
             });

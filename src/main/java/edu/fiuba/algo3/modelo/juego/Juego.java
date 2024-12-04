@@ -23,6 +23,7 @@ public class Juego extends Observable {
         if (gano() || perdio()) {
             throw new JuegoYaTerminadoError("Ya se terminó el juego");
         }
+
         boolean pasoDeRonda=false;
         turnosDisponibles--;
         puntajeActual += puntajeObtenido;

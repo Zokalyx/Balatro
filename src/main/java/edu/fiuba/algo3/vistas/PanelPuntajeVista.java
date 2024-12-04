@@ -45,7 +45,7 @@ public class PanelPuntajeVista extends HBox implements Observer {
         HBox conjuntoPuntaje = new HBox(textoPuntaje, puntajeActual, barraPuntaje, puntajeObjetivo);
 
         Label textoRonda = new Label("Ronda: ");
-        rondaActual = new Label("" + juego.getRondaActual());
+        rondaActual = new Label("" + (juego.getRondaActual() + 1));
         Label barraRonda = new Label("/");
         rondaObjetivo = new Label("" + juego.getRondaObjetivo());
         HBox conjuntoRonda =  new HBox(textoRonda, rondaActual, barraRonda, rondaObjetivo);
@@ -104,7 +104,7 @@ public class PanelPuntajeVista extends HBox implements Observer {
             Juego juego = (Juego) o;
             puntajeActual.setText("" + juego.getPuntajeActual());
             puntajeObjetivo.setText("" + juego.getPuntajeObjetivo());
-            rondaActual.setText("" + juego.getRondaActual());
+            rondaActual.setText("" + (juego.getRondaActual() + 1));
             rondaObjetivo.setText("" + juego.getRondaObjetivo());
         }
         if(o instanceof Mano){
