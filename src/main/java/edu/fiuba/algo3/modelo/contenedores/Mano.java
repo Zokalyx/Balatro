@@ -4,6 +4,8 @@ import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaManager;
 import edu.fiuba.algo3.modelo.jugada.JugadaNula;
+import edu.fiuba.algo3.modelo.tarot.ModificablePorTarot;
+import edu.fiuba.algo3.modelo.tarot.SeleccionParaTarotInvalidaError;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -129,5 +131,12 @@ public class Mano extends Observable {
 
     public boolean estaLlena() {
         return cartas.size() == maximoCartas;
+    }
+
+    public Poker getSeleccionUnica() {
+        if (cartasSeleccionadas.size() != 1) {
+            throw new SeleccionParaTarotInvalidaError("Para usar un tarot debe haber solo una carta seleccionada!");
+        }
+        return cartasSeleccionadas.get(0);
     }
 }

@@ -1,6 +1,8 @@
 package edu.fiuba.algo3.modelo.tarot;
 
+import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
+import edu.fiuba.algo3.modelo.jugada.JugadaManager;
 
 public class ActivacionTarotJugadaParticular implements ActivacionTarot {
     Jugada jugada;
@@ -10,7 +12,7 @@ public class ActivacionTarotJugadaParticular implements ActivacionTarot {
     }
 
     @Override
-    public boolean sePuedeActivarSobre(ModificablePorTarot modificablePorTarot) {
-        return modificablePorTarot.getClass().equals(jugada.getClass());
+    public ModificablePorTarot encontrarObjetoASerModificado(Mano mano, JugadaManager jugadaManager) {
+        return jugadaManager.getJugada(jugada);
     }
 }

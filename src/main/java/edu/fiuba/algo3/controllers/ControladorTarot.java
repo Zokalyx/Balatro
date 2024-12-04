@@ -7,6 +7,7 @@ import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaEscalera;
 import edu.fiuba.algo3.modelo.jugada.JugadaManager;
 import edu.fiuba.algo3.modelo.tarot.ModificablePorTarot;
+import edu.fiuba.algo3.modelo.tarot.SeleccionParaTarotInvalidaError;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -14,21 +15,23 @@ import javafx.scene.input.MouseEvent;
 public class ControladorTarot implements EventHandler<MouseEvent> {
     Tarots tarots;
     Tarot tarot;
+    Mano mano;
+    JugadaManager jugadaManager;
 
-    public ControladorTarot(Tarots tarots, Tarot tarot) {
+    public ControladorTarot(Tarots tarots, Tarot tarot, Mano mano, JugadaManager jugadaManager) {
         this.tarots = tarots;
         this.tarot = tarot;
+        this.mano = mano;
+        this.jugadaManager = jugadaManager;
     }
 
     @Override
     public void handle(MouseEvent mouseEvent) {
-        ModificablePorTarot modificable;
-
-        // Cómo hacemos esto???
-        // No sabemos sobre qué se aplica el tarot, o sea que debemos obtener como modificablePorTarot
-
-        // tarot.modificar(modificable);
-
-        tarots.consumir(tarot);
+        try {
+            tarot.consumir(mano, jugadaManager);
+            tarots.consumir(tarot);
+        } catch (SeleccionParaTarotInvalidaError e) {
+            // Nada.
+        }
     }
 }

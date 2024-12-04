@@ -59,7 +59,8 @@ public class JuegoScene implements Observer {
         // Objetos de modelo
         LectorJson lectorJson = new LectorJson();
         ConfiguracionJuego configuracion = lectorJson.leerConfiguracion();
-        this.mano = new Mano(configuracion.getMazo(), new JugadaManager());
+        JugadaManager jugadaManager = new JugadaManager();
+        this.mano = new Mano(configuracion.getMazo(), jugadaManager);
         this.juego = new Juego(lectorJson.leerConfiguracion());
         this.comodines = new Comodines();
         this.puntaje = new Puntaje(0,1);
@@ -101,7 +102,7 @@ public class JuegoScene implements Observer {
         ComodinesVista comodinesVista = new ComodinesVista(comodines);
         Region espacioDespuesComodines = new Region();
         Region espacioAntesTarots = new Region();
-        TarotsVista tarotsVista = new TarotsVista(tarots);
+        TarotsVista tarotsVista = new TarotsVista(tarots, mano, jugadaManager);
         HBox hboxMadre = new HBox(comodinesVista, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarotsVista);
 
         Button botonSalir = new Button("X");

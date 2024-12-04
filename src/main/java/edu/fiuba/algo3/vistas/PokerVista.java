@@ -14,11 +14,10 @@ import java.util.Observer;
 public class PokerVista extends CartaVista implements Observer {
 
     Poker poker;
+    Label fichas;
+    Label multiplicador;
 
     public PokerVista(Poker poker) {
-       offsetX=40;
-       offsetY=20;
-
         this.poker=poker;
         String simbolo = simboloVisible(poker.getSimbolo());
         Palo palo = poker.getPalo();
@@ -27,14 +26,16 @@ public class PokerVista extends CartaVista implements Observer {
         Pane conjuntoInferior = crearConjuntoSimboloPalo(simbolo, palo);
         HBox panelCentral = new HBox();
         panelCentral.setAlignment(Pos.CENTER);
-        Label puntaje = new Label("" + poker.getValorNumerico());
+        fichas = new Label("" + poker.getValorNumerico());
         Label multiplicacionSimbolo = new Label(" x ");
-        Label multiplicador = new Label("" + poker.getMultiplicador());
-        panelCentral.getChildren().addAll(puntaje, multiplicacionSimbolo, multiplicador);
+        multiplicador = new Label("" + poker.getMultiplicador());
+        panelCentral.getChildren().addAll(fichas, multiplicacionSimbolo, multiplicador);
         conjuntoInferior.setRotate(180);
 
         StackPane.setAlignment(conjuntoSuperior, Pos.TOP_LEFT);
         StackPane.setAlignment(conjuntoInferior, Pos.BOTTOM_RIGHT);
+
+        poker.addObserver(this);
 
         getChildren().addAll(conjuntoSuperior, conjuntoInferior, panelCentral);
     }
@@ -98,6 +99,12 @@ public class PokerVista extends CartaVista implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
+        if (o instanceof Poker) {
+            Poker poker = (Poker) o;
+
+            fichas.setText("" + poker.getValorNumerico());
+            multiplicador.setText("" + poker.getMultiplicador());
+        }
     }
 
     public boolean esPokerVista(Poker poker) {

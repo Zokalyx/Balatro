@@ -34,24 +34,33 @@ public class ControladorJugar  implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent mouseEvent) {
         Jugada jugada = mano.jugar();
-        PauseTransition pausa = new PauseTransition(Duration.seconds(0.6));
+        PauseTransition pausa = new PauseTransition(Duration.seconds(0.5));
         pausa.setOnFinished(e -> {
-            PauseTransition pausa2 = new PauseTransition(Duration.seconds(0.4));
+
+            PauseTransition pausa2 = new PauseTransition(Duration.seconds(0.5));
             jugada.modificarPuntaje(puntaje);
             pausa2.setOnFinished(e2 -> {
-                comodines.modificarPuntaje(puntaje, jugada, juego.getDescartesDisponibles());
-                boolean pasoDeRonda = juego.jugarTurno(puntaje.calcularTotal());
-                if (pasoDeRonda) {
-                    mano.retornarCartasAMazo();
-                    int rondaActual = juego.getRondaActual();
-                    tienda.abrir(configuracion.getComodines(rondaActual), configuracion.getTarots(rondaActual), configuracion.getPokers(rondaActual));
-                } else {
-                    mano.repartir();
-                }
-                puntaje.reiniciar();
-            });
 
+                comodines.modificarPuntaje(puntaje, jugada, juego.getDescartesDisponibles());
+                PauseTransition pausa3 = new PauseTransition(Duration.seconds(0.5));
+                pausa3.setOnFinished(e3 -> {
+
+                    boolean pasoDeRonda = juego.jugarTurno(puntaje.calcularTotal());
+                    if (pasoDeRonda) {
+                        mano.retornarCartasAMazo();
+                        int rondaActual = juego.getRondaActual();
+                        tienda.abrir(configuracion.getComodines(rondaActual), configuracion.getTarots(rondaActual), configuracion.getPokers(rondaActual));
+                    } else {
+                        mano.repartir();
+                    }
+                    puntaje.reiniciar();
+
+                });
+                pausa3.play();
+
+            });
             pausa2.play();
+
         });
         pausa.play();
     }

@@ -1,5 +1,8 @@
 package edu.fiuba.algo3.modelo.tarot;
 
+import edu.fiuba.algo3.modelo.contenedores.Mano;
+import edu.fiuba.algo3.modelo.jugada.JugadaManager;
+
 public class Tarot {
     String nombre;
     String descripcion;
@@ -15,12 +18,9 @@ public class Tarot {
         this.activacion = activacion;
     }
 
-    public void modificar(ModificablePorTarot modificablePorTarot) {
-        if (!activacion.sePuedeActivarSobre(modificablePorTarot)) {
-            throw new TarotNoAplicableError("No se puede aplicar el tarot sobre este objeto");
-        }
-
-        modificablePorTarot.modificarse(puntos, multiplicador);
+    public void consumir(Mano mano, JugadaManager jugadaManager) {
+        ModificablePorTarot modificable = activacion.encontrarObjetoASerModificado(mano, jugadaManager);
+        modificable.modificarse(puntos, multiplicador);
     }
 
     public String getNombre() {

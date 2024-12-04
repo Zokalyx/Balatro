@@ -45,6 +45,7 @@ public class ComodinesVista extends VBox implements Observer {
             ComodinVista vista = obtenerComodinVista(comodin);
             if (vista == null) {
                 vista = new ComodinVista(comodin);
+                vista.setAnimacion(-20, 40);
             }
             // Reutilizamos la vista si ya existe
             nuevasVistas.add(vista);
