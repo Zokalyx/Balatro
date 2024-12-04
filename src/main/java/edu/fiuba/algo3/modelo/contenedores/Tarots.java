@@ -29,4 +29,10 @@ public class Tarots extends Observable {
     public ArrayList<Tarot> getArray() {
         return cartas;
     }
+
+    public void consumir(Tarot tarot) {
+        cartas.remove(tarot);
+        setChanged();
+        notifyObservers();
+    }
 }
