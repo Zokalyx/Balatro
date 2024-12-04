@@ -20,5 +20,6 @@ public class Mazo<T> {
 
     public void agregar(ArrayList<T> cartas) {
         this.cartas.addAll(cartas);
+        Collections.shuffle(this.cartas);
     }
 }
