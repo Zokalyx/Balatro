@@ -4,19 +4,19 @@ import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.media.MediaPlayer;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -60,23 +60,17 @@ public class MenuScene {
             timeline.play();
         }
 
-        Button btnReglas = new Button("Reglas");
-        btnReglas.setStyle("-fx-background-color: #4aba91; -fx-font-size: 20; -fx-padding: 20;");
-
-        Button btnJugar = new Button("Jugar");
-        btnJugar.setStyle("-fx-background-color: #4aba91; -fx-font-size: 20; -fx-padding: 20;");
-
-        Button btnSalir = new Button("Salir");
-        btnSalir.setStyle("-fx-background-color: #4aba91; -fx-font-size: 20; -fx-padding: 20;");
+        Button btnReglas = new BotonVista("Reglas");
+        Button btnJugar = new BotonVista("Jugar");
+        Button btnSalir = new BotonVista("Salir");
 
         HBox buttonBox = new HBox();
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().addAll(btnReglas, btnJugar, btnSalir);
         buttonBox.setSpacing(50);
 
-        btnReglas.setOnAction(e -> System.out.println("Mostrar las reglas del juego."));
-        btnJugar.setOnAction(e -> app.iniciarJuego());
-        btnSalir.setOnAction(e -> app.cerrarVentana());
+        btnJugar.setOnMouseClicked(e -> app.iniciarJuego());
+        btnSalir.setOnMouseClicked(e -> app.cerrarVentana());
 
         Region margenIzquierda = new Region();
         Region margenDerecha = new Region();

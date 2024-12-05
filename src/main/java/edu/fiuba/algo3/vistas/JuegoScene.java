@@ -11,7 +11,9 @@ import edu.fiuba.algo3.modelo.contenedores.Tarots;
 import edu.fiuba.algo3.modelo.contenedores.Tienda;
 import edu.fiuba.algo3.modelo.juego.ConfiguracionJuego;
 import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaManager;
+import edu.fiuba.algo3.modelo.jugada.JugadaNula;
 import javafx.application.Application;
 
 import javafx.geometry.Pos;
@@ -38,9 +40,9 @@ import java.util.Observer;
 public class JuegoScene implements Observer {
 
     Label turnosDisponibles;
-    Button botonDescarte;
-    Button botonRepartir;
-    Button botonJugar;
+    BotonVista botonDescarte;
+    BotonVista botonRepartir;
+    BotonVista botonJugar;
     Scene scene;
     Label descartesDisponibles;
     Juego juego;
@@ -49,6 +51,9 @@ public class JuegoScene implements Observer {
     Puntaje puntaje;
     TiendaVista tiendaVista;
     Tienda tienda;
+
+    Boolean estaJugando = false;
+    boolean botonesBloqueados;
 
     public JuegoScene(App app) {
         AnchorPane root = new AnchorPane();
@@ -76,7 +81,7 @@ public class JuegoScene implements Observer {
         Label labelJugar = new Label("Jugar");
         turnosDisponibles = new Label("(" + juego.getTurnosDisponibles() + ")");
         VBox contenidoBotonJugar = new VBox(labelJugar, turnosDisponibles);
-        botonJugar = new Button();
+        botonJugar = new BotonVista();
         botonJugar.setGraphic(contenidoBotonJugar);
 
         Region espacioEntreBotonesIzquierda = new Region();
@@ -88,9 +93,9 @@ public class JuegoScene implements Observer {
         Label labelDescarte = new Label("Descartar");
         descartesDisponibles = new Label("(" + juego.getDescartesDisponibles() + ")");
         VBox contenidoBotonDescarte = new VBox(labelDescarte, descartesDisponibles);
-        botonDescarte = new Button();
+        botonDescarte = new BotonVista();
         botonDescarte.setGraphic(contenidoBotonDescarte);
-        botonRepartir = new Button("Repartir");
+        botonRepartir = new BotonVista("Repartir");
 
         HBox panelInferior = new HBox(botonJugar, espacioEntreBotonesIzquierda, manoVista, espacioEntreBotonesDerecha, botonDescarte, botonRepartir);
 
@@ -105,7 +110,7 @@ public class JuegoScene implements Observer {
         TarotsVista tarotsVista = new TarotsVista(tarots, mano, jugadaManager);
         HBox hboxMadre = new HBox(comodinesVista, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarotsVista);
 
-        Button botonSalir = new Button("X");
+        BotonVista botonSalir = new BotonVista("X");
 
         root.getChildren().addAll(hboxMadre, botonSalir);
 
@@ -150,13 +155,13 @@ public class JuegoScene implements Observer {
         botonSalir.setEffect(dropShadow);
 
         // Controladores
-        botonSalir.setOnAction(e -> app.volverAMenu());
+        botonSalir.setOnMouseClicked(e -> app.volverAMenu());
         botonJugar.setDisable(true);
         botonDescarte.setDisable(true);
 
         botonRepartir.setOnMouseClicked(new ControladorRepartir(mano));
         botonDescarte.setOnMouseClicked(new ControladorDescarte(mano,juego));
-        botonJugar.setOnMouseClicked(new ControladorJugar(mano,juego,comodines,puntaje, tienda, configuracion));
+        botonJugar.setOnMouseClicked(new ControladorJugar(mano,juego,comodines,puntaje, tienda, configuracion, this));
 
         mano.addObserver(this);
         juego.addObserver(this);
@@ -192,6 +197,7 @@ public class JuegoScene implements Observer {
         else if (o instanceof Juego){
             Juego juego = (Juego) o;
             actualizarBotonDescarte();
+            actualizarBotonRepartir();
         }
         else if (o instanceof Tienda) {
             Tienda tienda = (Tienda) o;
@@ -207,7 +213,7 @@ public class JuegoScene implements Observer {
         } else {
             botonRepartir.setManaged(true);
             botonRepartir.setVisible(true);
-            botonRepartir.setDisable(tienda.getEstado());
+            botonRepartir.setDisable(tienda.getEstado() || juego.perdio() || juego.gano() || botonesBloqueados);
         }
     }
 
@@ -224,7 +230,7 @@ public class JuegoScene implements Observer {
 
         ArrayList<Poker> seleccionadas = mano.getSeleccion();
 
-        if(juego.getDescartesDisponibles()!=0 && !seleccionadas.isEmpty()){
+        if(juego.getDescartesDisponibles()!=0 && !seleccionadas.isEmpty() && !botonesBloqueados){
             botonDescarte.setDisable(false);
         }else{
             botonDescarte.setDisable(true);
@@ -233,10 +239,7 @@ public class JuegoScene implements Observer {
     }
 
     private void actualizarBotonJuego() {
-
-        ArrayList<Poker> seleccionadas = mano.getSeleccion();
-
-        if(juego.getTurnosDisponibles()!=0 && !seleccionadas.isEmpty() && mano.estaLlena()){
+        if (juego.getTurnosDisponibles() !=0 && mano.estaLlena() && !botonesBloqueados){
             botonJugar.setDisable(false);
         }else{
             botonJugar.setDisable(true);
@@ -246,6 +249,13 @@ public class JuegoScene implements Observer {
 
     public Scene getScene() {
         return scene;
+    }
+
+    public void setEstadoBotones(boolean estado) {
+        botonesBloqueados = !estado;
+        actualizarBotonRepartir();
+        actualizarBotonJuego();
+        actualizarBotonDescarte();
     }
 }
 

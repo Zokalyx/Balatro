@@ -17,6 +17,7 @@ public class ManoVista extends HBox implements Observer {
     ArrayList<PokerVista> vistas;
 
     public ManoVista(Mano mano) {
+
         vistas = new ArrayList<>();
 
         reconstruirVista(mano);

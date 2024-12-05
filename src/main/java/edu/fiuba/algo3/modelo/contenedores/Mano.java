@@ -59,23 +59,14 @@ public class Mano extends Observable {
 
     public void deseleccionarCarta(Poker carta) {
         cartasSeleccionadas.remove(carta);
-
         actualizarJugada();
+
         setChanged();
         notifyObservers();
     }
 
     public Jugada jugar() {
-        for (Poker cartaSeleccionada : cartasSeleccionadas) {
-            cartas.remove(cartaSeleccionada);
-        }
-        cartasDescartadas.addAll(cartasSeleccionadas);
-        cartasSeleccionadas.clear();
-        setChanged();
-        notifyObservers();
-        Jugada jugadaARetornar = jugadaActiva;
-        actualizarJugada();
-        return jugadaARetornar;
+        return jugadaActiva;
     }
 
     public void descartar() {
@@ -85,7 +76,7 @@ public class Mano extends Observable {
         cartasDescartadas.addAll(cartasSeleccionadas);
         cartasSeleccionadas.clear();
         actualizarJugada();
-        repartir();
+
         setChanged();
         notifyObservers();
     }
@@ -111,6 +102,8 @@ public class Mano extends Observable {
 
     private void actualizarJugada() {
         jugadaActiva = jugadaManager.calcularJugada(cartasSeleccionadas);
+        setChanged();
+        notifyObservers();
     }
 
     public ArrayList<Poker> getCartas() {
@@ -125,10 +118,6 @@ public class Mano extends Observable {
         return cartasDescartadas;
     }
 
-    public Jugada getJugada(){
-        return jugadaActiva;
-    }
-
     public boolean estaLlena() {
         return cartas.size() == maximoCartas;
     }
@@ -138,5 +127,9 @@ public class Mano extends Observable {
             throw new SeleccionParaTarotInvalidaError("Para usar un tarot debe haber solo una carta seleccionada!");
         }
         return cartasSeleccionadas.get(0);
+    }
+
+    public Jugada getJugada() {
+        return jugadaActiva;
     }
 }

@@ -71,11 +71,17 @@ public class FinDePartidaVista extends StackPane implements Observer {
     private void actualizar(Juego juego) {
         boolean habilitado = juego.gano() || juego.perdio();
 
-        setVisible(habilitado);
-        setManaged(habilitado);
-
         if (habilitado) {
-            agrandar();
+            PauseTransition pausa = new PauseTransition(Duration.seconds(1));
+            pausa.setOnFinished(e -> {
+                this.agrandar();
+                setVisible(true);
+                setManaged(true);
+            });
+            pausa.play();
+        } else {
+            setVisible(false);
+            setManaged(false);
         }
 
         if (juego.gano()) {

@@ -18,9 +18,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class PanelPuntajeVista extends HBox implements Observer {
-    Label fichas;
-    Label multiplicador;
-    Label puntajeActual;
+    NumeroAnimadoVista fichas;
+    NumeroAnimadoVista multiplicador;
+    NumeroAnimadoVista puntajeActual;
     Label puntajeObjetivo;
     Label rondaActual;
     Label rondaObjetivo;
@@ -32,16 +32,16 @@ public class PanelPuntajeVista extends HBox implements Observer {
         this.mano = mano;
 
         // Objetos de layout
-        fichas = new Label("0");
+        fichas = new NumeroAnimadoVista(0);
         Label puntajeSimboloMultiplicacion = new Label("x");
-        multiplicador = new Label("1.0");
+        multiplicador = new NumeroAnimadoVista(1.0);
 
         nombreJugada = new Label("");
 
         Region espacioIntermedio = new Region();
 
-        Label textoPuntaje = new Label("Fichas: ");
-        puntajeActual = new Label("" + juego.getPuntajeActual());
+        Label textoPuntaje = new Label("Puntaje: ");
+        puntajeActual = new NumeroAnimadoVista(juego.getPuntajeActual());
         Label barraPuntaje = new Label("/");
         puntajeObjetivo = new Label("" + juego.getPuntajeObjetivo());
         HBox conjuntoPuntaje = new HBox(textoPuntaje, puntajeActual, barraPuntaje, puntajeObjetivo);
@@ -104,9 +104,9 @@ public class PanelPuntajeVista extends HBox implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        if(o instanceof Juego){
+        if(o instanceof Juego) {
             Juego juego = (Juego) o;
-            puntajeActual.setText("" + juego.getPuntajeActual());
+            puntajeActual.setValorFinal(juego.getPuntajeActual());
             puntajeObjetivo.setText("" + juego.getPuntajeObjetivo());
             rondaActual.setText("" + (juego.getRondaActual() + 1));
             rondaObjetivo.setText("" + juego.getRondaObjetivo());
@@ -116,24 +116,24 @@ public class PanelPuntajeVista extends HBox implements Observer {
             Mano mano = (Mano) o;
             Jugada jugada = mano.getJugada();
 
-            fichas.setText("" + jugada.getValor());
-            multiplicador.setText("" + jugada.getMultiplicador());
+            fichas.setValorFinal(jugada.getValor());
+            multiplicador.setValorFinal(jugada.getMultiplicador());
             nombreJugada.setText(obtenerNombreJugada(jugada));
 
         }
 
         if(o instanceof Puntaje){
             Puntaje puntaje = (Puntaje) o;
-            fichas.setText("" + puntaje.getValor());
-            multiplicador.setText("" + puntaje.getMultiplicador());
+            fichas.setValorFinal(puntaje.getValor());
+            multiplicador.setValorFinal(puntaje.getMultiplicador());
         }
 
         // Si justo modificamos la jugada con tarot cuando está "seleccionada"
         if (o instanceof Jugada) {
             Jugada jugada = (Jugada) o;
             if (jugada.equals(mano.getJugada())) {
-                fichas.setText("" + jugada.getValor());
-                multiplicador.setText("" + jugada.getMultiplicador());
+                fichas.setValorFinal(jugada.getValor());
+                multiplicador.setValorFinal(jugada.getMultiplicador());
             }
         }
     }
