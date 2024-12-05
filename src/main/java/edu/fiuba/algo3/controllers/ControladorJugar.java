@@ -7,12 +7,15 @@ import edu.fiuba.algo3.modelo.contenedores.Tienda;
 import edu.fiuba.algo3.modelo.juego.ConfiguracionJuego;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
+import edu.fiuba.algo3.vistas.JuegoScene;
 import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-public class ControladorJugar  implements EventHandler<MouseEvent> {
+public class ControladorJugar implements EventHandler<MouseEvent> {
 
     Comodines comodines;
     Juego juego;
@@ -21,18 +24,30 @@ public class ControladorJugar  implements EventHandler<MouseEvent> {
     Tienda tienda;
     ConfiguracionJuego configuracion;
 
+    MediaPlayer sonidoCartas;
+    MediaPlayer sonidoFichas;
 
-    public ControladorJugar(Mano mano, Juego juego, Comodines comodines, Puntaje puntaje, Tienda tienda, ConfiguracionJuego configuracion){
+    JuegoScene vista;
+
+    public ControladorJugar(Mano mano, Juego juego, Comodines comodines, Puntaje puntaje, Tienda tienda, ConfiguracionJuego configuracion, JuegoScene vista) {
         this.mano = mano;
         this.juego = juego;
         this.comodines=comodines;
         this.puntaje=puntaje;
         this.tienda = tienda;
         this.configuracion = configuracion;
+        this.vista = vista;
+
+        sonidoCartas = new MediaPlayer(new Media(getClass().getResource("/sonido_cartas.mp3").toExternalForm()));
+        sonidoCartas.setVolume(0.6);
+
+        sonidoFichas = new MediaPlayer(new Media(getClass().getResource("/sonido_fichas.mp3").toExternalForm()));
+        sonidoFichas.setVolume(0.6);
     }
 
     @Override
     public void handle(MouseEvent mouseEvent) {
+        vista.setEstadoBotones(false);
         Jugada jugada = mano.jugar();
         PauseTransition pausa = new PauseTransition(Duration.seconds(0.5));
         pausa.setOnFinished(e -> {
@@ -46,14 +61,26 @@ public class ControladorJugar  implements EventHandler<MouseEvent> {
                 pausa3.setOnFinished(e3 -> {
 
                     boolean pasoDeRonda = juego.jugarTurno(puntaje.calcularTotal());
-                    if (pasoDeRonda) {
-                        mano.retornarCartasAMazo();
-                        int rondaActual = juego.getRondaActual();
-                        tienda.abrir(configuracion.getComodines(rondaActual), configuracion.getTarots(rondaActual), configuracion.getPokers(rondaActual));
-                    } else {
-                        mano.repartir();
-                    }
-                    puntaje.reiniciar();
+                    sonidoFichas.seek(Duration.ZERO);
+                    sonidoFichas.play();
+                    mano.descartar();
+                    PauseTransition pausa4 = new PauseTransition(Duration.seconds(1));
+                    pausa4.setOnFinished(e4 -> {
+
+                        if (pasoDeRonda) {
+                            mano.retornarCartasAMazo();
+                            int rondaActual = juego.getRondaActual();
+                            tienda.abrir(configuracion.getComodines(rondaActual), configuracion.getTarots(rondaActual), configuracion.getPokers(rondaActual));
+                        } else if (!juego.perdio()) {
+                            mano.repartir();
+                            sonidoCartas.seek(Duration.ZERO);
+                            sonidoCartas.play();
+                        }
+                        puntaje.reiniciar();
+                        vista.setEstadoBotones(true);
+
+                    });
+                    pausa4.play();
 
                 });
                 pausa3.play();

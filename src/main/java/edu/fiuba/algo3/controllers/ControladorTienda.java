@@ -9,6 +9,9 @@ import edu.fiuba.algo3.modelo.contenedores.Tienda;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 
 public class ControladorTienda implements EventHandler<MouseEvent> {
     Object carta;
@@ -16,6 +19,7 @@ public class ControladorTienda implements EventHandler<MouseEvent> {
     Mano mano;
     Comodines comodines;
     Tarots tarots;
+    MediaPlayer mediaPlayer;
 
     public ControladorTienda(Object carta, Tienda tienda, Mano mano, Comodines comodines, Tarots tarots) {
         this.carta = carta;
@@ -23,6 +27,9 @@ public class ControladorTienda implements EventHandler<MouseEvent> {
         this.mano = mano;
         this.comodines = comodines;
         this.tarots = tarots;
+
+        mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/sonido_moneda.wav").toExternalForm()));
+        mediaPlayer.setVolume(0.8);
     }
 
     @Override
@@ -31,19 +38,21 @@ public class ControladorTienda implements EventHandler<MouseEvent> {
             Poker poker = (Poker) carta;
             tienda.comprarPoker(poker);
             mano.agregarCartaExterna(poker);
-            tienda.cerrar();
+
 
         } else if (carta instanceof Tarot) {
             Tarot tarot = (Tarot) carta;
             tienda.comprarTarot(tarot);
             tarots.agregar(tarot);
-            tienda.cerrar();
 
         } else if (carta instanceof Comodin) {
             Comodin comodin = (Comodin) carta;
             tienda.comprarComodin(comodin);
             comodines.agregar(comodin);
-            tienda.cerrar();
         }
+
+        tienda.cerrar();
+        mediaPlayer.seek(Duration.ZERO);
+        mediaPlayer.play();
     }
 }
