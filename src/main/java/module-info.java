@@ -1,7 +1,11 @@
 module edu.fiuba.algo3 {
     requires javafx.controls;
+    requires javafx.media;
+
     requires json.simple;
+
     requires java.desktop;
+
     exports edu.fiuba.algo3.vistas;
     exports edu.fiuba.algo3.modelo;
     exports edu.fiuba.algo3.modelo.contenedores;
