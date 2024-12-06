@@ -1,14 +1,16 @@
 package edu.fiuba.algo3.vistas;
 
+import edu.fiuba.algo3.vistas.general.SonidoManager;
+import edu.fiuba.algo3.vistas.juego.JuegoScene;
+import edu.fiuba.algo3.vistas.menu.MenuScene;
 import javafx.application.Application;
 import javafx.scene.image.Image;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class App extends Application {
     Stage stage;
-    MediaPlayer mediaPlayer;
+    SonidoManager sonidos;
 
     public static void main(String[] args) {
         launch();
@@ -23,9 +25,7 @@ public class App extends Application {
         stage.setMaximized(true);
         stage.show();
 
-        mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/Balatro Main Theme - Funk Fusion Cover.mp3").toExternalForm()));
-        mediaPlayer.setVolume(0.2);
-        mediaPlayer.play();
+        SonidoManager.getInstancia().play("musica");
     }
 
     public void iniciarJuego() {

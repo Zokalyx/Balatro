@@ -1,11 +1,9 @@
-package edu.fiuba.algo3.vistas;
+package edu.fiuba.algo3.vistas.juego;
 
 
-import edu.fiuba.algo3.modelo.Poker;
-import edu.fiuba.algo3.modelo.comodin.ActivacionComodinSiempre;
 import edu.fiuba.algo3.modelo.comodin.Comodin;
-import edu.fiuba.algo3.modelo.comodin.ComodinIndividual;
 import edu.fiuba.algo3.modelo.contenedores.Comodines;
+import edu.fiuba.algo3.vistas.general.ComodinVista;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 

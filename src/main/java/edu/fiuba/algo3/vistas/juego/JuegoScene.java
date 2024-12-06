@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.vistas;
+package edu.fiuba.algo3.vistas.juego;
 
 
 import edu.fiuba.algo3.controllers.ControladorDescarte;
@@ -11,24 +11,23 @@ import edu.fiuba.algo3.modelo.contenedores.Tarots;
 import edu.fiuba.algo3.modelo.contenedores.Tienda;
 import edu.fiuba.algo3.modelo.juego.ConfiguracionJuego;
 import edu.fiuba.algo3.modelo.juego.Juego;
-import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaManager;
-import edu.fiuba.algo3.modelo.jugada.JugadaNula;
-import javafx.application.Application;
+import edu.fiuba.algo3.vistas.App;
+import edu.fiuba.algo3.vistas.general.BotonVista;
 
+import edu.fiuba.algo3.vistas.general.SonidoManager;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -51,11 +50,10 @@ public class JuegoScene implements Observer {
     Puntaje puntaje;
     TiendaVista tiendaVista;
     Tienda tienda;
-
-    Boolean estaJugando = false;
     boolean botonesBloqueados;
 
     public JuegoScene(App app) {
+
         AnchorPane root = new AnchorPane();
 
         cargarFuenteDeTexto(root);
@@ -160,7 +158,7 @@ public class JuegoScene implements Observer {
         botonDescarte.setDisable(true);
 
         botonRepartir.setOnMouseClicked(new ControladorRepartir(mano));
-        botonDescarte.setOnMouseClicked(new ControladorDescarte(mano,juego));
+        botonDescarte.setOnMouseClicked(new ControladorDescarte(mano, juego));
         botonJugar.setOnMouseClicked(new ControladorJugar(mano,juego,comodines,puntaje, tienda, configuracion, this));
 
         mano.addObserver(this);

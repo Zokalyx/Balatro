@@ -1,10 +1,11 @@
-package edu.fiuba.algo3.vistas;
+package edu.fiuba.algo3.vistas.juego;
 
 import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.contenedores.Tienda;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
+import edu.fiuba.algo3.vistas.general.PokerVista;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 

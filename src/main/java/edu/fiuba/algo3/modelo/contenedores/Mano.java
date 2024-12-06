@@ -95,6 +95,10 @@ public class Mano extends Observable {
     }
 
     public void agregarCartaExterna(Poker carta) {
+        if (cartas.size() == maximoCartas) {
+            throw new ManoLlenaError("Ya no queda espacio en la mano");
+        }
+
         cartas.add(carta);
         setChanged();
         notifyObservers();

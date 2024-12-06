@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.vistas;
+package edu.fiuba.algo3.vistas.general;
 
 import javafx.animation.Interpolator;
 import javafx.animation.RotateTransition;

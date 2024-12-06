@@ -7,12 +7,11 @@ import edu.fiuba.algo3.modelo.contenedores.Tienda;
 import edu.fiuba.algo3.modelo.juego.ConfiguracionJuego;
 import edu.fiuba.algo3.modelo.juego.Juego;
 import edu.fiuba.algo3.modelo.jugada.Jugada;
-import edu.fiuba.algo3.vistas.JuegoScene;
+import edu.fiuba.algo3.vistas.general.SonidoManager;
+import edu.fiuba.algo3.vistas.juego.JuegoScene;
 import javafx.animation.PauseTransition;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class ControladorJugar implements EventHandler<MouseEvent> {
@@ -24,9 +23,6 @@ public class ControladorJugar implements EventHandler<MouseEvent> {
     Tienda tienda;
     ConfiguracionJuego configuracion;
 
-    MediaPlayer sonidoCartas;
-    MediaPlayer sonidoFichas;
-
     JuegoScene vista;
 
     public ControladorJugar(Mano mano, Juego juego, Comodines comodines, Puntaje puntaje, Tienda tienda, ConfiguracionJuego configuracion, JuegoScene vista) {
@@ -37,12 +33,6 @@ public class ControladorJugar implements EventHandler<MouseEvent> {
         this.tienda = tienda;
         this.configuracion = configuracion;
         this.vista = vista;
-
-        sonidoCartas = new MediaPlayer(new Media(getClass().getResource("/sonido_cartas.mp3").toExternalForm()));
-        sonidoCartas.setVolume(0.6);
-
-        sonidoFichas = new MediaPlayer(new Media(getClass().getResource("/sonido_fichas.mp3").toExternalForm()));
-        sonidoFichas.setVolume(0.6);
     }
 
     @Override
@@ -61,8 +51,7 @@ public class ControladorJugar implements EventHandler<MouseEvent> {
                 pausa3.setOnFinished(e3 -> {
 
                     boolean pasoDeRonda = juego.jugarTurno(puntaje.calcularTotal());
-                    sonidoFichas.seek(Duration.ZERO);
-                    sonidoFichas.play();
+                    SonidoManager.getInstancia().play("fichas");
                     mano.descartar();
                     PauseTransition pausa4 = new PauseTransition(Duration.seconds(1));
                     pausa4.setOnFinished(e4 -> {
@@ -73,8 +62,7 @@ public class ControladorJugar implements EventHandler<MouseEvent> {
                             tienda.abrir(configuracion.getComodines(rondaActual), configuracion.getTarots(rondaActual), configuracion.getPokers(rondaActual));
                         } else if (!juego.perdio()) {
                             mano.repartir();
-                            sonidoCartas.seek(Duration.ZERO);
-                            sonidoCartas.play();
+                            SonidoManager.getInstancia().play("cartas");
                         }
                         puntaje.reiniciar();
                         vista.setEstadoBotones(true);

@@ -1,13 +1,14 @@
-package edu.fiuba.algo3.vistas;
+package edu.fiuba.algo3.vistas.juego;
 
 
 
 import edu.fiuba.algo3.controllers.ControladorTarot;
 import edu.fiuba.algo3.modelo.contenedores.Mano;
-import edu.fiuba.algo3.modelo.jugada.Jugada;
 import edu.fiuba.algo3.modelo.jugada.JugadaManager;
 import edu.fiuba.algo3.modelo.tarot.Tarot;
 import edu.fiuba.algo3.modelo.contenedores.Tarots;
+import edu.fiuba.algo3.vistas.general.SonidoManager;
+import edu.fiuba.algo3.vistas.general.TarotVista;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 

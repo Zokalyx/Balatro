@@ -2,6 +2,7 @@ package edu.fiuba.algo3.controllers;
 
 import edu.fiuba.algo3.modelo.contenedores.Mano;
 import edu.fiuba.algo3.modelo.juego.Juego;
+import edu.fiuba.algo3.vistas.general.SonidoManager;
 import javafx.scene.input.MouseEvent;
 import javafx.event.EventHandler;
 import javafx.scene.media.Media;
@@ -9,16 +10,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public class ControladorDescarte implements EventHandler<MouseEvent>  {
-
-    MediaPlayer mediaPlayer;
     private  Juego juego;
     private  Mano mano;
 
     public ControladorDescarte(Mano mano, Juego juego){
-        this.mano=mano;
-        this.juego=juego;
-        mediaPlayer = new MediaPlayer(new Media(getClass().getResource("/sonido_cartas.mp3").toExternalForm()));
-        mediaPlayer.setVolume(0.6);
+        this.mano = mano;
+        this.juego = juego;
     }
 
     @Override
@@ -26,7 +23,6 @@ public class ControladorDescarte implements EventHandler<MouseEvent>  {
         juego.utilizarDescarte();
         mano.descartar();
         mano.repartir();
-        mediaPlayer.seek(Duration.ZERO);
-        mediaPlayer.play();
+        SonidoManager.getInstancia().play("cartas");
     }
 }

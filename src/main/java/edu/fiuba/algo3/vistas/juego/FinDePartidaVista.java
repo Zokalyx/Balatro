@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.vistas;
+package edu.fiuba.algo3.vistas.juego;
 
 import edu.fiuba.algo3.modelo.juego.Juego;
 import javafx.animation.*;

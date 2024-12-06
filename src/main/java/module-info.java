@@ -14,4 +14,7 @@ module edu.fiuba.algo3 {
     exports edu.fiuba.algo3.modelo.palo;
     exports edu.fiuba.algo3.modelo.jugada;
     exports edu.fiuba.algo3.modelo.juego;
+    exports edu.fiuba.algo3.vistas.menu;
+    exports edu.fiuba.algo3.vistas.general;
+    exports edu.fiuba.algo3.vistas.juego;
 }

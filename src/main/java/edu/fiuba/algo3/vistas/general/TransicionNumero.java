@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.vistas;
+package edu.fiuba.algo3.vistas.general;
 
 import javafx.animation.Transition;
 import javafx.scene.control.Label;

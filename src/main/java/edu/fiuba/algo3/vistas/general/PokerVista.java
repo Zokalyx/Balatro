@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.vistas;
+package edu.fiuba.algo3.vistas.general;
 
 import edu.fiuba.algo3.modelo.Poker;
 import edu.fiuba.algo3.modelo.palo.*;

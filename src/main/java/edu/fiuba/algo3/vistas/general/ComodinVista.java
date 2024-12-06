@@ -1,4 +1,4 @@
-package edu.fiuba.algo3.vistas;
+package edu.fiuba.algo3.vistas.general;
 
 import edu.fiuba.algo3.modelo.comodin.Comodin;
 import javafx.scene.control.Label;
