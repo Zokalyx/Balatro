@@ -15,7 +15,9 @@ import org.json.simple.parser.ParseException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
+import java.nio.file.FileSystemNotFoundException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
@@ -24,7 +26,8 @@ public class LectorJson {
         JSONObject archivo;
         try {
             archivo = parsearArchivo("/json/mazo.json");
-        } catch (IOException e) {
+        } catch (IOException | FileSystemNotFoundException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("No se pudo abrir el archivo");
         } catch (ParseException e) {
             throw new RuntimeException("No se pudo parsear el contenido JSON");
@@ -40,7 +43,7 @@ public class LectorJson {
         JSONObject archivo;
         try {
             archivo = parsearArchivo("/json/comodines.json");
-        } catch (IOException e) {
+        } catch (IOException | FileSystemNotFoundException e) {
             throw new RuntimeException("No se pudo abrir el archivo");
         } catch (ParseException e) {
             throw new RuntimeException("No se pudo parsear el contenido JSON");
@@ -55,7 +58,7 @@ public class LectorJson {
         JSONObject archivo;
         try {
             archivo = parsearArchivo("/json/tarots.json");
-        } catch (IOException e) {
+        } catch (IOException | FileSystemNotFoundException e) {
             throw new RuntimeException("No se pudo abrir el archivo");
         } catch (ParseException e) {
             throw new RuntimeException("No se pudo parsear el contenido JSON");
@@ -71,7 +74,7 @@ public class LectorJson {
         JSONObject archivo;
         try {
             archivo = parsearArchivo("/json/balatro.json");
-        } catch (IOException e) {
+        } catch (IOException | FileSystemNotFoundException e) {
             throw new RuntimeException("No se pudo abrir el archivo");
         } catch (ParseException e) {
             throw new RuntimeException("No se pudo parsear el contenido JSON");
@@ -106,8 +109,8 @@ public class LectorJson {
 
     private JSONObject parsearArchivo(String nombreArchivo) throws IOException, ParseException, URISyntaxException {
         JSONParser parser = new JSONParser();
-        String pathArchivo = Paths.get(getClass().getResource(nombreArchivo).toURI()).toString();
-        return (JSONObject) parser.parse(new FileReader(pathArchivo));
+        InputStreamReader reader = new InputStreamReader(getClass().getResourceAsStream(nombreArchivo));
+        return (JSONObject) parser.parse(reader);
     }
 
     private ArrayList<Poker> parsearMazo(JSONArray mazo) {
