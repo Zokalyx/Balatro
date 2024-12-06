@@ -10,6 +10,8 @@ import java.util.Map;
 public class SonidoManager {
     static SonidoManager instancia;
     Map<String, MediaPlayer> sonidos;
+    double volumenMusica;
+    double volumenEfectos;
 
     private SonidoManager() {
         HashMap<String, String> archivos = new HashMap<>();
@@ -47,6 +49,8 @@ public class SonidoManager {
     }
 
     public void setVolumenEfectos(double volumen) {
+        volumenEfectos = volumen;
+
         sonidos.get("click").setVolume(0.3 * volumen);
         sonidos.get("moneda").setVolume(0.9 * volumen);
         sonidos.get("fichas").setVolume(0.9 * volumen);
@@ -57,6 +61,8 @@ public class SonidoManager {
     }
 
     public void setVolumenMusica(double volumen) {
+        volumenMusica = volumen;
+
         sonidos.get("musica").setVolume(0.2 * volumen);
     }
 
@@ -77,5 +83,13 @@ public class SonidoManager {
     public void play(String sonido) {
         sonidos.get(sonido).seek(Duration.ZERO);
         sonidos.get(sonido).play();
+    }
+
+    public double getVolumenMusica() {
+        return volumenMusica;
+    }
+
+    public double getVolumenEfectos() {
+        return volumenEfectos;
     }
 }

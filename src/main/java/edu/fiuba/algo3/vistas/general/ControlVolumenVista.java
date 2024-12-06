@@ -12,9 +12,9 @@ import javafx.scene.paint.Color;
 public class ControlVolumenVista extends VBox {
     public ControlVolumenVista() {
         // Objetos de layout
-        Slider sliderMusica = new Slider(0, 2, 1);
+        Slider sliderMusica = new Slider(0, 2, SonidoManager.getInstancia().getVolumenMusica());
         Label labelMusica = new Label("Música: ");
-        Slider sliderEfectos = new Slider(0, 2, 1);
+        Slider sliderEfectos = new Slider(0, 2, SonidoManager.getInstancia().getVolumenEfectos());
         Label labelEfectos = new Label("Efectos: ");
 
         HBox musica = new HBox(labelMusica, sliderMusica);

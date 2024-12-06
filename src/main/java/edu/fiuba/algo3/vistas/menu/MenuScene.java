@@ -42,7 +42,7 @@ public class MenuScene extends EscenaGeneral {
 
         titulo = new TituloVista("BALATRO");
 
-        btnReglas = new BotonVista("Reglas");
+        btnReglas = new BotonVista("Info");
         btnJugar = new BotonVista("Jugar");
         btnSalir = new BotonVista("Salir");
         contenedorBotones = new HBox(btnReglas, btnJugar, btnSalir);
