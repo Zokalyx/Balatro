@@ -1,7 +1,6 @@
 package edu.fiuba.algo3.vistas;
 
 import edu.fiuba.algo3.vistas.general.SonidoManager;
-import edu.fiuba.algo3.vistas.juego.JuegoScene;
 import edu.fiuba.algo3.vistas.menu.MenuScene;
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -10,7 +9,6 @@ import javafx.stage.Stage;
 
 public class App extends Application {
     Stage stage;
-    SonidoManager sonidos;
 
     public static void main(String[] args) {
         launch();
@@ -19,24 +17,12 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         this.stage = stage;
-        stage.setScene(new MenuScene(this).getScene());
+        stage.setScene(new MenuScene(stage).getScene());
         stage.setTitle("Balatro");
         stage.getIcons().add(new Image(getClass().getResourceAsStream("/balatro.png")));
         stage.setMaximized(true);
         stage.show();
 
         SonidoManager.getInstancia().play("musica");
-    }
-
-    public void iniciarJuego() {
-        stage.setScene(new JuegoScene(this).getScene());
-    }
-
-    public void cerrarVentana() {
-        stage.close();
-    }
-
-    public void volverAMenu() {
-        stage.setScene(new MenuScene(this).getScene());
     }
 }

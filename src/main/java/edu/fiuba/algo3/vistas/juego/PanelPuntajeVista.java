@@ -82,7 +82,7 @@ public class PanelPuntajeVista extends HBox implements Observer {
 
         DropShadow dropShadow = new DropShadow();
         dropShadow.setColor(Color.BLACK);
-        dropShadow.setRadius(5);
+        dropShadow.setRadius(10);
 
         setEffect(dropShadow);
         setSpacing(10);

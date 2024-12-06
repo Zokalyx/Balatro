@@ -15,11 +15,14 @@ import edu.fiuba.algo3.modelo.jugada.JugadaManager;
 import edu.fiuba.algo3.vistas.App;
 import edu.fiuba.algo3.vistas.general.BotonVista;
 
+import edu.fiuba.algo3.vistas.general.EscenaGeneral;
 import edu.fiuba.algo3.vistas.general.SonidoManager;
+import edu.fiuba.algo3.vistas.menu.MenuScene;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.PopupControl;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -28,6 +31,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -36,13 +40,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 
-public class JuegoScene implements Observer {
-
+public class JuegoScene extends EscenaGeneral implements Observer {
+    ConfiguracionJuego configuracion;
+    VBox contenidoBotonJugar;
+    VBox contenidoBotonDescarte;
     Label turnosDisponibles;
     BotonVista botonDescarte;
     BotonVista botonRepartir;
     BotonVista botonJugar;
-    Scene scene;
     Label descartesDisponibles;
     Juego juego;
     Mano mano;
@@ -51,22 +56,32 @@ public class JuegoScene implements Observer {
     TiendaVista tiendaVista;
     Tienda tienda;
     boolean botonesBloqueados;
+    BotonVista botonSalir;
+    HBox hboxMadre;
+    HBox panelInferior;
+    VBox contenedorCentral;
+    Region espacioCentralVerticalSuperior;
+    Region espacioCentralVerticalInferior;
+    Region espacioEntreBotonesIzquierda;
+    Region espacioEntreBotonesDerecha;
+    Region espacioDespuesComodines;
+    Region espacioAntesTarots;
 
-    public JuegoScene(App app) {
+    public JuegoScene(Stage stage) {
+        super(stage);
+    }
 
+    protected Pane crearLayout() {
         AnchorPane root = new AnchorPane();
-
-        cargarFuenteDeTexto(root);
-        cargarFondo(root);
 
         // Objetos de modelo
         LectorJson lectorJson = new LectorJson();
-        ConfiguracionJuego configuracion = lectorJson.leerConfiguracion();
+        configuracion = lectorJson.leerConfiguracion();
         JugadaManager jugadaManager = new JugadaManager();
         this.mano = new Mano(configuracion.getMazo(), jugadaManager);
         this.juego = new Juego(lectorJson.leerConfiguracion());
         this.comodines = new Comodines();
-        this.puntaje = new Puntaje(0,1);
+        this.puntaje = new Puntaje(0, 1);
         Tarots tarots = new Tarots();
         tienda = new Tienda();
         tienda.abrir(configuracion.getComodines(juego.getRondaActual()), configuracion.getTarots(juego.getRondaActual()), configuracion.getPokers(juego.getRondaActual()));
@@ -78,41 +93,44 @@ public class JuegoScene implements Observer {
 
         Label labelJugar = new Label("Jugar");
         turnosDisponibles = new Label("(" + juego.getTurnosDisponibles() + ")");
-        VBox contenidoBotonJugar = new VBox(labelJugar, turnosDisponibles);
+        contenidoBotonJugar = new VBox(labelJugar, turnosDisponibles);
         botonJugar = new BotonVista();
         botonJugar.setGraphic(contenidoBotonJugar);
 
-        Region espacioEntreBotonesIzquierda = new Region();
+        espacioEntreBotonesIzquierda = new Region();
 
         ManoVista manoVista = new ManoVista(mano);
 
-        Region espacioEntreBotonesDerecha = new Region();
+        espacioEntreBotonesDerecha = new Region();
 
         Label labelDescarte = new Label("Descartar");
         descartesDisponibles = new Label("(" + juego.getDescartesDisponibles() + ")");
-        VBox contenidoBotonDescarte = new VBox(labelDescarte, descartesDisponibles);
+        contenidoBotonDescarte = new VBox(labelDescarte, descartesDisponibles);
         botonDescarte = new BotonVista();
         botonDescarte.setGraphic(contenidoBotonDescarte);
         botonRepartir = new BotonVista("Repartir");
 
-        HBox panelInferior = new HBox(botonJugar, espacioEntreBotonesIzquierda, manoVista, espacioEntreBotonesDerecha, botonDescarte, botonRepartir);
+        panelInferior = new HBox(botonJugar, espacioEntreBotonesIzquierda, manoVista, espacioEntreBotonesDerecha, botonDescarte, botonRepartir);
 
-        PanelPuntajeVista panelPuntajeVista = new PanelPuntajeVista(juego,mano,puntaje,jugadaManager);
-        Region espacioCentralVerticalSuperior = new Region();
-        Region espacioCentralVerticalInferior = new Region();
-        VBox contenedorCentral = new VBox(panelPuntajeVista, espacioCentralVerticalSuperior, tiendaVista, jugadaVista, finDePartidaVista, espacioCentralVerticalInferior, panelInferior);
+        PanelPuntajeVista panelPuntajeVista = new PanelPuntajeVista(juego, mano, puntaje, jugadaManager);
+        espacioCentralVerticalSuperior = new Region();
+        espacioCentralVerticalInferior = new Region();
+        contenedorCentral = new VBox(panelPuntajeVista, espacioCentralVerticalSuperior, tiendaVista, jugadaVista, finDePartidaVista, espacioCentralVerticalInferior, panelInferior);
 
         ComodinesVista comodinesVista = new ComodinesVista(comodines);
-        Region espacioDespuesComodines = new Region();
-        Region espacioAntesTarots = new Region();
+        espacioDespuesComodines = new Region();
+        espacioAntesTarots = new Region();
         TarotsVista tarotsVista = new TarotsVista(tarots, mano, jugadaManager);
-        HBox hboxMadre = new HBox(comodinesVista, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarotsVista);
+        hboxMadre = new HBox(comodinesVista, espacioDespuesComodines, contenedorCentral, espacioAntesTarots, tarotsVista);
 
-        BotonVista botonSalir = new BotonVista("X");
+        botonSalir = new BotonVista("X");
 
         root.getChildren().addAll(hboxMadre, botonSalir);
 
-        // Estilo y posicionamiento
+        return root;
+    }
+
+    protected void crearEstilos() {
         contenidoBotonDescarte.setAlignment(Pos.CENTER);
         contenidoBotonJugar.setAlignment(Pos.CENTER);
         contenidoBotonDescarte.setSpacing(10);
@@ -142,18 +160,10 @@ public class JuegoScene implements Observer {
         HBox.setHgrow(espacioAntesTarots, Priority.ALWAYS);
 
         hboxMadre.prefWidthProperty().bind(root.widthProperty());
+    }
 
-        DropShadow dropShadow = new DropShadow();
-        dropShadow.setColor(Color.BLACK);
-        dropShadow.setRadius(5);
-
-        botonRepartir.setEffect(dropShadow);
-        botonJugar.setEffect(dropShadow);
-        botonDescarte.setEffect(dropShadow);
-        botonSalir.setEffect(dropShadow);
-
-        // Controladores
-        botonSalir.setOnMouseClicked(e -> app.volverAMenu());
+    protected void crearControladores(Stage stage) {
+        botonSalir.setOnMouseClicked(e -> stage.setScene(new MenuScene(stage).getScene()));
         botonJugar.setDisable(true);
         botonDescarte.setDisable(true);
 
@@ -164,23 +174,6 @@ public class JuegoScene implements Observer {
         mano.addObserver(this);
         juego.addObserver(this);
         tienda.addObserver(this);
-
-        scene = new Scene(root);
-    }
-
-    private void cargarFuenteDeTexto(AnchorPane root) {
-        Font.loadFont(getClass().getResourceAsStream("/PressStart2P-Regular.ttf"), 20);
-        root.setStyle("-fx-font-family: 'Press Start 2P';");
-    }
-
-    private static void cargarFondo(AnchorPane root) {
-        try {
-            Image image = new Image(new FileInputStream("src/main/resources/freepik_poker_table_background.jpg"));
-            BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-            root.setBackground(new Background(backgroundImage));
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encontró la imagen");
-        }
     }
 
     @Override
@@ -243,10 +236,6 @@ public class JuegoScene implements Observer {
             botonJugar.setDisable(true);
         }
         turnosDisponibles.setText("(" + juego.getTurnosDisponibles() + ")");
-    }
-
-    public Scene getScene() {
-        return scene;
     }
 
     public void setEstadoBotones(boolean estado) {

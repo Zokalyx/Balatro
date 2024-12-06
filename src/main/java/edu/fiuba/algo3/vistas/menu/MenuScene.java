@@ -1,24 +1,18 @@
 package edu.fiuba.algo3.vistas.menu;
 
-import edu.fiuba.algo3.vistas.App;
 import edu.fiuba.algo3.vistas.general.BotonVista;
 import edu.fiuba.algo3.vistas.general.ControlVolumenVista;
-import edu.fiuba.algo3.vistas.general.SonidoManager;
+import edu.fiuba.algo3.vistas.InformacionScene;
+import edu.fiuba.algo3.vistas.general.EscenaGeneral;
+import edu.fiuba.algo3.vistas.juego.JuegoScene;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
-public class MenuScene {
-    Scene scene;
-    Pane root;
+public class MenuScene extends EscenaGeneral {
     HBox titulo;
     Button btnSalir;
     Button btnJugar;
@@ -31,18 +25,17 @@ public class MenuScene {
     VBox vboxMadre;
     ControlVolumenVista controlVolumen;
 
-    public MenuScene(App app) {
-        crearLayout();
-        crearControladores(app);
-        crearEstilo();
+    public MenuScene(Stage stage) {
+        super(stage);
     }
 
-    private void crearControladores(App app) {
-        btnJugar.setOnMouseClicked(e -> app.iniciarJuego());
-        btnSalir.setOnMouseClicked(e -> app.cerrarVentana());
+    protected void crearControladores(Stage stage) {
+        btnJugar.setOnMouseClicked(e -> stage.setScene(new JuegoScene(stage).getScene()));
+        btnSalir.setOnMouseClicked(e -> stage.close());
+        btnReglas.setOnMouseClicked(e -> stage.setScene(new InformacionScene(stage).getScene()));
     }
 
-    private void crearLayout() {
+    protected Pane crearLayout() {
         root = new AnchorPane();
 
         controlVolumen = new ControlVolumenVista();
@@ -64,10 +57,10 @@ public class MenuScene {
 
         root.getChildren().addAll(vboxMadre, controlVolumen);
 
-        scene = new Scene(root);
+        return root;
     }
 
-    private void crearEstilo() {
+    protected void crearEstilos() {
         AnchorPane.setTopAnchor(controlVolumen, 20.0);
         AnchorPane.setLeftAnchor(controlVolumen, 20.0);
 
@@ -90,28 +83,6 @@ public class MenuScene {
         shadow.setColor(Color.BLACK);
         shadow.setRadius(5);
         root.setEffect(shadow);
-
-        cargarFuenteDeTexto(root);
-        cargarFondo(root);
-    }
-
-    private void cargarFuenteDeTexto(Pane root) {
-        Font.loadFont(getClass().getResourceAsStream("/PressStart2P-Regular.ttf"), 20);
-        root.setStyle("-fx-font-family: 'Press Start 2P';");
-    }
-
-    private static void cargarFondo(Pane root) {
-        try {
-            Image image = new Image(new FileInputStream("src/main/resources/freepik_poker_table_background.jpg"));
-            BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-            root.setBackground(new Background(backgroundImage));
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encontró el imagen");
-        }
-    }
-
-    public Scene getScene() {
-        return scene;
     }
 }
 
