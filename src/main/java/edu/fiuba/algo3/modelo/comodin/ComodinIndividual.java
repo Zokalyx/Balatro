@@ -20,7 +20,7 @@ public class ComodinIndividual extends Comodin {
         int activaciones = activacionComodin.activaciones(jugada, cartasDescartadas);
         for (int i = 0; i < activaciones; i++) {
             puntaje.sumarValorBase(puntos);
-            puntaje.multiplicarMultiplicador(multiplicador);
+            puntaje.sumarMultiplicador(multiplicador);
         }
     }
 }

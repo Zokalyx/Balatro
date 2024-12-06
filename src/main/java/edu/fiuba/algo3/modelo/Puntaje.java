@@ -17,6 +17,12 @@ public class Puntaje extends Observable {
         notifyObservers();
     }
 
+    public void sumarMultiplicador(double multiplicador) {
+        this.multiplicador += multiplicador;
+        setChanged();
+        notifyObservers();
+    }
+
     public void sumarValorBase(int valorBase) {
         this.valorBase += valorBase;
         setChanged();
