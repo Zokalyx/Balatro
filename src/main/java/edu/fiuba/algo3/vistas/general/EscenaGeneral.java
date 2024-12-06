@@ -36,18 +36,14 @@ public abstract class EscenaGeneral {
     protected abstract Pane crearLayout();
 
     private void cargarFuenteDeTexto(Pane root) {
-        Font.loadFont(getClass().getResourceAsStream("/PressStart2P-Regular.ttf"), 20);
+        Font.loadFont(getClass().getResourceAsStream("/fuentes/PressStart2P-Regular.ttf"), 20);
         root.setStyle("-fx-font-family: 'Press Start 2P';");
     }
 
-    private static void cargarImagenDeFondo(Pane root) {
-        try {
-            Image image = new Image(new FileInputStream("src/main/resources/freepik_poker_table_background.jpg"));
-            BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
-            root.setBackground(new Background(backgroundImage));
-        } catch (FileNotFoundException e) {
-            System.out.println("No se encontró el imagen");
-        }
+    private void cargarImagenDeFondo(Pane root) {
+        Image image = new Image(getClass().getResource("/images/freepik_poker_table_background.jpg").toExternalForm());
+        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT);
+        root.setBackground(new Background(backgroundImage));
     }
 
     public Scene getScene() {

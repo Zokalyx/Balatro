@@ -52,6 +52,6 @@ public class ControlVolumenVista extends VBox {
     }
 
     private void aplicarEstiloASlider(Slider slider) {
-        slider.getStylesheets().add(getClass().getResource("/estilo_slider.css").toExternalForm());
+        slider.getStylesheets().add(getClass().getResource("/css/estilo_slider.css").toExternalForm());
     }
 }

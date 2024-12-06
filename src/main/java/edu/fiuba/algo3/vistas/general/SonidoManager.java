@@ -16,15 +16,15 @@ public class SonidoManager {
     private SonidoManager() {
         HashMap<String, String> archivos = new HashMap<>();
 
-        archivos.put("error", "/error.wav");
-        archivos.put("click", "/sonido_click.wav");
-        archivos.put("seleccion_carta", "/seleccion_carta.mp3");
-        archivos.put("cartas", "/sonido_cartas.mp3");
-        archivos.put("moneda", "/sonido_moneda.wav");
-        archivos.put("fuego", "/fosforo.mp3");
-        archivos.put("deseleccion_carta", "/deseleccion_carta.mp3");
-        archivos.put("musica", "/Balatro Main Theme - Funk Fusion Cover.mp3");
-        archivos.put("fichas", "/sonido_fichas.mp3");
+        archivos.put("error", "/audio/error.wav");
+        archivos.put("click", "/audio/sonido_click.wav");
+        archivos.put("seleccion_carta", "/audio/seleccion_carta.mp3");
+        archivos.put("cartas", "/audio/sonido_cartas.mp3");
+        archivos.put("moneda", "/audio/sonido_moneda.wav");
+        archivos.put("fuego", "/audio/fosforo.mp3");
+        archivos.put("deseleccion_carta", "/audio/deseleccion_carta.mp3");
+        archivos.put("musica", "/audio/Balatro Main Theme - Funk Fusion Cover.mp3");
+        archivos.put("fichas", "/audio/sonido_fichas.mp3");
 
         sonidos = new HashMap<>();
         for (Map.Entry<String, String> archivo : archivos.entrySet()) {

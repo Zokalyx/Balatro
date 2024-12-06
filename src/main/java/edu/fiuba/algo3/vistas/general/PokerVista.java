@@ -47,13 +47,13 @@ public class PokerVista extends CartaVista implements Observer {
     private ImageView paloVisible(Palo palo) {
         Image image;
         if (palo.equals(new Diamante())) {
-            image = new Image(getClass().getResource("/diamante.png").toExternalForm());
+            image = new Image(getClass().getResource("/images/diamante.png").toExternalForm());
         } else if (palo.equals(new Trebol())) {
-            image = new Image(getClass().getResource("/trebol.png").toExternalForm());
+            image = new Image(getClass().getResource("/images/trebol.png").toExternalForm());
         } else if (palo.equals(new Corazon())) {
-            image = new Image(getClass().getResource("/corazon.png").toExternalForm());
+            image = new Image(getClass().getResource("/images/corazon.png").toExternalForm());
         } else if (palo.equals(new Pica())) {
-            image = new Image(getClass().getResource("/pica.png").toExternalForm());
+            image = new Image(getClass().getResource("/images/pica.png").toExternalForm());
         } else {
             throw new RuntimeException("Palo inexistente");
         }

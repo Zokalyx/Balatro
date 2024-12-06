@@ -4,7 +4,6 @@ import edu.fiuba.algo3.vistas.general.SonidoManager;
 import edu.fiuba.algo3.vistas.menu.MenuScene;
 import javafx.application.Application;
 import javafx.scene.image.Image;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public class App extends Application {
@@ -19,7 +18,7 @@ public class App extends Application {
         this.stage = stage;
         stage.setScene(new MenuScene(stage).getScene());
         stage.setTitle("Balatro");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("/balatro.png")));
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/images/balatro.png")));
         stage.setMaximized(true);
         stage.show();
 

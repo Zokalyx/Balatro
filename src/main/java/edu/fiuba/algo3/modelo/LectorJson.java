@@ -12,19 +12,24 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 public class LectorJson {
     public ArrayList<Poker> leerMazo() {
         JSONObject archivo;
         try {
-            archivo = parsearArchivo("src/test/resources/json/mazo.json");
+            archivo = parsearArchivo("/json/mazo.json");
         } catch (IOException e) {
             throw new RuntimeException("No se pudo abrir el archivo");
         } catch (ParseException e) {
             throw new RuntimeException("No se pudo parsear el contenido JSON");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
 
         JSONArray mazo = (JSONArray) archivo.get("mazo");
@@ -34,11 +39,13 @@ public class LectorJson {
     public ArrayList<Comodin> leerComodines() {
         JSONObject archivo;
         try {
-            archivo = parsearArchivo("src/test/resources/json/comodines.json");
+            archivo = parsearArchivo("/json/comodines.json");
         } catch (IOException e) {
             throw new RuntimeException("No se pudo abrir el archivo");
         } catch (ParseException e) {
             throw new RuntimeException("No se pudo parsear el contenido JSON");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
 
         return parsearCategoriasDeComodines(archivo);
@@ -47,11 +54,13 @@ public class LectorJson {
     public ArrayList<Tarot> leerTarots() {
         JSONObject archivo;
         try {
-            archivo = parsearArchivo("src/test/resources/json/tarots.json");
+            archivo = parsearArchivo("/json/tarots.json");
         } catch (IOException e) {
             throw new RuntimeException("No se pudo abrir el archivo");
         } catch (ParseException e) {
             throw new RuntimeException("No se pudo parsear el contenido JSON");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
 
         JSONArray tarots = (JSONArray) archivo.get("tarots");
@@ -61,11 +70,13 @@ public class LectorJson {
     public ConfiguracionJuego leerConfiguracion() {
         JSONObject archivo;
         try {
-            archivo = parsearArchivo("src/test/resources/json/balatro.json");
+            archivo = parsearArchivo("/json/balatro.json");
         } catch (IOException e) {
             throw new RuntimeException("No se pudo abrir el archivo");
         } catch (ParseException e) {
             throw new RuntimeException("No se pudo parsear el contenido JSON");
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
 
         ArrayList<ConfiguracionRonda> configuracionRondas = new ArrayList<>();
@@ -93,10 +104,10 @@ public class LectorJson {
         return new ConfiguracionRonda(puntajeObjetivo, turnos, descartes, comodines, tarots, cartas);
     }
 
-    private JSONObject parsearArchivo(String nombreArchivo) throws IOException, ParseException {
-        FileReader reader = new FileReader(nombreArchivo);
+    private JSONObject parsearArchivo(String nombreArchivo) throws IOException, ParseException, URISyntaxException {
         JSONParser parser = new JSONParser();
-        return (JSONObject) parser.parse(reader);
+        String pathArchivo = Paths.get(getClass().getResource(nombreArchivo).toURI()).toString();
+        return (JSONObject) parser.parse(new FileReader(pathArchivo));
     }
 
     private ArrayList<Poker> parsearMazo(JSONArray mazo) {
