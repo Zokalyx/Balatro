@@ -40,7 +40,7 @@ public class InformacionScene extends EscenaGeneral {
         regionIntermedia = new Region();
 
         tituloInformacion = new Label("Información");
-        informacion = new Label("Esta recreación de Balatro es el trabajo práctico N°2 de la materia Paradigmas de Programación (ex Algoritmos III). La vista está hecha con JavaFX.\n\nCréditos: Atuel Fullana, Salvador Mendoza, Brian Conde, Francisco Russo.");
+        informacion = new Label("Esta recreación de Balatro es el trabajo práctico N°2 de la materia Paradigmas de Programación (ex Algoritmos III). La vista está hecha con JavaFX.\n\nCréditos: Atuel Fullana, Salvador Mendoza, Brian Conde, Francisco Russo.\n\nInterpretación musical por Dom Palombi en Youtube.");
 
         margenIzquierda = new Region();
         vboxMadre = new VBox(tituloReglas, reglas, regionIntermedia, tituloInformacion, informacion);
