@@ -230,7 +230,7 @@ public class JuegoScene extends EscenaGeneral implements Observer {
     }
 
     private void actualizarBotonJuego() {
-        if (juego.getTurnosDisponibles() !=0 && mano.estaLlena() && !botonesBloqueados){
+        if (juego.getTurnosDisponibles() !=0 && mano.estaLlena() && !mano.getSeleccion().isEmpty() && !botonesBloqueados){
             botonJugar.setDisable(false);
         }else{
             botonJugar.setDisable(true);
