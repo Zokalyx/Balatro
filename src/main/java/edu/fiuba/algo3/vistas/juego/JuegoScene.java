@@ -99,7 +99,7 @@ public class JuegoScene extends EscenaGeneral implements Observer {
 
         espacioEntreBotonesIzquierda = new Region();
 
-        ManoVista manoVista = new ManoVista(mano);
+        ManoVista manoVista = new ManoVista(mano, this);
 
         espacioEntreBotonesDerecha = new Region();
 
@@ -243,6 +243,10 @@ public class JuegoScene extends EscenaGeneral implements Observer {
         actualizarBotonRepartir();
         actualizarBotonJuego();
         actualizarBotonDescarte();
+    }
+
+    public boolean getBloquearBotones() {
+        return botonesBloqueados;
     }
 }
 

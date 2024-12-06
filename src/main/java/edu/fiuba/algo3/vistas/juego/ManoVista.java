@@ -15,8 +15,10 @@ import java.util.Observer;
 
 public class ManoVista extends HBox implements Observer {
     ArrayList<PokerVista> vistas;
+    JuegoScene juegoVista;
 
-    public ManoVista(Mano mano) {
+    public ManoVista(Mano mano, JuegoScene juegoVista) {
+        this.juegoVista = juegoVista;
 
         vistas = new ArrayList<>();
 
@@ -48,7 +50,7 @@ public class ManoVista extends HBox implements Observer {
             if (vista == null) {
                 vista = new PokerVista(poker);
                 vista.setAnimacion(20, 40);
-                vista.setOnMouseClicked(new ControladorPoker(mano, poker));
+                vista.setOnMouseClicked(new ControladorPoker(mano, poker, juegoVista));
                 vistas.add(vista);
                 getChildren().add(vista);
 
