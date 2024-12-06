@@ -28,7 +28,7 @@ public class Entrega2Test {
         Puntaje puntaje = new Puntaje(3, 1);
         comodin.modificarPuntaje(puntaje, new JugadaCartaAlta(), 0);
 
-        assertEquals(24, puntaje.calcularTotal());
+        assertEquals(27, puntaje.calcularTotal());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class Entrega2Test {
         Puntaje puntaje = new Puntaje(2, 1);
         Jugada jugada = new JugadaEscalera();
         comodin.modificarPuntaje(puntaje, jugada, 0);
-        assertEquals(6, puntaje.calcularTotal());
+        assertEquals(8, puntaje.calcularTotal());
     }
 
     @Test
@@ -102,8 +102,8 @@ public class Entrega2Test {
         // Comodin 10 x 1 + 10 x 1 (doble activacion)
         // Carta alta 5 x 1
         // Carta 7 x 1
-        // Total 32 x 1
-        assertEquals(32, puntaje.calcularTotal());
+        // Total 32 x 3
+        assertEquals(96, puntaje.calcularTotal());
     }
 
     @Test
@@ -144,7 +144,7 @@ public class Entrega2Test {
         jugada.modificarPuntaje(puntaje);
         comodin.modificarPuntaje(puntaje, jugada, descartesDisponibles);
 
-        assertEquals(32, puntaje.calcularTotal());
+        assertEquals(96, puntaje.calcularTotal());
     }
 
     @Test
@@ -164,6 +164,6 @@ public class Entrega2Test {
         // Comodin color: 0 (no se activa)
         comodinCompuesto.modificarPuntaje(puntaje, new JugadaEscalera(), 0);
 
-        assertEquals(20, puntaje.calcularTotal());
+        assertEquals(40, puntaje.calcularTotal());
     }
 }

@@ -23,8 +23,8 @@ public class ComodinesTest {
 
         // Comodin 1 x 2
         // Comodin 3 x 4
-        // Total 4 x 8
-        assertEquals(4 * 8, puntaje.calcularTotal());
+        // Total 4 x 7
+        assertEquals(4 * 7, puntaje.calcularTotal());
     }
 
     @Test

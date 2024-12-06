@@ -58,7 +58,7 @@ public class LectorJsonTest {
         Puntaje puntaje = new Puntaje(0, 1);
         carta.modificarPuntaje(puntaje, new JugadaCartaAlta(), 2);  // 2 descartes
 
-        assertEquals(60, puntaje.calcularTotal());
+        assertEquals(180, puntaje.calcularTotal());
     }
 
     @Test

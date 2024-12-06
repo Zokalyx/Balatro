@@ -76,13 +76,12 @@ public class Adicionales {
         // Primer as (modificado por tarot): 30 x 1
         // Segundo as: 10 x 1
         jugada.modificarPuntaje(puntaje);
-        // Primer comodin: 0 x 2^5 (5 activaciones)
+        // Primer comodin: 0 x 2 (5 activaciones)
         // Segundo comodin: 1 x 1
         // Tercer comodin: No se activa.
         comodines.modificarPuntaje(puntaje, jugada, 5);
 
-        // Total: 51 x 64 = 1148
-        assertEquals(3264, puntaje.calcularTotal());
+        assertEquals((10 + 30 + 10 + 1) * (2 * 1 * 1 + 10 + 1), puntaje.calcularTotal());
     }
 
     @Test
