@@ -16,11 +16,12 @@ public class SonidoManager {
     private SonidoManager() {
         HashMap<String, String> archivos = new HashMap<>();
 
+        archivos.put("error", "/error.wav");
         archivos.put("click", "/sonido_click.wav");
         archivos.put("seleccion_carta", "/seleccion_carta.mp3");
         archivos.put("cartas", "/sonido_cartas.mp3");
         archivos.put("moneda", "/sonido_moneda.wav");
-        archivos.put("fuego", "/fuego.wav");
+        archivos.put("fuego", "/fosforo.mp3");
         archivos.put("deseleccion_carta", "/deseleccion_carta.mp3");
         archivos.put("musica", "/Balatro Main Theme - Funk Fusion Cover.mp3");
         archivos.put("fichas", "/sonido_fichas.mp3");
@@ -51,10 +52,11 @@ public class SonidoManager {
     public void setVolumenEfectos(double volumen) {
         volumenEfectos = volumen;
 
+        sonidos.get("error").setVolume(0.5 * volumen);
         sonidos.get("click").setVolume(0.3 * volumen);
         sonidos.get("moneda").setVolume(0.9 * volumen);
         sonidos.get("fichas").setVolume(0.9 * volumen);
-        sonidos.get("fuego").setVolume(1.0 * volumen);
+        sonidos.get("fuego").setVolume(1.1 * volumen);
         sonidos.get("seleccion_carta").setVolume(0.7 * volumen);
         sonidos.get("deseleccion_carta").setVolume(0.7 * volumen);
         sonidos.get("cartas").setVolume(0.6 * volumen);
@@ -67,6 +69,7 @@ public class SonidoManager {
     }
 
     public void setMuteEfectos(boolean mute) {
+        sonidos.get("error").setMute(mute);
         sonidos.get("musica").setMute(mute);
         sonidos.get("click").setMute(mute);
         sonidos.get("moneda").setMute(mute);

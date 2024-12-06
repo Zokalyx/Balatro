@@ -13,6 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -32,16 +33,16 @@ public class PanelPuntajeVista extends HBox implements Observer {
         this.mano = mano;
 
         // Objetos de layout
-        fichas = new NumeroAnimadoVista(0);
+        fichas = new NumeroAnimadoVista(0, Duration.millis(300));
         Label puntajeSimboloMultiplicacion = new Label("x");
-        multiplicador = new NumeroAnimadoVista(1.0);
+        multiplicador = new NumeroAnimadoVista(1.0, Duration.millis(300));
 
         nombreJugada = new Label("");
 
         Region espacioIntermedio = new Region();
 
         Label textoPuntaje = new Label("Puntaje: ");
-        puntajeActual = new NumeroAnimadoVista(juego.getPuntajeActual());
+        puntajeActual = new NumeroAnimadoVista(juego.getPuntajeActual(), Duration.millis(600));
         Label barraPuntaje = new Label("/");
         puntajeObjetivo = new Label("" + juego.getPuntajeObjetivo());
         HBox conjuntoPuntaje = new HBox(textoPuntaje, puntajeActual, barraPuntaje, puntajeObjetivo);

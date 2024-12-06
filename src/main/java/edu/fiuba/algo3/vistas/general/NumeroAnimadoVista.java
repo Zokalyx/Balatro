@@ -1,18 +1,19 @@
 package edu.fiuba.algo3.vistas.general;
 
 import javafx.scene.control.Label;
+import javafx.util.Duration;
 
 public class NumeroAnimadoVista extends Label {
     TransicionNumero transicion;
 
-    public NumeroAnimadoVista(int valorInicial) {
+    public NumeroAnimadoVista(int valorInicial, Duration duracion) {
         setText(Integer.toString(valorInicial));
-        transicion = new TransicionNumero(this, valorInicial, true);
+        transicion = new TransicionNumero(this, valorInicial, true, duracion);
     }
 
-    public NumeroAnimadoVista(double valorInicial) {
+    public NumeroAnimadoVista(double valorInicial, Duration duracion) {
         setText(Double.toString(valorInicial));
-        transicion = new TransicionNumero(this, valorInicial, false);
+        transicion = new TransicionNumero(this, valorInicial, false, duracion);
     }
 
     public void setValorFinal(int valorFinal) {

@@ -30,7 +30,7 @@ public class ControladorTarot implements EventHandler<MouseEvent> {
             tarots.consumir(tarot);
             SonidoManager.getInstancia().play("fuego");
         } catch (SeleccionParaTarotInvalidaError e) {
-            // Nada (capaz un sonido)
+            SonidoManager.getInstancia().play("error");
         }
     }
 }

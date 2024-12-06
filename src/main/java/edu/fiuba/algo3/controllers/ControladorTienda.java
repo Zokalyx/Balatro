@@ -48,7 +48,7 @@ public class ControladorTienda implements EventHandler<MouseEvent> {
             SonidoManager.getInstancia().play("moneda");
 
         } catch (ManoLlenaError | ComodinesLlenoError | TarotsLlenoError e) {
-            // Nada (o un sonido)
+            SonidoManager.getInstancia().play("error");
         }
     }
 }

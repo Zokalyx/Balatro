@@ -11,11 +11,11 @@ class TransicionNumero extends Transition {
     Label label;
     boolean redondear;
 
-    public TransicionNumero(Label label, double valorInicial, boolean redondear) {
+    public TransicionNumero(Label label, double valorInicial, boolean redondear, Duration duracion) {
         this.label = label;
         this.valorInicial = valorInicial;
         this.valorActual = valorInicial;
-        setCycleDuration(Duration.seconds(0.5));
+        setCycleDuration(duracion);
         setCycleCount(1);
         this.redondear = redondear;
     }

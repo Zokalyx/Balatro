@@ -27,7 +27,7 @@ public class ControladorPoker implements EventHandler<MouseEvent> {
                 mano.seleccionarCarta(poker);
                 SonidoManager.getInstancia().play("seleccion_carta");
             } catch (SeleccionInvalidaError e) {
-                // Nada (sonido capaz)
+                SonidoManager.getInstancia().play("error");
             }
         }
     }
