@@ -1,0 +1,20 @@
+activate a
+a -> Mano: repartir()
+activate Mano
+loop hasta que haya 8 cartas
+Mano -> Mazo: tomarCarta()
+Mazo -> Carta: remove(0)
+Carta --> Mazo: carta
+Mazo --> Mano: carta
+end
+Mano --> a
+loop hasta tener como maximo 5 cartas
+a -> Mano: seleccionarCarta(carta)
+Mano -> Mazo: tomarCarta()
+Mazo -> Carta: remove(0)
+Carta --> Mazo: carta
+Mazo --> Mano: carta
+end
+deactivate a
+deactivate Mano
+deactivate Carta

@@ -1,0 +1,32 @@
+@startuml
+hide footbox
+
+title Usuario aplica el efecto de un comodín individual que se activa por descartes restantes
+actor User
+participant Comodin as ": ComodinIndividual"
+participant Activacion as ": ActivacionComodinDescarte"
+participant Puntaje as "puntaje: Puntaje"
+
+activate User
+
+User -> Comodin: modificarPuntaje(puntaje, jugada, descartes)
+activate Comodin
+
+Comodin -> Activacion: activaciones(jugada, descartes)
+activate Activacion
+Activacion --> Comodin: decartes
+deactivate Activacion
+
+loop por cada activacion
+Comodin -> Puntaje: sumarValorBase(valorBase)
+activate Puntaje
+deactivate Puntaje
+Comodin -> Puntaje: sumarMultiplicador(multiplicador)
+activate Puntaje
+deactivate Puntaje
+end
+
+deactivate Comodin
+
+deactivate User
+@enduml

@@ -1,7 +1,7 @@
 # TP2 Algoritmos 3: Balatro
 
 Trabajo Práctico número 2 de la materia Algoritmos y Programación III de FIUBA.
-El trabajo práctico consiste en reconstruir el juego de cartas [Balatro]() aplicando
+El trabajo práctico consiste en reconstruir el juego de cartas [Balatro](https://store.steampowered.com/app/2379780/Balatro/) aplicando
 las técnicas de desarrollo basadas en los principios del POO y TDD. Las herramientas de
 desarrollo son Java, JUnit, JavaFX, Maven y Mockito.
 
@@ -19,13 +19,5 @@ Correctores: **Santiago Valdez** y **Lucas Aldonate**
 La versión más reciente de la aplicación puede encontrarse en la pestaña [releases](https://github.com/Zokalyx/Balatro/releases/latest) y ejecutarse en Linux, Windows o Mac de esta forma:
 
 ```bash
-$ java -jar <archivo.jar>
+$ java -jar balatro.jar
 ```
-
-## Desarrollo
-
-Aquellos que deseen colaborar con el proyecto pueden consultar la [guía de desarrollo](./docs/Desarrollo.md).
-
-## Licencia
-
-Este repositorio se encuentra bajo la Licencia MIT.

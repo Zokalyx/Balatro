@@ -1,0 +1,38 @@
+@startuml
+hide footbox
+
+title Usuario aplica el efecto de un tarot que se aplica sobre una carta
+actor User
+participant Tarot as ": Tarot"
+participant Activacion as ": ActivacionTarotPokerCualquiera"
+participant Mano as "mano: Mano"
+participant Poker as "poker: Poker"
+
+activate User
+
+User -> Tarot: encontrarObjetivoYUtilizar(\nmano, jugadaManager)
+activate Tarot
+
+Tarot -> Activacion: encontrarObjetoASerModificado(\nmano, jugadaManager)
+activate Activacion
+
+Activacion -> Mano: getSeleccionUnica()
+activate Mano
+Mano --> Activacion: poker
+deactivate Mano
+
+Activacion --> Tarot: poker
+deactivate Activacion
+
+Tarot -> Tarot: utilizarSobre(poker)
+activate Tarot
+Tarot -> Poker: modificarse(puntos, multiplicador)
+activate Poker
+deactivate Poker
+
+deactivate Tarot
+
+deactivate Tarot
+
+deactivate User
+@enduml

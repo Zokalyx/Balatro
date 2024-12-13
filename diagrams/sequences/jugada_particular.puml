@@ -1,0 +1,42 @@
+@startuml
+hide footbox
+
+title Usuario crea una jugada
+actor User
+participant JugadaManager as ": JugadaManager"
+participant Jugada as ": Jugada"
+participant JugadaNula as "jugadaNula: JugadaNula"
+
+activate User
+
+User -> JugadaManager: calcularJugada(cartas)
+activate JugadaManager
+
+loop todas las jugadas posibles
+
+    JugadaManager -> Jugada: formarseConCartas(cartas)
+    activate Jugada
+    Jugada --> JugadaManager: cartasInvolucradas
+    deactivate Jugada
+
+    break cartasInvolucradas contiene cartas
+
+    JugadaManager -> Jugada: setCartas(cartasInvolucradas)
+    activate Jugada
+    deactivate Jugada
+    JugadaManager --> User: jugada
+
+    else jugada no encontrada
+
+    create JugadaNula
+    JugadaManager -->  JugadaNula: <<create>> new
+    JugadaManager --> User: jugadaNula
+
+    end
+
+end
+
+deactivate JugadaManager
+
+deactivate User
+@enduml
