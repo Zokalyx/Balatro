@@ -1,17 +1,37 @@
 @startuml
 
-!include ../classes/herencia.plantuml!WITHOUTNOTES
+package Balatro.controllers {
+}
+
+package Balatro.modelo {
+}
+
+package Balatro.vistas {
+}
+
+package JavaFX {
+}
+
+package Balatro.test {
+}
 
 package JUnit {
-        class Test
 }
 
-package java.lang {
-        class String
+package Mockito {
 }
 
-Test --> Localize: "<<instantiate>>"
-Localize -> String: " # esContent"
-Localize -> String: " # usContent"
+package SimpleJson {
+}
+
+Balatro.vistas .> JavaFX
+Balatro.vistas <..> Balatro.controllers
+Balatro.vistas ..> Balatro.modelo
+Balatro.controllers .> Balatro.modelo
+
+Balatro.modelo .> SimpleJson
+Balatro.modelo <.. Balatro.test
+Balatro.test .> JUnit
+Mockito <. Balatro.test
 
 @enduml
