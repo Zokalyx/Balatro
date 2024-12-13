@@ -1,0 +1,48 @@
+@startuml
+class Tarot{
+  - nombre: String
+  - descripcion: String
+  - puntos: int
+  - multiplicador: double
+  - activacion: ActivacionTarot
+  + encontrarObjetivoYUtilizar(mano: Mano, jugadaManager: JugadaManager): void
+  + utilizarSobre(modificable: Modificable): void
+}
+class Tarots {
+  - cartas: ArrayList<Tarot>
+  - capacidad: int
+  + agregar(tarot: Tarot): void
+  + consumir(tarot: Tarot): void
+}
+class Comodin {
+  - nombre: String
+  - descripcion: String
+  + {abstract}modificarPuntaje(puntaje: Puntaje, jugada: Jugada, descartesDisponibles: int): void
+}
+class Comodines {
+  - cartas: ArrayList<Comodin>
+  - capacidad: int
+  + modificarPuntaje(puntaje: Puntaje, jugada: Jugada, descartesDisponibles: int): void
+  + agregar(comodin: Comodin): void
+}
+interface ActivacionTarot {
+  + encontrarObjetoASerModificado(mano: Mano, jugadaManager: JugadaManager): ModificablePorTarot
+}
+interface ActivacionComodin {
+  + activacion(jugada: Jugada, cartasDescartadas: int): int
+}
+class Tienda {
+  - comodinesDisponibles: ArrayList<Comodin>
+  - tarotsDisponibles: ArrayList<Tarot>
+  - pokerDisponibles: ArrayList<Poker>
+  + comprarComodin(comodin: Comodin): Comodin
+  + comprarTarot(tarot: Tarot): Tarot
+  + comprarPoker(poker: Poker): Poker
+}
+Comodines "2" *-- "0..5" Comodin
+Tarot "0..3" --* Tarots
+Tarot --> ActivacionTarot
+ActivacionComodin <-- Comodin
+Comodin "2" <-- Tienda
+Tienda --> "2" Tarot
+@enduml
