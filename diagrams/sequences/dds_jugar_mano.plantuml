@@ -1,0 +1,35 @@
+@startuml
+hide footbox
+title Usuario calcula el puntaje de su jugada ya armada
+actor "User" as user
+participant a as ": nose"
+participant Mano as ": Mano"
+participant Mazo as ": Mazo"
+participant Carta as ": Carta"
+participant Jugada as "jugada: Jugada"
+activate user
+activate Mazo
+activate Carta
+user -> a: jugarMano()
+activate a
+a -> Mano: repartir()
+activate Mano
+loop hasta que haya 8 cartas
+Mano -> Mazo: tomarCarta()
+Mazo -> Carta: remove(0)
+Carta --> Mazo: carta
+Mazo --> Mano: carta
+end
+Mano --> a
+loop hasta tener como maximo 5 cartas
+a -> Mano: seleccionarCarta(carta)
+Mano -> Mazo: tomarCarta()
+Mazo -> Carta: remove(0)
+Carta --> Mazo: carta
+Mazo --> Mano: carta
+end
+deactivate a
+deactivate Mano
+deactivate Carta
+deactivate user
+@enduml
