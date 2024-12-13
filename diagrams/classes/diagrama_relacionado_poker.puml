@@ -1,0 +1,76 @@
+@startuml
+
+interface ModificablePorTarot {
+  + modificarse(puntos: int, multiplicador: double)
+}
+
+abstract class Jugada {
+  - valorBase: int
+  - multiplicadorBase: double
+
+  + modificarPuntaje(puntaje: Puntaje)
+  + {abstract} formarseConCartas(cartas: Poker[0..5]): Poker[0..5]
+  + setCartas(cartasInvolucradas: Poker[0..5])
+}
+
+class Poker {
+  - simbolo: String
+  - palo: Palo
+  - valorNumerico: int
+  - multiplicador: double
+
+  + Poker(simbolo: String, palo: Palo, valorNumerico: int, multiplicador: double)
+  + modificarPuntaje(puntaje: Puntaje)
+  + esMismoPaloQue(carta: Poker): bool
+  + esMismoSimboloQue(carta: Poker): bool
+  + esSimboloSiguienteA(carta: Poker): bool
+  + esSimboloAnteriorA(carta: Poker): bool
+  + esAs(): bool
+  + compareTo(carta: Poker): int
+}
+
+class JugadaManager {
+  + calcularJugada(cartas: Poker[0..5]): Jugada
+  + getJugada(jugadaAEncontrar: Jugada): Jugada
+}
+
+class Mano {
+  - cartasSeleccionadas: Poker[0..5]
+  - cartasDescartadas: Poker[0..8]
+  - maximoCartas: int
+  - maximoCartasSeleccionadas: int
+
+  + Mano(mazo: Mazo<Poker>, jugadaManager: JugadaManager)
+  + repartir()
+  + seleccionarCarta(carta: Poker)
+  + deseleccionarCarta(carta: Poker)
+  + jugar(): Jugada
+  + descartar()
+  + retornarCartasAMazo()
+  + agregarCartaExterna(carta: Poker)
+  + estaLlena(): bool
+  + getSeleccionUnica(): Poker
+
+  - actualizarJugada(): void
+}
+
+class Mazo<T> {
+  + Mazo(cartas: ArrayList<T>)
+  + tomarCarta(): T
+  + agregar(cartas: ArrayList<T>)
+}
+
+Mano o-- "0..8" Poker : contiene
+Mano -> JugadaManager
+Mano -> Jugada : jugada activa
+Mano -> Mazo
+JugadaManager *- "0..*" Jugada
+Jugada o- "0..5" Poker
+Mazo o- "0..*" Poker
+
+Poker .|> ModificablePorTarot
+Jugada .|> ModificablePorTarot
+
+JugadaManager ..> Poker
+
+@enduml
