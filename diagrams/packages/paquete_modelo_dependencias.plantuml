@@ -1,18 +1,18 @@
 @startuml
 
-package balatro.controllers {
+package Balatro.controllers {
 }
 
-package balatro.modelo {
+package Balatro.modelo {
 }
 
-package balatro.vistas {
+package Balatro.vistas {
 }
 
 package JavaFX {
 }
 
-package balatro.test {
+package Balatro.test {
 }
 
 package JUnit {
@@ -21,13 +21,17 @@ package JUnit {
 package Mockito {
 }
 
-balatro.vistas ..> JavaFX
-balatro.vistas <..> balatro.controllers
-balatro.vistas ..> balatro.modelo
-balatro.controllers .> balatro.modelo
+package SimpleJson {
+}
 
-balatro.modelo <.. balatro.test
-balatro.test .> JUnit
-Mockito <. balatro.test
+Balatro.vistas .> JavaFX
+Balatro.vistas <..> Balatro.controllers
+Balatro.vistas ..> Balatro.modelo
+Balatro.controllers .> Balatro.modelo
+
+Balatro.modelo .> SimpleJson
+Balatro.modelo <.. Balatro.test
+Balatro.test .> JUnit
+Mockito <. Balatro.test
 
 @enduml
