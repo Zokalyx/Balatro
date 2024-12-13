@@ -1,0 +1,80 @@
+@startuml
+class Comodin {}
+class Poker {}
+class Jugada {}
+
+class Puntaje {
+    - valorBase: int
+    - multiplicador: double
+
+    + Puntaje(valorBase: int, multiplicador: double)
+    + calcularTotal(): int
+    + reiniciar()
+    + sumarValorBase(valorBase: int)
+    + sumarMultiplicador(multiplicador: double)
+    + multiplicarMultiplicador(multiplicador: double)
+}
+
+class Juego {
+    - rondaActual: int
+    - rondaMaxima: int
+    - puntajeActual: int
+    - puntajeObjetivo: int
+    - turnosRestantes: int
+    - descartesRestantes: int
+
+    + Juego(configuracion: ConfiguracionJuego)
+    + jugarTurno(puntajeObtenido: int)
+    + utilizarDescarte()
+    + gano(): bool
+    + perdio(): bool
+
+    - cargarRonda(ronda: int)
+}
+
+class ConfiguracionJuego {
+    + ConfiguracionJuego(rondas: ConfiguracionRonda[*], mazo: Mazo<Poker>)
+    + getMazo(): Mazo<Poker>
+    + getPuntajeObjetivo(ronda: int): int
+    + getTurnoMaximo(ronda: int): int
+    + getRondaMaxima(): int
+    + getDescartes(ronda: int): int
+    + getPokers(): Poker[*]
+    + getTarots(): Tarot[*]
+    + getComodines(): Comodin[*]
+}
+
+class ConfiguracionRonda {
+    + puntajeObjetivo: int
+    + descartes: int
+    + turnoMaximo: int
+    + comodines: Comodin[*]
+    + tarots: Tarot[*]
+    + pokers: Poker[*]
+}
+
+class LectorJson {
+    + leerConfiguracion(): ConfiguracionJuego
+
+    - parsearArchivo(nombre: String): JSONObject
+    - parsearRonda(ronda: JSONObject): ConfiguracionRonda
+    - parsearMazo(mazo: JSONArray): Poker[*]
+    - parsearListaDeComodines(comodines: JSONArray): Comodin[*]
+    - parsearTarots(tarots: JSONArray): Tarot[*]
+    - parsearTarot(tarot: JSONObject): Tarot
+    - parsearComodin(comodin: JSONObject): Comodin
+    - parsearPoker(poker: JSONObject): Poker
+    - parsearJugada(activacion: String): Jugada
+    - parsearActivacion(activaction: String): ActivacionComodin
+}
+
+Juego --> ConfiguracionJuego
+ConfiguracionJuego o--> "0..*" ConfiguracionRonda
+
+Puntaje <.. Jugada
+Puntaje <.. Poker: modifica
+Puntaje <.. Comodin
+
+LectorJson ..> ConfiguracionJuego
+LectorJson ..> ConfiguracionRonda
+@enduml
