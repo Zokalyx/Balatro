@@ -14,6 +14,11 @@ desarrollo son Java, JUnit, JavaFX, Maven y Mockito.
 
 Correctores: **Santiago Valdez** y **Lucas Aldonate**
 
+## Capturas
+
+![img.png](screenshots/menu.png)
+![img.png](screenshots/partida.png)
+
 ## Aplicación
  
 La versión más reciente de la aplicación puede encontrarse en la pestaña [releases](https://github.com/Zokalyx/Balatro/releases/latest) y ejecutarse en Linux, Windows o Mac de esta forma:
